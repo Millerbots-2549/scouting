@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: MTSService
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/scouting?verifyServerCertificate=false&useSSL=false&requireSSL=false
+    username: scout
+    password: password
+    jmx-enabled: false
+    maximum-pool-size: 20
+    initial-size: 1
+    test-on-borrow: true
+    validation-query: select 1
+  jpa:
+    show-sql: false
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      naming-strategy: org.hibernate.‌​boot.model.naming.Ph‌​ysicalNamingStrategy‌​StandardImpl
