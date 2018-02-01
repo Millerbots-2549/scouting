@@ -1,7 +1,7 @@
 package com.frc.dto
 
 class QuestionTypeDto {
-    Integer id
+    Integer questionTypeId
     String description
     Set<ResponseValueDto> responseValues
 }

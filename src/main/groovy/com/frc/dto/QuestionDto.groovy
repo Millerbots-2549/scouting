@@ -2,9 +2,9 @@ package com.frc.dto
 
 import groovy.transform.Sortable
 
-@Sortable(includes = ['sequence', 'id'])
+@Sortable(includes = ['sequence', 'questionId'])
 class QuestionDto {
-    Integer id
+    Integer questionId
     String question
     Integer sequence
     QuestionTypeDto questionType

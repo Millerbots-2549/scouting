@@ -2,8 +2,8 @@ package com.frc.dto
 
 import groovy.transform.Sortable
 
-@Sortable(includes = ['value', 'id'])
+@Sortable(includes = ['value', 'responseValueId'])
 class ResponseValueDto {
-    Integer id
+    Integer responseValueId
     String value
 }

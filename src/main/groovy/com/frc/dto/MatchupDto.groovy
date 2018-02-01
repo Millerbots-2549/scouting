@@ -1,7 +1,7 @@
 package com.frc.dto
 
 class MatchupDto {
-    Integer id
+    Integer matchupId
     Date startTime
     Integer matchNumber
     String type

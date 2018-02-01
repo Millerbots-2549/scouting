@@ -18,7 +18,7 @@ class StudentController {
     Collection<StudentDto> getActive() {
         studentRepository.findByActive(true).collect {
             new StudentDto(
-                    id: it.id,
+                    studentId: it.id,
                     firstName: it.firstName,
                     lastName: it.lastName
             )

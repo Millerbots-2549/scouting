@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
 @RestController
@@ -17,12 +18,12 @@ class EventController {
     @Autowired
     EventRepository eventRepository
 
-    @GetMapping
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
     EventDto getCurrent() {
         Event event = eventRepository.findByCurrent(true)
 
-        return new EventDto(
-                id: event.id,
+         return new EventDto(
+                eventId: event.id,
                 survey: convert(event.survey),
                 name: event.name,
                 city: event.city,
@@ -36,7 +37,7 @@ class EventController {
     private static Collection<MatchupDto> convertMatchups(Collection<Matchup> matchups) {
         matchups.collect {
             new MatchupDto(
-                    id: it.id,
+                    matchupId: it.id,
                     startTime: it.startTime,
                     matchNumber: it.matchNumber,
                     type: it.type,
@@ -48,7 +49,7 @@ class EventController {
     private static Collection<TeamMatchupDto> convertTeamMatchups(Collection<TeamMatchup> teamMatchups) {
         teamMatchups.collect {
             new TeamMatchupDto(
-                    id: it.id,
+                    teamMatchupId: it.id,
                     alliance: it.alliance,
                     team: convert(it.team)
             )
@@ -57,7 +58,7 @@ class EventController {
 
     private static TeamDto convert(Team team) {
         return new TeamDto(
-                id: team.id,
+                teamId: team.id,
                 name: team.name,
                 city: team.city,
                 state: team.state,
@@ -67,7 +68,7 @@ class EventController {
 
     private static SurveyDto convert(Survey survey) {
         return new SurveyDto(
-                id: survey.id,
+                surveyId: survey.id,
                 surveySections: convertSurveySections(survey.surveySections)
         )
     }
@@ -75,7 +76,7 @@ class EventController {
     private static Collection<SurveySectionDto> convertSurveySections(Collection<SurveySection> surveySections) {
         surveySections.collect {
             new SurveySectionDto(
-                    id: it.id,
+                    surveySectionId: it.id,
                     name: it.name,
                     sequence: it.sequence,
                     questions: convertQuestions(it.questions)
@@ -86,7 +87,7 @@ class EventController {
     private static Set<QuestionDto> convertQuestions(Set<Question> questions) {
         questions.collect {
             new QuestionDto(
-                    id: it.id,
+                    questionId: it.id,
                     question: it.question,
                     sequence: it.sequence,
                     questionType: convert(it.questionType)
@@ -96,7 +97,7 @@ class EventController {
 
     private static QuestionTypeDto convert(QuestionType questionType) {
         new QuestionTypeDto(
-                id: questionType.id,
+                questionTypeId: questionType.id,
                 description: questionType.description,
                 responseValues: convertResponseValues(questionType.responseValues)
         )
@@ -105,7 +106,7 @@ class EventController {
     private static Set<ResponseValueDto> convertResponseValues(Collection<ResponseValue> responseValues) {
         responseValues.collect {
             new ResponseValueDto(
-                    id: it.id,
+                    responseValueId: it.id,
                     value: it.value
             )
         } as TreeSet

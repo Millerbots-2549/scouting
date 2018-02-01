@@ -1,7 +1,7 @@
 package com.frc.dto
 
 class ResponseDto {
-    Integer id
+    Integer responseId
     String response
     Integer questionId
     Integer teamMatchupId

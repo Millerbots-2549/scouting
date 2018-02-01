@@ -2,9 +2,9 @@ package com.frc.dto
 
 import groovy.transform.Sortable
 
-@Sortable(includes = ['id'])
+@Sortable(includes = ['teamId'])
 class TeamDto {
-    Integer id
+    Integer teamId
     String name
     String city
     String state

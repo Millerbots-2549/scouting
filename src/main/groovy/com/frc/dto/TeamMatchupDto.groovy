@@ -1,7 +1,7 @@
 package com.frc.dto
 
 class TeamMatchupDto {
-    Integer id
+    Integer teamMatchupId
     TeamDto team
     String alliance
 }

@@ -1,6 +1,6 @@
 package com.frc.dto
 
 class SurveyDto {
-    Integer id
+    Integer surveyId
     Set<SurveySectionDto> surveySections
 }

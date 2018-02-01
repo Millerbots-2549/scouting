@@ -8,13 +8,19 @@ INSERT INTO scouting.student (id, first_name, last_name) VALUES (1, 'first', 'la
 INSERT INTO scouting.team_matchup (id, matchup_id, team_id, alliance) VALUES (1, 1, 1, 'red');
 
 INSERT INTO scouting.question_type (id, description) VALUES (1, 'boolean');
-INSERT INTO scouting.response_value (id, question_type_id, value) VALUES (1, 1, 'true');
-INSERT INTO scouting.response_value (id, question_type_id, value) VALUES (2, 1, 'false');
 INSERT INTO scouting.question_type (id, description) VALUES (2, 'numeric');
 INSERT INTO scouting.question_type (id, description) VALUES (3, 'choice');
+INSERT INTO scouting.question_type (id, description) VALUES (4, 'radio');
+INSERT INTO scouting.question_type (id, description) VALUES (5, 'text');
+
+INSERT INTO scouting.response_value (id, question_type_id, value) VALUES (1, 1, 'true');
+INSERT INTO scouting.response_value (id, question_type_id, value) VALUES (2, 1, 'false');
 INSERT INTO scouting.response_value (id, question_type_id, value) VALUES (3, 3, '1');
 INSERT INTO scouting.response_value (id, question_type_id, value) VALUES (4, 3, '2');
 INSERT INTO scouting.response_value (id, question_type_id, value) VALUES (5, 3, '3');
+INSERT INTO scouting.response_value (id, question_type_id, value) VALUES (6, 4, 'Win');
+INSERT INTO scouting.response_value (id, question_type_id, value) VALUES (7, 4, 'Loss');
+INSERT INTO scouting.response_value (id, question_type_id, value) VALUES (8, 4, 'Tie');
 
 INSERT INTO survey_section (id, survey_id, name, sequence) VALUES (1,1,'Autonomus',1);
 INSERT INTO survey_section (id, survey_id, name, sequence) VALUES (2,1,'Teleop',2);
@@ -44,9 +50,7 @@ INSERT INTO scouting.question (id, question_type_id, question, survey_section_id
 INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (20, 3, 'Levitate	- cube count', 4, 20);
 INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (21, 3, 'Boost - cube count', 4, 21);
 INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (22, 2, 'Alliance Score', 5, 22);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (23, 1, 'Win', 5, 23);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (24, 1, 'Tie', 5, 24);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (25, 1, 'Loss', 5, 25);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (23, 4, 'Game Outcome', 5, 23);
 INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (26, 2, 'Foul', 5, 26);
 INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (27, 2, 'Tech Foul', 5, 27);
 INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (28, 1, 'Yellow Card', 5, 28);
