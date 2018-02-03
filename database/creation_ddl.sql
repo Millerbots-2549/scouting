@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `scouting`.`matchup` (
   `type` VARCHAR(45) NOT NULL COMMENT 'The match type describes if this is a regular, semi-final, or final match round.',
   PRIMARY KEY (`id`),
   INDEX `fk_Match_Event1_idx` (`event_id` ASC),
+  UNIQUE INDEX `matchup_uk1` (`event_id` ASC, `match_number` ASC, `type` ASC),
   CONSTRAINT `fk_Match_Event1`
   FOREIGN KEY (`event_id`)
   REFERENCES `scouting`.`event` (`id`)

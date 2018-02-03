@@ -41,20 +41,23 @@ INSERT INTO scouting.question (id, question_type_id, question, survey_section_id
 INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (11, 2, 'Power Cube on Opponent Switch - Succeed', 2, 11);
 INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (12, 1, 'Cubes in Exchange', 2, 12);
 INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (13, 1, 'Cubes from Portal', 2, 13);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (14, 1, 'Got on Pad', 3, 14);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (15, 2, 'Climb Attempt - Attempt', 3, 15);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (16, 2, 'Climb Attempt - Succeed', 3, 16);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (17, 2, 'Assist Climb - Attempt', 3, 17);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (18, 2, 'Assist Climb - Succeed', 3, 18);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (19, 3, 'Force - cube count', 4, 19);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (20, 3, 'Levitate	- cube count', 4, 20);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (21, 3, 'Boost - cube count', 4, 21);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (22, 2, 'Alliance Score', 5, 22);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (23, 4, 'Game Outcome', 5, 23);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (26, 2, 'Foul', 5, 26);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (27, 2, 'Tech Foul', 5, 27);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (28, 1, 'Yellow Card', 5, 28);
-INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (29, 1, 'Red Card', 5, 29);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (30, 1, 'Defensive', 2, 14);
+
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (14, 1, 'Got on Pad', 3, 15);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (15, 2, 'Climb Attempt - Attempt', 3, 16);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (16, 2, 'Climb Attempt - Succeed', 3, 17);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (17, 2, 'Assist Climb - Attempt', 3, 18);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (18, 2, 'Assist Climb - Succeed', 3, 19);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (19, 3, 'Force - cube count', 4, 20);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (20, 3, 'Levitate	- cube count', 4, 21);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (21, 3, 'Boost - cube count', 4, 22);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (22, 5, 'Alliance Score', 5, 23);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (23, 4, 'Game Outcome', 5, 24);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (26, 2, 'Foul', 5, 25);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (27, 2, 'Tech Foul', 5, 26);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (28, 1, 'Yellow Card', 5, 27);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (29, 1, 'Red Card', 5, 28);
+INSERT INTO scouting.question (id, question_type_id, question, survey_section_id, sequence) VALUES (30, 5, 'Comments', 5, 29);
 
 -- Insert into team
 INSERT INTO team (id, name, school, city, state) VALUES (27,'Team RUSH','unknown','Clarkston','MI');
