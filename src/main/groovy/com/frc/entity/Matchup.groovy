@@ -7,6 +7,7 @@ import javax.persistence.*
 class Matchup {
 
     @Id
+    @GeneratedValue
     @Column(name = 'id', nullable = false)
     Integer id
 
@@ -23,6 +24,6 @@ class Matchup {
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
     Event event
 
-    @OneToMany(mappedBy = "matchup")
+    @OneToMany(mappedBy = "matchup", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<TeamMatchup> teamMatchups
 }

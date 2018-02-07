@@ -8,6 +8,7 @@ import java.sql.Date
 class Event {
 
     @Id
+    @GeneratedValue
     @Column(name = 'id', nullable = false)
     Integer id
 

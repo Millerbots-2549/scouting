@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Team Creation</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+    <h1>Team Creation</h1>
+    <p></p>
+    <form th:action="@{/teams}" th:object="${dto}" method="post" id="teamForm" class="form-horizontal">
+        <p>Team Number: <input type="text" th:field="*{teamId}"/></p>
+        <p>Team Name: <input type="text" th:field="*{name}"/></p>
+        <p>School: <input type="text" th:field="*{school}"/></p>
+        <p>City: <input type="text" th:field="*{city}"/></p>
+        <p> State: <input type="text" th:field="*{state}"/></p>
+        <p></p>
+        <p><input type="submit" value="Submit"/></p>
+    </form>
+</div>
+
+</body>
+</html>

@@ -7,6 +7,7 @@ import javax.persistence.*
 class SurveySection {
 
     @Id
+    @GeneratedValue
     @Column(name = 'id', nullable = false)
     Integer id
 

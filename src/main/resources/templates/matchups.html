@@ -11,7 +11,16 @@
 <body>
 
 <div class="container-fluid">
+    <h1>Matchup Creation</h1>
+    <p></p>
     <form th:action="@{/matchups}" th:object="${dto}" method="post" id="matchupForm" class="form-horizontal">
+        <p>Match Number: <input type="text" th:field="*{matchNumber}"/> Start Date: <input type="date" th:field="*{startDate}" th:value="*{startDate}"/> Start Time: <input type="time" th:field="*{startTime}"/></p>
+
+        <p>Team Number Red: <input type="text" th:field="*{teamNumberRedOne}"/> Team Number Blue: <input type="text" th:field="*{teamNumberBlueOne}"/></p>
+        <p>Team Number Red: <input type="text" th:field="*{teamNumberRedTwo}"/> Team Number Blue: <input type="text" th:field="*{teamNumberBlueTwo}"/></p>
+        <p>Team Number Red: <input type="text" th:field="*{teamNumberRedThree}"/> Team Number Blue: <input type="text" th:field="*{teamNumberBlueThree}"/></p>
+
+        <p><input type="submit" value="Submit"/></p>
     </form>
 </div>
 

@@ -7,7 +7,7 @@ import javax.persistence.*
 class Response {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = 'id', nullable = false)
     Integer id
 
