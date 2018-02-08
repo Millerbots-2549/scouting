@@ -1,9 +1,9 @@
-#Purpose
+# Purpose
 This is a general purpose application used to support the needs of the robotics scouting team. This application interacts with a 
 general database that can be used to create any type of survey needed for keeping track of important scouting data. This 
 scouting data tracks the performance of different teams at competitions.
 
-#Installation
+# Installation
 This project creates a self contained jar that has everything needed to run. 
 It is assuming that the database is installed on the local machine and is already set up with a scouting schema 
 and a user, scout, that has access to that schema.
@@ -27,7 +27,7 @@ This would provide a nice stable environment. We could even use AWS databases,
 which would even be more stable. The disadvantage of this approach is that we might not 
 have very good internet access at the competitions.
 
-#Building
+# Building
 First ensure that you have the Oracle Java JDK installed. If not you will need to download it from Oracle. Get the 64 bit JDK.
 Here is a link you can go to: [Oracle JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
@@ -39,7 +39,7 @@ gradlew.bat clean build bootrun
 This command cleans the build directory, builds the application, and then runs it. Once the application is running 
 you can type CTRL+C to terminate it.
 
-#Helpful Application Links
+# Helpful Application Links
 
 The link to the Swagger docs is: http://localhost/scouting/swagger-ui.html
 
