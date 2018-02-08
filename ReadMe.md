@@ -31,10 +31,11 @@ have very good internet access at the competitions.
 First ensure that you have the Oracle Java JDK installed. If not you will need to download it from Oracle. Get the 64 bit JDK.
 Here is a link you can go to: [Oracle JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
-Simply check out this complete project to your local system. This is a gradle wrapper project so everything iscontained in the project. Once checked out you can build and run this on the command line simply by typing this one
+Simply check out this complete project to your local system. This is a gradle wrapper project so everything is contained in the project. 
+Once checked out you can build and run this on the command line simply by typing this one
 command in the top directory of where you checked out the project locally:  
 
-gradlew.bat clean build bootrun
+`gradlew.bat clean build bootrun`
 
 This command cleans the build directory, builds the application, and then runs it. Once the application is running 
 you can type CTRL+C to terminate it.
