@@ -16,3 +16,9 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:
       naming-strategy: org.hibernate.‌​boot.model.naming.Ph‌​ysicalNamingStrategy‌​StandardImpl
+server:
+  port: 80
+  compression:
+    enabled: true
+  context-path: /scouting
+  display-name: scouting
