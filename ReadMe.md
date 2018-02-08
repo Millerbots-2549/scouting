@@ -14,7 +14,7 @@ that are located in the database directory of the project. These scripts will cr
 sample. Then create a user with the name of 'scout' and a password of 'password' that has privileges to the scouting 
 scheme. This can be done in the workbench. Someday I will export that SQL into a script.
 
-Once the jar is built it can be run by executing this at the command line: java -jar ./scouting.jar
+Once the jar is built it can be run by executing this at the command line: `java -jar ./scouting.jar`
 
 The idea is to install the database and this application on a dedicated laptop that is brought to the competitions.
 This laptop is attached to a dedicated router, thus creating its own private network. 
