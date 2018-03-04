@@ -20,9 +20,9 @@ class QuestionType {
     String description
 
     @OneToMany(mappedBy = "questionType")
-    Set<Question> questions
+    Set<Question> questions = new HashSet<>()
 
     @OneToMany(mappedBy = "questionType")
-    Set<ResponseValue> responseValues
+    Set<ResponseValue> responseValues = new HashSet<>()
 
 }

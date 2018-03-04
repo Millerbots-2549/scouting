@@ -1,6 +1,10 @@
 package com.frc.entity
 
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.OneToMany
+import javax.persistence.Table
 
 @Entity
 @Table(name = 'team')
@@ -23,5 +27,5 @@ class Team {
     String school
 
     @OneToMany(mappedBy = "team")
-    Set<TeamMatchup> teamMatchups
+    Set<TeamMatchup> teamMatchups = new HashSet<>()
 }

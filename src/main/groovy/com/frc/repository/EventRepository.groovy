@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface EventRepository extends JpaRepository<Event, Integer> {
     Event findByCurrent(boolean current)
 
+    Set<Event> findByActive(boolean active)
 }

@@ -56,4 +56,6 @@ Going to the swagger document will show you the entire api and allow you to inte
 
 The plan is that the main data entry screen will be at http://localhost/scouting
 
+This project uses bootstrap-4.0.0-alpha.6-dist
+
 There are currently no plans for a menu

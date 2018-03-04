@@ -1,6 +1,15 @@
 package com.frc.entity
 
-import javax.persistence.*
+import javax.persistence.CascadeType
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.JoinTable
+import javax.persistence.ManyToMany
+import javax.persistence.OneToMany
+import javax.persistence.Table
 import java.sql.Date
 
 @Entity
@@ -12,9 +21,13 @@ class Event {
     @Column(name = 'id', nullable = false)
     Integer id
 
-    @ManyToOne
-    @JoinColumn(name = "survey_id", referencedColumnName = "id", nullable = false)
-    Survey survey
+    @ManyToMany(cascade = [CascadeType.ALL])
+    @JoinTable(
+            name = "event_survey",
+            joinColumns = [@JoinColumn(name = "event_id")],
+            inverseJoinColumns = [@JoinColumn(name = "survey_id")]
+    )
+    Set<Survey> surveys = new HashSet<>()
 
     @Column(name = 'name', nullable = false, length = 100)
     String name
@@ -31,6 +44,9 @@ class Event {
     @Column(name = 'current', nullable = false)
     Boolean current
 
+    @Column(name = 'active', nullable = false)
+    Boolean active
+
     @OneToMany(mappedBy = "event")
-    Set<Matchup> matchups
+    Set<Matchup> matchups = new HashSet<>()
 }

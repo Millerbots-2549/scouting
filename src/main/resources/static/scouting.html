@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Millerbots Scouting</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="css/millerbots.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+    <div class="container">
+        <img id="millerbots-logo" src="images/miller_bots.jpg" alt=""></img>
+        <h1>Washburn Millerbots Scouting System</h1>
+        <p>Team 2549</p>
+    </div>
+    <nav class="navbar navbar-expand-sm bg-light navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="scouting.html">Scouting</a></li>
+            <li class="nav-item"><a class="nav-link" href="teams">Team Entry</a></li>
+            <li class="nav-item"><a class="nav-link" href="matchups">Matchup Entry</a></li>
+        </ul>
+    </nav>
+    <p></p>
+</div>
+
+<div class="container-fluid">
+    <form class="container" id="scouting" action="/responses" method="post">
+
+        <div class="" id="event_info">
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <label for="event_name">Event Name:</label>
+                    <select id="event_name" name="eventId"></select>
+                </div>
+
+                <div class="col-sm-3">
+                    <label for="survey_name">Survey Name:</label>
+                    <select id="survey_name" name="surveyId"></select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <label for="matchup_id">Match No.:</label>
+                    <select id="matchup_id" name="matchupId"></select>
+                </div>
+
+                <div class="col-sm-4">
+                    <label for="team_id">Team ID:</label>
+                    <select id="team_id" name="teamId">
+                        <option value="Select a Match No." selected>Select a Match No.</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-4">
+                    <label for="student_id">Student:</label>
+                    <select id="student_id" name="studentId"></select>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="survey"></div>
+
+        <button id="submit">Submit Match Information to Database</button>
+        <span id="message" style="color: red;"></span>
+
+    </form>
+</div>
+<script src="js/scouting.js"></script>
+
+</body>
+</html>

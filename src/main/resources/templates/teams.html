@@ -3,26 +3,85 @@
 <head>
     <title>Team Creation</title>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"></link>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="css/millerbots.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<div class="container-fluid">
-    <h1>Team Creation</h1>
+<div class="jumbotron text-center">
+    <div class="container">
+        <img id="millerbots-logo" src="images/miller_bots.jpg" alt=""></img>
+        <h1>Washburn Millerbots Scouting System</h1>
+        <p>Team 2549</p>
+    </div>
+    <nav class="navbar navbar-expand-sm bg-light navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="scouting.html">Scouting</a></li>
+            <li class="nav-item active"><a class="nav-link" href="teams">Team Entry</a></li>
+            <li class="nav-item"><a class="nav-link" href="matchups">Matchup Entry</a></li>
+        </ul>
+    </nav>
     <p></p>
+</div>
+
+<div class="container-fluid">
     <form th:action="@{/teams}" th:object="${dto}" method="post" id="teamForm" class="form-horizontal">
-        <p>Team Number: <input type="text" th:field="*{teamId}"/></p>
-        <p>Team Name: <input type="text" th:field="*{name}"/></p>
-        <p>School: <input type="text" th:field="*{school}"/></p>
-        <p>City: <input type="text" th:field="*{city}"/></p>
-        <p> State: <input type="text" th:field="*{state}"/></p>
+        <div class="row">
+            <div class="col-sm-2"><label for="teamId">Team Number:</label></div>
+            <div class="col-sm-4"><input type="text" th:field="*{teamId}"/></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"><label for="name">Team Name:</label></div>
+            <div class="col-sm-4"><input type="text" th:field="*{name}"/></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"><label for="school">School:</label></div>
+            <div class="col-sm-4"><input type="text" th:field="*{school}"/></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"><label for="city">City:</label></div>
+            <div class="col-sm-4"><input type="text" th:field="*{city}"/></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"><label for="state">State:</label></div>
+            <div class="col-sm-4"><input type="text" th:field="*{state}"/></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4"></div>
+        </div>
+
         <p></p>
-        <p><input type="submit" value="Submit"/></p>
+        <div class="row">
+            <div class="col-sm-1"><input type="submit" value="Submit"/></div>
+        </div>
     </form>
 </div>
 
+
+<script type="text/javascript">
+    /*<![CDATA[*/
+    $('#teamId').on('blur', function () {
+        var teamId = $(this).val();
+        $.ajax({
+            dataType: "json",
+            url: "teams/" + teamId,
+            cache: false,
+            success: function (json) {
+                $('#name').val(json.name);
+                $('#school').val(json.school);
+                $('#city').val(json.city);
+                $('#state').val(json.state);
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        });
+    });
+    /*]]>*/
+</script>
 </body>
 </html>

@@ -38,6 +38,6 @@ class ScoutingApplication {
 
     @Bean
     public HttpMessageConverters customConverters() {
-        return new HttpMessageConverters(false, Collections.<HttpMessageConverter<?>>singleton(new MappingJackson2HttpMessageConverter()));
+        return new HttpMessageConverters(false, Collections.<HttpMessageConverter<?>> singleton(new MappingJackson2HttpMessageConverter()));
     }
 }

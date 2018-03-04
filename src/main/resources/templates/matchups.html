@@ -3,24 +3,74 @@
 <head>
     <title>Matchup Creation</title>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"></link>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="css/millerbots.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<div class="container-fluid">
-    <h1>Matchup Creation</h1>
+<div class="jumbotron text-center">
+    <div class="container">
+        <img id="millerbots-logo" src="images/miller_bots.jpg" alt=""></img>
+        <h1>Washburn Millerbots Scouting System</h1>
+        <p>Team 2549</p>
+    </div>
+    <nav class="navbar navbar-expand-sm bg-light navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="scouting.html">Scouting</a></li>
+            <li class="nav-item"><a class="nav-link" href="teams">Team Entry</a></li>
+            <li class="nav-item active"><a class="nav-link" href="matchups">Matchup Entry</a></li>
+        </ul>
+    </nav>
     <p></p>
+</div>
+
+<div class="container-fluid">
     <form th:action="@{/matchups}" th:object="${dto}" method="post" id="matchupForm" class="form-horizontal">
-        <p>Match Number: <input type="text" th:field="*{matchNumber}"/> Start Date: <input type="date" th:field="*{startDate}" th:value="*{startDate}"/> Start Time: <input type="time" th:field="*{startTime}"/></p>
+        <div class="row">
+            <div class="col-sm-2"><label for="matchNumber">Match Number:</label></div>
+            <div class="col-sm-2"><input type="text" th:field="*{matchNumber}"/></div>
+            <div class="col-sm-2"><label for="startDate">Start Date:</label></div>
+            <div class="col-sm-2"><input type="date" th:field="*{startDate}"/></div>
+            <div class="col-sm-2"><label for="startTime">Start Time:</label></div>
+            <div class="col-sm-2"><input type="time" th:field="*{startTime}"/></div>
+        </div>
 
-        <p>Team Number Red: <input type="text" th:field="*{teamNumberRedOne}"/> Team Number Blue: <input type="text" th:field="*{teamNumberBlueOne}"/></p>
-        <p>Team Number Red: <input type="text" th:field="*{teamNumberRedTwo}"/> Team Number Blue: <input type="text" th:field="*{teamNumberBlueTwo}"/></p>
-        <p>Team Number Red: <input type="text" th:field="*{teamNumberRedThree}"/> Team Number Blue: <input type="text" th:field="*{teamNumberBlueThree}"/></p>
+        <div class="row">
+            <div class="col-sm-1"><h5>Teams:</h5></div>
+        </div>
 
-        <p><input type="submit" value="Submit"/></p>
+        <div class="row">
+            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><label for="teamNumberRedOne">Team Number Red:</label></div>
+            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><input type="text" style="background-color:rgba(255,0,0,0.31);" th:field="*{teamNumberRedOne}"/></div>
+
+            <div class="col-sm-2" style="background-color:powderblue;"><label for="teamNumberBlueOne">Team Number Blue:</label></div>
+            <div class="col-sm-2" style="background-color:powderblue;"><input type="text" style="background-color:powderblue;" th:field="*{teamNumberBlueOne}"/></div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><label for="teamNumberRedTwo">Team Number Red:</label></div>
+            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><input type="text" style="background-color:rgba(255,0,0,0.31);" th:field="*{teamNumberRedTwo}"/></div>
+
+            <div class="col-sm-2" style="background-color:powderblue;"><label for="teamNumberBlueTwo">Team Number Blue:</label></div>
+            <div class="col-sm-2" style="background-color:powderblue;"><input type="text" style="background-color:powderblue;" th:field="*{teamNumberBlueTwo}"/></div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><label for="teamNumberRedThree">Team Number Red:</label></div>
+            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><input type="text" style="background-color:rgba(255,0,0,0.31);" th:field="*{teamNumberRedThree}"/></div>
+
+            <div class="col-sm-2" style="background-color:powderblue;"><label for="teamNumberBlueThree">Team Number Blue:</label></div>
+            <div class="col-sm-2" style="background-color:powderblue;"><input type="text" style="background-color:powderblue;" th:field="*{teamNumberBlueThree}"/></div>
+        </div>
+
+        <p></p>
+        <div class="row">
+            <div class="col-sm-1"><input type="submit" value="Submit"/></div>
+        </div>
     </form>
 </div>
 

@@ -8,9 +8,12 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseBody
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 
 @Controller
 @RequestMapping(value = "/teams")
@@ -20,19 +23,22 @@ class TeamController {
     TeamRepository teamRepository
 
     @GetMapping
-    String displayTeam(@RequestParam(required=false) Integer id, final Model model) {
+    String displayTeam(final Model model) {
         TeamDto dto = new TeamDto()
-        if (id) {
-            Team team = teamRepository.findOne(id)
-            dto.teamId = team.id
-            dto.name = team.name
-            dto.city = team.city
-            dto.state = team.state
-            dto.school = team.school
-        }
-
         model.addAttribute('dto', dto)
         return 'teams'
+    }
+
+    @GetMapping(path = '/{id}', produces = APPLICATION_JSON_VALUE)
+    @ResponseBody
+    TeamDto displayTeam(@PathVariable("id") Integer id) {
+        Team team = teamRepository.findOne(id)
+        new TeamDto(
+                teamId: id,
+                name: team?.name,
+                city: team?.city,
+                state: team?.state,
+                school: team?.school)
     }
 
     @PostMapping
@@ -50,7 +56,7 @@ class TeamController {
         team.school = dto.school
 
         teamRepository.save(team)
-        displayTeam(null, model)
+        displayTeam(model)
     }
 
 }
