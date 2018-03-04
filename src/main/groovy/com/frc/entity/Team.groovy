@@ -1,5 +1,7 @@
 package com.frc.entity
 
+import groovy.transform.ToString
+
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -7,6 +9,7 @@ import javax.persistence.OneToMany
 import javax.persistence.Table
 
 @Entity
+@ToString
 @Table(name = 'team')
 class Team {
 
@@ -20,10 +23,13 @@ class Team {
     @Column(name = 'city', nullable = false, length = 100)
     String city
 
-    @Column(name = 'state', nullable = false, length = 2)
+    @Column(name = 'state', nullable = false, length = 100)
     String state
 
-    @Column(name = 'school', nullable = false, length = 100)
+    @Column(name = 'country', nullable = false, length = 100)
+    String country
+
+    @Column(name = 'school', nullable = true, length = 100)
     String school
 
     @OneToMany(mappedBy = "team")

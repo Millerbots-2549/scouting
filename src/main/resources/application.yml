@@ -12,12 +12,11 @@ spring:
     test-on-borrow: true
     validation-query: select 1
   jpa:
-    show-sql: false
+    show-sql: true
     database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:
       naming-strategy: org.hibernate.‌​boot.model.naming.Ph‌​ysicalNamingStrategy‌​StandardImpl
 server:
-  port: 80
   compression:
     enabled: true
   context-path: /scouting

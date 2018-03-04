@@ -29,12 +29,12 @@
 </div>
 
 <div class="container-fluid">
-    <form class="container" id="scouting" action="/responses" method="post">
+    <form class="container" id="scouting" action="responses" method="post">
 
         <div class="" id="event_info">
 
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <label for="event_name">Event Name:</label>
                     <select id="event_name" name="eventId"></select>
                 </div>
@@ -45,20 +45,21 @@
                 </div>
             </div>
 
+            <p></p>
             <div class="row">
                 <div class="col-sm-3">
-                    <label for="matchup_id">Match No.:</label>
+                    <label for="matchup_id">Match No:</label>
                     <select id="matchup_id" name="matchupId"></select>
                 </div>
 
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <label for="team_id">Team ID:</label>
                     <select id="team_id" name="teamId">
-                        <option value="Select a Match No." selected>Select a Match No.</option>
+                        <option value="Select a Match No." selected></option>
                     </select>
                 </div>
 
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <label for="student_id">Student:</label>
                     <select id="student_id" name="studentId"></select>
                 </div>

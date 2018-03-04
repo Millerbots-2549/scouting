@@ -9,4 +9,5 @@ class TeamDto {
     String city
     String state
     String school
+    String country
 }

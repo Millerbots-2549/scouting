@@ -118,7 +118,7 @@ $(document).ready(function () {
     }
 
     function build_event(eventsObj) {
-        var eventOptions = '<option value="-1">Select an event</option>';
+        var eventOptions = '<option value="-1"></option>';
 
         for (i in eventsObj) {
             var event = eventsObj[i];
@@ -130,7 +130,7 @@ $(document).ready(function () {
 
 
     function build_survey_list(surveysObj) {
-        var surveyOptions = '<option value="-1">Select a survey</option>';
+        var surveyOptions = '<option value="-1"></option>';
 
         for (i in surveysObj) {
             var survey = surveysObj[i];
@@ -144,7 +144,7 @@ $(document).ready(function () {
 
         // matchups dropdown
         var matchupsObj = eventsObj.matchups, matchups = [],
-            matchupsOptions = '<option value="Select a Match No." selected>Select a Match No.</option>';
+            matchupsOptions = '<option value="Select a Match No" selected></option>';
 
         // sort matchups
         for (i in matchupsObj) {

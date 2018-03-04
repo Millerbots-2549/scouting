@@ -38,7 +38,9 @@ class TeamController {
                 name: team?.name,
                 city: team?.city,
                 state: team?.state,
-                school: team?.school)
+                school: team?.school,
+                country: team?.country
+        )
     }
 
     @PostMapping
@@ -54,6 +56,7 @@ class TeamController {
         team.city = dto.city
         team.state = dto.state
         team.school = dto.school
+        team.country = dto.country
 
         teamRepository.save(team)
         displayTeam(model)
