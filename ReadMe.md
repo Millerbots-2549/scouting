@@ -42,20 +42,23 @@ you can type CTRL+C to terminate it.
 
 # Helpful Application Links
 
-The link to the Swagger docs is: http://localhost/scouting/swagger-ui.html
+The link to the Swagger docs is: http://localhost:8080/scouting/swagger-ui.html
 
 The other links are:
-- GET: http://localhost/scouting/events
-- GET: http://localhost/scouting/students
-- POST: http://localhost/scouting/responses
+- GET: http://localhost:8080/scouting/events
+- GET: http://localhost:8080/scouting/students
+- POST: http://localhost:8080/scouting/responses
     
 The GET events link will return all the data needed for the current event and the survey.  
 The other GET students link will return all the active students.
 
 Going to the swagger document will show you the entire api and allow you to interact with it.
 
-The plan is that the main data entry screen will be at http://localhost/scouting
+The plan is that the main data entry screen will be at http://localhost:8080/scouting.
+I have now added a menu to make it easier to navigate to the different screens
 
 This project uses bootstrap-4.0.0-alpha.6-dist
 
-There are currently no plans for a menu
+#Work left to Do
+- Get all js and css references to be local. We will not have internet access all the time.
+- Get the data to save.
