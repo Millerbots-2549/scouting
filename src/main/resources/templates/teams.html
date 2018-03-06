@@ -3,8 +3,8 @@
 <head>
     <title>Team Creation</title>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"></link>
-    <link rel="stylesheet" type="text/css" href="css/millerbots.css"></link>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/millerbots.css"/>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -13,7 +13,7 @@
 
 <div class="jumbotron text-center">
     <div class="container">
-        <img id="millerbots-logo" src="images/miller_bots.jpg" alt=""></img>
+        <img id="millerbots-logo" src="images/miller_bots.jpg" alt=""/>
         <h1>Washburn Millerbots Scouting System</h1>
         <p>Team 2549</p>
     </div>
@@ -31,27 +31,27 @@
 <div class="container-fluid">
     <form th:action="@{/teams}" th:object="${dto}" method="post" id="teamForm" class="form-horizontal">
         <div class="row">
-            <div class="col-sm-2"><label for="teamId">Team Number:</label></div>
+            <div class="col-sm-1"><label for="teamId">Team Number:</label></div>
             <div class="col-sm-4"><input type="text" th:field="*{teamId}"/></div>
         </div>
         <div class="row">
-            <div class="col-sm-2"><label for="name">Team Name:</label></div>
+            <div class="col-sm-1"><label for="name">Team Name:</label></div>
             <div class="col-sm-4"><input type="text" th:field="*{name}"/></div>
         </div>
         <div class="row">
-            <div class="col-sm-2"><label for="school">School:</label></div>
+            <div class="col-sm-1"><label for="school">School:</label></div>
             <div class="col-sm-4"><input type="text" th:field="*{school}"/></div>
         </div>
         <div class="row">
-            <div class="col-sm-2"><label for="city">City:</label></div>
+            <div class="col-sm-1"><label for="city">City:</label></div>
             <div class="col-sm-4"><input type="text" th:field="*{city}"/></div>
         </div>
         <div class="row">
-            <div class="col-sm-2"><label for="state">State:</label></div>
+            <div class="col-sm-1"><label for="state">State:</label></div>
             <div class="col-sm-4"><input type="text" th:field="*{state}"/></div>
         </div>
         <div class="row">
-            <div class="col-sm-2"><label for="country">Country:</label></div>
+            <div class="col-sm-1"><label for="country">Country:</label></div>
             <div class="col-sm-4"><input type="text" th:field="*{country}"/></div>
         </div>
 

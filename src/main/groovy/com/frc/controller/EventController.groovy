@@ -62,28 +62,39 @@ class EventController {
             @PathVariable(name = 'surveyId') Integer surveyId) {
 
         Event event = eventRepository.findOne(eventId)
+        SurveyDto survey = convert(event.surveys, surveyId)
         return new EventDto(
                 eventId: event.id,
-                survey: convert(event.surveys, surveyId),
+                survey: survey,
                 name: event.name,
                 city: event.city,
                 state: event.state,
                 startDate: event.startDate,
                 current: event.current,
-                matchups: convertMatchups(event.matchups)
+                matchups: convertMatchups(event.matchups, survey)
         )
     }
 
-    private static Collection<MatchupDto> convertMatchups(Collection<Matchup> matchups) {
-        matchups.collect {
-            new MatchupDto(
-                    matchupId: it.id,
-                    startTime: it.startTime,
-                    matchNumber: it.matchNumber,
-                    type: it.type,
-                    teamMatchups: convertTeamMatchups(it.teamMatchups)
-            )
+    private static Collection<MatchupDto> convertMatchups(Collection<Matchup> matchups, SurveyDto survey) {
+        List<MatchupDto> dtos = []
+        matchups.each {
+            if (survey.name.contains('Pit') && it.matchNumber == -1) {
+                dtos.add(convert(it))
+            } else if (survey.name.contains('Match') && it.matchNumber != -1) {
+                dtos.add(convert(it))
+            }
         }
+        return dtos
+    }
+
+    private static MatchupDto convert(Matchup matchup) {
+        new MatchupDto(
+                matchupId: matchup.id,
+                startTime: matchup.startTime,
+                matchNumber: matchup.matchNumber,
+                type: matchup.type,
+                teamMatchups: convertTeamMatchups(matchup.teamMatchups)
+        )
     }
 
     private static Collection<TeamMatchupDto> convertTeamMatchups(Collection<TeamMatchup> teamMatchups) {

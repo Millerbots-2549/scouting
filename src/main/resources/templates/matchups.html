@@ -3,8 +3,8 @@
 <head>
     <title>Matchup Creation</title>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"></link>
-    <link rel="stylesheet" type="text/css" href="css/millerbots.css"></link>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/millerbots.css"/>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -13,7 +13,7 @@
 
 <div class="jumbotron text-center">
     <div class="container">
-        <img id="millerbots-logo" src="images/miller_bots.jpg" alt=""></img>
+        <img id="millerbots-logo" src="images/miller_bots.jpg" alt=""/>
         <h1>Washburn Millerbots Scouting System</h1>
         <p>Team 2549</p>
     </div>
@@ -31,14 +31,12 @@
 <div class="container-fluid">
     <form th:action="@{/matchups}" th:object="${dto}" method="post" id="matchupForm" class="form-horizontal">
         <div class="row">
-            <div class="col-sm-2"><label for="matchNumber">Match Number:</label></div>
-            <div class="col-sm-2"><input type="text" th:field="*{matchNumber}"/></div>
-            <div class="col-sm-2"><label for="startDate">Start Date:</label></div>
-            <div class="col-sm-2"><input type="date" th:field="*{startDate}"/></div>
-            <div class="col-sm-2"><label for="startTime">Start Time:</label></div>
-            <div class="col-sm-2"><input type="time" th:field="*{startTime}"/></div>
+            <div class="col-sm-2"><div class="d-flex flex-column"><label for="matchNumber">Match Number: </label><input type="text" th:field="*{matchNumber}"/></div></div>
+            <div class="col-sm-2"><div class="d-flex flex-column"><label for="startDate">Start Date: </label><input type="date" th:field="*{startDate}"/></div></div>
+            <div class="col-sm-2"><div class="d-flex flex-column"><label for="startTime">Start Time: </label><input type="time" th:field="*{startTime}"/></div></div>
         </div>
 
+        <p></p>
         <div class="row">
             <div class="col-sm-1"><h5>Teams:</h5></div>
         </div>

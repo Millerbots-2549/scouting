@@ -3,8 +3,8 @@
 <head>
     <title>Millerbots Scouting</title>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"></link>
-    <link rel="stylesheet" type="text/css" href="css/millerbots.css"></link>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/millerbots.css"/>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -13,7 +13,7 @@
 
 <div class="jumbotron text-center">
     <div class="container">
-        <img id="millerbots-logo" src="images/miller_bots.jpg" alt=""></img>
+        <img id="millerbots-logo" src="images/miller_bots.jpg" alt=""/>
         <h1>Washburn Millerbots Scouting System</h1>
         <p>Team 2549</p>
     </div>
@@ -35,40 +35,50 @@
 
             <div class="row">
                 <div class="col-sm-6">
-                    <label for="event_name">Event Name:</label>
-                    <select id="event_name" name="eventId"></select>
+                    <div class="d-flex flex-column">
+                        <label for="event_name">Event Name:</label>
+                        <select id="event_name" name="eventId"></select>
+                    </div>
                 </div>
 
                 <div class="col-sm-3">
-                    <label for="survey_name">Survey Name:</label>
-                    <select id="survey_name" name="surveyId"></select>
+                    <div class="d-flex flex-column">
+                        <label for="survey_name">Survey Name:</label>
+                        <select id="survey_name" name="surveyId"></select>
+                    </div>
                 </div>
             </div>
 
             <p></p>
             <div class="row">
-                <div class="col-sm-3">
-                    <label for="matchup_id">Match No:</label>
-                    <select id="matchup_id" name="matchupId"></select>
+                <div class="col-sm-2">
+                    <div class="d-flex flex-column">
+                        <label for="matchup_id">Match No:</label>
+                        <select id="matchup_id" name="matchupId"></select>
+                    </div>
                 </div>
 
                 <div class="col-sm-6">
-                    <label for="team_matchup_id">Team ID:</label>
-                    <select id="team_matchup_id" name="teamMatchupId">
-                        <option value="Select a Match No." selected></option>
-                    </select>
+                    <div class="d-flex flex-column">
+                        <label for="team_matchup_id">Team ID:</label>
+                        <select id="team_matchup_id" name="teamMatchupId">
+                            <option value="Select a Match No." selected></option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="col-sm-3">
-                    <label for="student_id">Student:</label>
-                    <select id="student_id" name="studentId"></select>
+                    <div class="d-flex flex-column">
+                        <label for="student_id">Student:</label>
+                        <select id="student_id" name="studentId"></select>
+                    </div>
                 </div>
             </div>
 
         </div>
 
         <div id="survey"></div>
-		<span id="message" style="color: red;"></span><br>
+        <span id="message" style="color: red;"></span><br>
         <button id="submit">Submit Responses</button>
 
 

@@ -2,4 +2,5 @@ build/
 .gradle/
 .idea/
 scouting.iml
-database/scouting 2018.mwb.bak
+database/*.mwb.bak
+out/

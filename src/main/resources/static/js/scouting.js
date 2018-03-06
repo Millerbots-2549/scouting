@@ -2,13 +2,14 @@ $(document).ready(function () {
 
     var eventId;
     var surveyId;
+    var events;
 
     //get event data from database;
     $.ajax(
         {
             type: "GET",
             url: "events",
-			//url: "events.json",
+            //url: "events.json",
             dataType: "json",
             success: function (events) {
                 build_event(events);
@@ -20,14 +21,21 @@ $(document).ready(function () {
 
     $('#event_name').on('change', function () {
         eventId = $(this).val();
+        surveyId = null;
+        events = null;
         $.ajax(
             {
                 type: "GET",
                 url: "events/" + eventId + "/surveys",
-				//url: "surveys.json",
+                //url: "surveys.json",
                 dataType: "json",
                 success: function (surveys) {
                     build_survey_list(surveys);
+                    build_students(); // separate ajax call
+
+                    // When we change events we need to clear out teams and matches.
+                    $('#team_matchup_id').html('<option value="Select a Match No" selected></option>');
+                    $('#matchup_id').html('<option value="Select a Match No" selected></option>');
                 },
                 error: function (response) {
                     console.log(response)
@@ -42,116 +50,119 @@ $(document).ready(function () {
         $.ajax({
             dataType: "json",
             url: "events/" + eventId + "/surveys/" + surveyId,
-			//url: "survey1.json",
+            //url: "survey1.json",
             cache: false,
-            success: function (events) {
+            success: function (json) {
+                events = json
+                // when the survey changes need to clear out teams. matches will be rebuilt
+                $('#team_matchup_id').html('<option value="Select a Match No" selected></option>');
                 build_matchups(events);
-                build_students(); // separate ajax call
                 $('#survey').html(build_survey(events.survey));
-                $('#matchup_id').change(function () {
-                    var key = val2key(this.value, events.matchups, 'matchupId');
-                    build_teams(events.matchups[key].teamMatchups);
-                });
-
                 confirm_submit();
             },
             error: function (response) {
+                events = null
                 console.log(response)
             }
         });
     });
 
-	function get_responses(){
+    $('#matchup_id').on('change', function () {
+        var key = val2key(this.value, events.matchups, 'matchupId');
+        build_teams(events.matchups[key].teamMatchups);
+    });
 
-		var responses = [];
+    function get_responses() {
 
-		$('.question').each(function(){
+        var responses = [];
 
-			var questionId = $(this).data("questionId");
+        $('.question').each(function () {
 
-			var response = get_response(questionId);
+            var questionId = $(this).data("questionId");
 
-			responses.push({
-				"questionId": questionId,
-			    "response": response,
-			    "studentId": $('#student_id').val(),
-			    "teamMatchupId": $('#team_matchup_id').val()
+            var response = get_response(questionId);
+
+            responses.push({
+                "questionId": questionId,
+                "response": response,
+                "studentId": $('#student_id').val(),
+                "teamMatchupId": $('#team_matchup_id').val()
             });
 
 
-		});
+        });
 
-		return responses;
+        return responses;
 
-	}
+    }
 
-	function get_response(questionID){
+    function get_response(questionID) {
 
-		var elem = $("[name='questionId"+questionID+"']");
+        var elem = $("[name='questionId" + questionID + "']");
 
-		var response = elem.val();
+        var response = elem.val();
 
-		if ( elem.attr('type') == 'checkbox' ){
+        if (elem.attr('type') == 'checkbox') {
 
-			response = elem.is(':checked')? 'true':'false';
+            response = elem.is(':checked') ? 'true' : 'false';
 
-		}
+        }
 
-		if ( elem.attr('type') == 'radio' ){
+        if (elem.attr('type') == 'radio') {
 
-			response = elem.is(':checked')? $("[name='questionId"+questionID+"']:checked").val():'';
+            response = elem.is(':checked') ? $("[name='questionId" + questionID + "']:checked").val() : '';
 
-		}
+        }
 
-		return response;
+        return response;
 
-	}
+    }
 
-	$("#submit").on('click', function(){
+    $("#submit").on('click', function () {
 
-		event.preventDefault();
+        event.preventDefault();
 
-		if( confirm_submit() ){
+        if (confirm_submit()) {
 
-			var responses = get_responses();
+            var responses = get_responses();
 
-console.log(JSON.stringify(responses));
+            //console.log(JSON.stringify(responses));
 
-			submit_responses(responses);
+            submit_responses(responses);
 
-		}
+        }
 
-		return;
+        return;
 
-	});
+    });
 
-	function submit_responses(responses){
+    function submit_responses(responses) {
 
-		$.ajax({
-			url: 'responses',
-			type : "POST",
-			contentType: 'application/json',
-			//dataType : 'json',
-			data : JSON.stringify(responses),
-			success : function(result) {
-console.log("success")
-				console.log(result);
+        $.ajax({
+            url: 'responses',
+            type: "POST",
+            contentType: 'application/json',
+            //dataType : 'json',
+            data: JSON.stringify(responses),
+            success: function (result) {
+                console.log("success")
+                console.log(result);
 
-				alert("Your match data has been submitted.");
+                alert("Your match data has been submitted.");
 
-				window.location = "index.html";
+                window.location = "index.html";
 
-			},
-			error: function(xhr, resp, text) {
+            },
+            error: function (xhr, resp, text) {
 
-				console.log(xhr, resp, text);
+                console.log(xhr, resp, text);
 
-				$("#message").text("This team matchup may have already been submitted. Please verify and try again.").show();
+                $("#message").text("This team matchup may have already been submitted. Please verify and try again.").show();
 
-			}
-		})
+            }
+        })
 
-	}
+    }
 
     function confirm_submit() {
 
@@ -258,7 +269,6 @@ console.log("success")
         }
 
         $('#matchup_id').html(matchupsOptions);
-
     }
 
     function build_teams(teamMatchupObj) {
@@ -280,7 +290,7 @@ console.log("success")
             {
                 type: "GET",
                 url: "students",
-				//url: "students.json",
+                //url: "students.json",
                 dataType: "json",
                 success: function (json) {
 
