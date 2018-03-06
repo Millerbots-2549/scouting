@@ -25,10 +25,14 @@ label {
     margin-left: 15px;
 }
 
+#message {
+	margin-top: 25px;
+}
+
 #submit {
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 50px;
-    width: 400px;
+    width: auto;
 }

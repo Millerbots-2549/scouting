@@ -3,11 +3,11 @@
 <head>
     <title>Millerbots Scouting</title>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"></link>
     <link rel="stylesheet" type="text/css" href="css/millerbots.css"></link>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -29,7 +29,7 @@
 </div>
 
 <div class="container-fluid">
-    <form class="container" id="scouting" action="responses" method="post">
+    <form class="container" id="scouting" action="" method="post">
 
         <div class="" id="event_info">
 
@@ -53,8 +53,8 @@
                 </div>
 
                 <div class="col-sm-6">
-                    <label for="team_id">Team ID:</label>
-                    <select id="team_id" name="teamId">
+                    <label for="team_matchup_id">Team ID:</label>
+                    <select id="team_matchup_id" name="teamMatchupId">
                         <option value="Select a Match No." selected></option>
                     </select>
                 </div>
@@ -68,9 +68,9 @@
         </div>
 
         <div id="survey"></div>
+		<span id="message" style="color: red;"></span><br>
+        <button id="submit">Submit Responses</button>
 
-        <button id="submit">Submit Match Information to Database</button>
-        <span id="message" style="color: red;"></span>
 
     </form>
 </div>

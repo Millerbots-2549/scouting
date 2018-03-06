@@ -8,6 +8,7 @@ $(document).ready(function () {
         {
             type: "GET",
             url: "events",
+			//url: "events.json",
             dataType: "json",
             success: function (events) {
                 build_event(events);
@@ -23,6 +24,7 @@ $(document).ready(function () {
             {
                 type: "GET",
                 url: "events/" + eventId + "/surveys",
+				//url: "surveys.json",
                 dataType: "json",
                 success: function (surveys) {
                     build_survey_list(surveys);
@@ -40,6 +42,7 @@ $(document).ready(function () {
         $.ajax({
             dataType: "json",
             url: "events/" + eventId + "/surveys/" + surveyId,
+			//url: "survey1.json",
             cache: false,
             success: function (events) {
                 build_matchups(events);
@@ -58,35 +61,123 @@ $(document).ready(function () {
         });
     });
 
+	function get_responses(){
+
+		var responses = [];
+
+		$('.question').each(function(){
+
+			var questionId = $(this).data("questionId");
+
+			var response = get_response(questionId);
+
+			responses.push({
+				"questionId": questionId,
+			    "response": response,
+			    "studentId": $('#student_id').val(),
+			    "teamMatchupId": $('#team_matchup_id').val()
+            });
+
+
+		});
+
+		return responses;
+
+	}
+
+	function get_response(questionID){
+
+		var elem = $("[name='questionId"+questionID+"']");
+
+		var response = elem.val();
+
+		if ( elem.attr('type') == 'checkbox' ){
+
+			response = elem.is(':checked')? 'true':'false';
+
+		}
+
+		if ( elem.attr('type') == 'radio' ){
+
+			response = elem.is(':checked')? $("[name='questionId"+questionID+"']:checked").val():'';
+
+		}
+
+		return response;
+
+	}
+
+	$("#submit").on('click', function(){
+
+		event.preventDefault();
+
+		if( confirm_submit() ){
+
+			var responses = get_responses();
+
+console.log(JSON.stringify(responses));
+
+			submit_responses(responses);
+
+		}
+
+		return;
+
+	});
+
+	function submit_responses(responses){
+
+		$.ajax({
+			url: 'responses',
+			type : "POST",
+			contentType: 'application/json',
+			//dataType : 'json',
+			data : JSON.stringify(responses),
+			success : function(result) {
+console.log("success")
+				console.log(result);
+
+				alert("Your match data has been submitted.");
+
+				window.location = "index.html";
+
+			},
+			error: function(xhr, resp, text) {
+
+				console.log(xhr, resp, text);
+
+				$("#message").text("This team matchup may have already been submitted. Please verify and try again.").show();
+
+			}
+		})
+
+	}
+
     function confirm_submit() {
 
-        $("form").submit(function (event) {
+        if (isNumber($("#matchup_id").val())) {
 
-            if (isNumber($("#matchup_id").val())) {
+            var messageConfirm = "You are submitting the result for Match No.: " + $('#matchup_id').val();
 
-                var messageConfirm = "You are submitting the result for Match No.: " + $('#matchup_id').val();
+            messageConfirm += " and Team: " + $('#team_matchup_id option:selected').data("teamId") + ". Is this correct?";
 
-                messageConfirm += " and Team: " + $('#team_id option:selected').text() + ". Is this correct?";
+            var userConfirm = confirm(messageConfirm);
 
-                var userConfirm = confirm(messageConfirm);
-
-                if (userConfirm === true) {
-                    return;
-                }
-                else {
-                    event.preventDefault();
-                }
-
+            if (userConfirm === true) {
+                return true;
             }
             else {
-
-                $("#message").text("Please select a Match No. and Team!").show().fadeOut(5000);
-
-                event.preventDefault();
-
+                return false;
             }
 
-        });
+        }
+        else {
+
+            $("#message").text("Please select a Match No. and Team!").show().fadeOut(5000);
+
+            return false;
+
+        }
 
     }
 
@@ -176,10 +267,10 @@ $(document).ready(function () {
 
         for (i in teamMatchupObj) {
             var team = teamMatchupObj[i].team;
-            teamOptions += '<option value="' + team.teamId + '">' + team.teamId + ' - ' + team.name + '</option>';
+            teamOptions += '<option value="' + teamMatchupObj[i].teamMatchupId + '" data-team-id="' + team.teamId + '">' + team.teamId + ' - ' + team.name + '</option>';
         }
 
-        $('#team_id').html(teamOptions);
+        $('#team_matchup_id').html(teamOptions);
 
     }
 
@@ -189,6 +280,7 @@ $(document).ready(function () {
             {
                 type: "GET",
                 url: "students",
+				//url: "students.json",
                 dataType: "json",
                 success: function (json) {
 
@@ -259,7 +351,7 @@ $(document).ready(function () {
 
             questionObj = questionsObj[i];
 
-            questionHTML += '<div class="question">' + questionObj.question;
+            questionHTML += '<div class="question" data-question-id="' + questionObj.questionId + '">' + questionObj.question;
 
             questionHTML += build_response(questionObj);
 
