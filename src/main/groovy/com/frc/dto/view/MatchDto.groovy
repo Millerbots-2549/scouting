@@ -1,6 +1,7 @@
 package com.frc.dto.view
 
 class MatchDto {
+    String eventName
     Integer matchNumber
     String startTime
     String startDate

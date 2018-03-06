@@ -31,6 +31,11 @@
 <div class="container-fluid">
     <form th:action="@{/matchups}" th:object="${dto}" method="post" id="matchupForm" class="form-horizontal">
         <div class="row">
+            <div class="col-sm-4"><h3 th:text="${dto.eventName}"/></div>
+        </div>
+
+        <p></p>
+        <div class="row">
             <div class="col-sm-2"><div class="d-flex flex-column"><label for="matchNumber">Match Number: </label><input type="text" th:field="*{matchNumber}"/></div></div>
             <div class="col-sm-2"><div class="d-flex flex-column"><label for="startDate">Start Date: </label><input type="date" th:field="*{startDate}"/></div></div>
             <div class="col-sm-2"><div class="d-flex flex-column"><label for="startTime">Start Time: </label><input type="time" th:field="*{startTime}"/></div></div>

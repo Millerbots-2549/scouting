@@ -2,6 +2,7 @@ package com.frc.controller
 
 import com.frc.dto.view.MatchDto
 import com.frc.entity.Alliance
+import com.frc.entity.Event
 import com.frc.entity.Matchup
 import com.frc.entity.MatchupType
 import com.frc.entity.TeamMatchup
@@ -33,7 +34,9 @@ class MatchupController {
     @GetMapping
     String displayMatchup(final Model model) {
         MatchDto dto = new MatchDto()
+        Event event = eventRepository.findByCurrent(true)
         dto.startDate = (new Date()).format('yyyy-MM-dd')
+        dto.eventName = event.name
         model.addAttribute('dto', dto)
         return 'matchups'
     }
