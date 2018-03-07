@@ -36,7 +36,7 @@ class ResponseController {
                     question: questionRepository.findOne(it.questionId),
                     teamMatchup: teamMatchupRepository.findOne(it.teamMatchupId),
                     student: studentRepository.findOne(it.studentId),
-                    response: it.response
+                    response: it.response.trim()
             )
         }
 
