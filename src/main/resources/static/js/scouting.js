@@ -361,7 +361,7 @@ $(document).ready(function () {
 
             questionObj = questionsObj[i];
 
-            questionHTML += '<div class="question" data-question-id="' + questionObj.questionId + '">' + questionObj.question;
+            questionHTML += '<div class="question row" data-question-id="' + questionObj.questionId + '">' + questionObj.question;
 
             questionHTML += build_response(questionObj);
 
@@ -440,7 +440,9 @@ $(document).ready(function () {
 
         var text = '';
 
-        text += '<input name="questionId' + questionId + '" type="text" >';
+        //text += '<input name="questionId' + questionId + '" type="text" maxlength="400">';
+
+        text += '<textarea name="questionId' + questionId + '" rows="2" cols="50" maxlength="400"/>';
 
         return text;
 

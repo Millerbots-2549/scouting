@@ -14,6 +14,7 @@ label {
 .section {
     margin-top: 15px;
 }
+
 .question {
     margin-left: 10px;
     padding-bottom: 5px;
@@ -22,6 +23,10 @@ label {
 
 .question > input,
 .question > select {
+    margin-left: 15px;
+}
+
+.question > textarea {
     margin-left: 15px;
 }
 
