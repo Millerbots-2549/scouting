@@ -1,5 +1,5 @@
 package com.frc.entity
 
 enum MatchupType {
-    QUALIFIER, SEMIFINAL, FINAL
+    QUALIFIER, SEMIFINAL, FINAL, PIT
 }

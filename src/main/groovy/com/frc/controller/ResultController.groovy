@@ -1,0 +1,138 @@
+package com.frc.controller
+
+import com.frc.dto.view.QuestionResultDto
+import com.frc.dto.view.ResultDto
+import com.frc.dto.view.SurveyResultDto
+import com.frc.entity.QuestionTypeValue
+import com.frc.entity.Team
+import com.frc.repository.TeamRepository
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+
+@RestController
+@RequestMapping(value = "/results")
+class ResultController {
+
+    @Autowired
+    TeamRepository teamRepository
+
+    @GetMapping('/{teamId}')
+    ResultDto getResults(@PathVariable("teamId") Integer teamId) {
+
+        Team team = teamRepository.findOne(teamId)
+        if (!team) {
+            return new ResultDto(teamId: teamId)
+        }
+
+        Map<SurveyResultDto, Map<Integer, List<QuestionResultDto>>> questions = [:]
+        ResultDto result = new ResultDto(teamName: team.name, teamId: team.id)
+        getQuestionData(team, questions)
+
+        questions.each { surveyDto, questionMap ->
+            result.surveys.add(surveyDto)
+            questionMap.each { questionId, questionList ->
+                QuestionResultDto questionDto = buildQuestionResult(questionList)
+                surveyDto.questions.add(questionDto)
+            }
+            surveyDto.questions.sort()
+        }
+
+        return result
+    }
+
+    private static QuestionResultDto buildQuestionResult(List<QuestionResultDto> questionList) {
+        QuestionResultDto dto = new QuestionResultDto()
+        dto.questionType = questionList.first().questionType
+        dto.question = questionList.first().question
+        dto.questionId = questionList.first().questionId
+        dto.sectionSeq = questionList.first().sectionSeq
+        dto.questionSeq = questionList.first().questionSeq
+
+        questionList.each {
+            dto.responses.addAll(it.responses)
+        }
+
+        calculateSummary(dto)
+
+        return dto
+    }
+
+    private static void calculateSummary(QuestionResultDto dto) {
+        switch (dto.questionType) {
+            case QuestionTypeValue.NUMERIC:
+                dto.summary = calculateAverage(dto.responses)
+                break
+            case QuestionTypeValue.BOOLEAN:
+            case QuestionTypeValue.CHOICE:
+                dto.summary = calculateMostOccurring(dto.responses)
+                break
+            default:
+                dto.summary = ''
+        }
+    }
+
+    private static Integer calculateAverage(List<String> responses) {
+        int count = 0
+        int total = 0
+        responses.each {
+            count++
+            int value = it.trim() ? it.trim().toInteger() : 0
+            total += value
+        }
+        return total / count
+    }
+
+    private static String calculateMostOccurring(List<String> responses) {
+        Map<String, Integer> counts = [:]
+        responses.each {
+            if (!counts.containsKey(it)) {
+                counts.put(it, 1)
+            } else {
+                counts.put(it, counts.get(it) + 1)
+            }
+        }
+        int max = 0
+        String result = ''
+        counts.each { key, count ->
+            if (max < count) {
+                result = key
+                max = count
+            }
+        }
+        return result
+    }
+
+    private static void getQuestionData(Team team, questions) {
+        team.teamMatchups.each { teamMatchUp ->
+            teamMatchUp.responses.each { response ->
+                Integer questionId = response.question.id
+
+                QuestionResultDto questionDto = new QuestionResultDto(
+                        question: response.question.question,
+                        questionId: response.question.id, responses: [response.response],
+                        questionType: QuestionTypeValue.valueOf(response.question.questionType.description.toUpperCase()),
+                        questionSeq: response.question.sequence,
+                        sectionSeq: response.question.surveySection.sequence
+                )
+
+                SurveyResultDto surveyDto = new SurveyResultDto(
+                        surveyId: response.question.surveySection.survey.id,
+                        surveyName: response.question.surveySection.survey.name
+                )
+
+                if (!questions.containsKey(surveyDto)) {
+                    questions.put(surveyDto, [:])
+                }
+                Map q = questions.get(surveyDto)
+                if (!q.containsKey(questionId)) {
+                    q.put(questionId, [questionDto])
+                } else {
+                    q.get(questionId).add(questionDto)
+                }
+            }
+        }
+    }
+}

@@ -93,7 +93,6 @@ $(document).ready(function () {
         });
 
         return responses;
-
     }
 
     function get_response(questionID) {
