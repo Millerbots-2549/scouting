@@ -3,6 +3,7 @@ $(document).ready(function () {
     var eventId;
     var surveyId;
     var events;
+    var matchupKey;
 
     //get event data from database;
     $.ajax(
@@ -23,6 +24,7 @@ $(document).ready(function () {
         eventId = $(this).val();
         surveyId = null;
         events = null;
+        matchupKey = null;
         $.ajax(
             {
                 type: "GET",
@@ -36,6 +38,7 @@ $(document).ready(function () {
                     // When we change events we need to clear out teams and matches.
                     $('#team_matchup_id').html('<option value="Select a Match No" selected></option>');
                     $('#matchup_id').html('<option value="Select a Match No" selected></option>');
+                    $('#alliance').html('<option value="1" selected></option>');
                 },
                 error: function (response) {
                     console.log(response)
@@ -56,6 +59,7 @@ $(document).ready(function () {
                 events = json
                 // when the survey changes need to clear out teams. matches will be rebuilt
                 $('#team_matchup_id').html('<option value="Select a Match No" selected></option>');
+                $('#alliance').html('<option value="1" selected></option>');
                 build_matchups(events);
                 $('#survey').html(build_survey(events.survey));
                 confirm_submit();
@@ -68,8 +72,13 @@ $(document).ready(function () {
     });
 
     $('#matchup_id').on('change', function () {
-        var key = val2key(this.value, events.matchups, 'matchupId');
-        build_teams(events.matchups[key].teamMatchups);
+        matchupKey = val2key(this.value, events.matchups, 'matchupId');
+        $('#team_matchup_id').html('<option value="Select a Match No" selected></option>');
+        build_alliances();
+    });
+
+    $('#alliance').on('change', function () {
+        build_teams(events.matchups[matchupKey].teamMatchups, this.value);
     });
 
     function get_responses() {
@@ -88,8 +97,6 @@ $(document).ready(function () {
                 "studentId": $('#student_id').val(),
                 "teamMatchupId": $('#team_matchup_id').val()
             });
-
-
         });
 
         return responses;
@@ -144,8 +151,8 @@ $(document).ready(function () {
             //dataType : 'json',
             data: JSON.stringify(responses),
             success: function (result) {
-                console.log("success")
-                console.log(result);
+                //console.log("success")
+                //console.log(result);
 
                 alert("Your match data has been submitted.");
 
@@ -165,30 +172,21 @@ $(document).ready(function () {
 
     function confirm_submit() {
 
-        if (isNumber($("#matchup_id").val())) {
+        var matchNumber = $('#matchup_id option:selected').data("matchupNumber");
+        var teamNumber = $('#team_matchup_id option:selected').data("teamId");
 
-            var messageConfirm = "You are submitting the result for Match No.: " + $('#matchup_id').val();
+        if (isNumber(matchNumber) && isNumber(teamNumber)) {
 
-            messageConfirm += " and Team: " + $('#team_matchup_id option:selected').data("teamId") + ". Is this correct?";
-
-            var userConfirm = confirm(messageConfirm);
-
-            if (userConfirm === true) {
-                return true;
-            }
-            else {
-                return false;
-            }
-
+            var messageConfirm = "You are submitting the result for Match No.: " + matchNumber;
+            messageConfirm += " and Team: " + teamNumber + ". Is this correct?";
+            return confirm(messageConfirm);
         }
         else {
 
             $("#message").text("Please select a Match No. and Team!").show().fadeOut(5000);
 
             return false;
-
         }
-
     }
 
     // sort objects by id property
@@ -262,25 +260,36 @@ $(document).ready(function () {
 
         // build matchup options
         for (i in matchups) {
-
-            matchupsOptions += '<option value="' + matchups[i].id + '">' + matchups[i].no + '</option>';
-
+            matchupsOptions += '<option value="' + matchups[i].id + '" data-matchup-number="' + matchups[i].no + '">' + matchups[i].no + '</option>';
         }
 
         $('#matchup_id').html(matchupsOptions);
     }
 
-    function build_teams(teamMatchupObj) {
+    function build_alliances() {
+
+        var allianceOptions = '';
+
+        allianceOptions += '<option value="1" selected></option>';
+        allianceOptions += '<option value="red">Red</option>';
+        allianceOptions += '<option value="blue">Blue</option>';
+        allianceOptions += '<option value="none">Pit</option>';
+
+        $('#alliance').html(allianceOptions);
+    }
+
+    function build_teams(teamMatchupObj, selectedAlliance) {
 
         var teamOptions = '';
 
         for (i in teamMatchupObj) {
             var team = teamMatchupObj[i].team;
-            teamOptions += '<option value="' + teamMatchupObj[i].teamMatchupId + '" data-team-id="' + team.teamId + '">' + team.teamId + ' - ' + team.name + '</option>';
+            if (selectedAlliance === teamMatchupObj[i].alliance) {
+                teamOptions += '<option value="' + teamMatchupObj[i].teamMatchupId + '" data-team-id="' + team.teamId + '">' + team.teamId + ' - ' + team.name + '</option>';
+            }
         }
 
         $('#team_matchup_id').html(teamOptions);
-
     }
 
     function build_students() {
@@ -329,8 +338,7 @@ $(document).ready(function () {
     function build_survey(surveyObj) {
 
         //console.log(surveyObj);
-
-        console.log(surveyObj.surveySections);
+        //console.log(surveyObj.surveySections);
 
         var sectionObj, sectionHTML = '';
 
@@ -340,7 +348,7 @@ $(document).ready(function () {
 
             sectionObj = surveyObj.surveySections[i];
 
-            sectionHTML += '<h2 class="section">' + sectionObj.name + '</h2>';
+            sectionHTML += '<hr><h2 class="section">' + sectionObj.name + '</h2>';
 
             sectionHTML += build_questions(surveyObj.surveySections[i].questions);
 
@@ -356,7 +364,7 @@ $(document).ready(function () {
 
         for (i in questionsObj) {
 
-            console.log(questionsObj[i]);
+            //console.log(questionsObj[i]);
 
             questionObj = questionsObj[i];
 

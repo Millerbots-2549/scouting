@@ -33,11 +33,11 @@
     <form th:action="@{/teams}" th:object="${dto}" method="post" id="teamForm" class="form-horizontal">
         <div class="row">
             <div class="col-sm-2"><label for="teamId">Team Number:</label></div>
-            <div class="col-sm-4"><input type="text" th:field="*{teamId}"/></div>
+            <div class="col-sm-4"><input type="text" th:field="*{teamId}" required="required"/></div>
         </div>
         <div class="row">
             <div class="col-sm-2"><label for="name">Team Name:</label></div>
-            <div class="col-sm-4"><input type="text" th:field="*{name}"/></div>
+            <div class="col-sm-4"><input type="text" th:field="*{name}" required="required"/></div>
         </div>
         <div class="row">
             <div class="col-sm-2"><label for="school">School:</label></div>
@@ -45,15 +45,15 @@
         </div>
         <div class="row">
             <div class="col-sm-2"><label for="city">City:</label></div>
-            <div class="col-sm-4"><input type="text" th:field="*{city}"/></div>
+            <div class="col-sm-4"><input type="text" th:field="*{city}" required="required"/></div>
         </div>
         <div class="row">
             <div class="col-sm-2"><label for="state">State:</label></div>
-            <div class="col-sm-4"><input type="text" th:field="*{state}"/></div>
+            <div class="col-sm-4"><input type="text" th:field="*{state}" required="required"/></div>
         </div>
         <div class="row">
             <div class="col-sm-2"><label for="country">Country:</label></div>
-            <div class="col-sm-4"><input type="text" th:field="*{country}"/></div>
+            <div class="col-sm-4"><input type="text" th:field="*{country}" required="required"/></div>
         </div>
 
         <p></p>
@@ -65,26 +65,26 @@
 
 
 <script type="text/javascript">
-/*<![CDATA[*/
-$('#teamId').on('blur', function () {
-    var teamId = $(this).val();
-    $.ajax({
-        dataType: "json",
-        url: "teams/" + teamId,
-        cache: false,
-        success: function (json) {
-            $('#name').val(json.name);
-            $('#school').val(json.school);
-            $('#city').val(json.city);
-            $('#state').val(json.state);
-            $('#country').val(json.country);
-        },
-        error: function (response) {
-            console.log(response)
-        }
+    /*<![CDATA[*/
+    $('#teamId').on('blur', function () {
+        var teamId = $(this).val();
+        $.ajax({
+            dataType: "json",
+            url: "teams/" + teamId,
+            cache: false,
+            success: function (json) {
+                $('#name').val(json.name);
+                $('#school').val(json.school);
+                $('#city').val(json.city);
+                $('#state').val(json.state);
+                $('#country').val(json.country);
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        });
     });
-});
-/*]]>*/
+    /*]]>*/
 </script>
 </body>
 </html>

@@ -37,9 +37,24 @@
 
         <p></p>
         <div class="row">
-            <div class="col-sm-2"><div class="d-flex flex-column"><label for="matchNumber">Match Number: </label><input type="text" th:field="*{matchNumber}"/></div></div>
-            <div class="col-sm-2"><div class="d-flex flex-column"><label for="startDate">Start Date: </label><input type="date" th:field="*{startDate}"/></div></div>
-            <div class="col-sm-2"><div class="d-flex flex-column"><label for="startTime">Start Time: </label><input type="time" th:field="*{startTime}"/></div></div>
+            <div class="col-sm-2">
+                <div class="d-flex flex-column"><label for="matchNumber">Match Number: </label><input type="text"
+                                                                                                      th:field="*{matchNumber}"
+                                                                                                      required="required"/>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="d-flex flex-column"><label for="startDate">Start Date: </label><input type="date"
+                                                                                                  th:field="*{startDate}"
+                                                                                                  required="required"/>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="d-flex flex-column"><label for="startTime">Start Time: </label><input type="time"
+                                                                                                  th:field="*{startTime}"
+                                                                                                  required="required"/>
+                </div>
+            </div>
         </div>
 
         <p></p>
@@ -48,27 +63,58 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><label for="teamNumberRedOne">Team Number Red:</label></div>
-            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><input type="text" style="background-color:rgba(255,0,0,0.31);" th:field="*{teamNumberRedOne}"/></div>
+            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><label for="teamNumberRedOne">Team Number
+                Red:</label></div>
+            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><input type="text"
+                                                                                      style="background-color:rgba(255,0,0,0.31);"
+                                                                                      th:field="*{teamNumberRedOne}"
+                                                                                      th:size="4" th:max="4"
+                                                                                      required="required"/></div>
 
-            <div class="col-sm-2" style="background-color:powderblue;"><label for="teamNumberBlueOne">Team Number Blue:</label></div>
-            <div class="col-sm-2" style="background-color:powderblue;"><input type="text" style="background-color:powderblue;" th:field="*{teamNumberBlueOne}"/></div>
+            <div class="col-sm-2" style="background-color:powderblue;"><label for="teamNumberBlueOne">Team Number
+                Blue:</label></div>
+            <div class="col-sm-2" style="background-color:powderblue;"><input type="text"
+                                                                              style="background-color:powderblue;"
+                                                                              th:field="*{teamNumberBlueOne}"
+                                                                              th:size="4" th:max="4"
+                                                                              required="required"/>
+            </div>
         </div>
 
         <div class="row">
-            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><label for="teamNumberRedTwo">Team Number Red:</label></div>
-            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><input type="text" style="background-color:rgba(255,0,0,0.31);" th:field="*{teamNumberRedTwo}"/></div>
+            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><label for="teamNumberRedTwo">Team Number
+                Red:</label></div>
+            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><input type="text"
+                                                                                      style="background-color:rgba(255,0,0,0.31);"
+                                                                                      th:field="*{teamNumberRedTwo}"
+                                                                                      th:size="4" th:max="4"
+                                                                                      required="required"/></div>
 
-            <div class="col-sm-2" style="background-color:powderblue;"><label for="teamNumberBlueTwo">Team Number Blue:</label></div>
-            <div class="col-sm-2" style="background-color:powderblue;"><input type="text" style="background-color:powderblue;" th:field="*{teamNumberBlueTwo}"/></div>
+            <div class="col-sm-2" style="background-color:powderblue;"><label for="teamNumberBlueTwo">Team Number
+                Blue:</label></div>
+            <div class="col-sm-2" style="background-color:powderblue;"><input type="text"
+                                                                              style="background-color:powderblue;"
+                                                                              th:field="*{teamNumberBlueTwo}"
+                                                                              th:size="4" th:max="4" required="required"/>
+            </div>
         </div>
 
         <div class="row">
-            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><label for="teamNumberRedThree">Team Number Red:</label></div>
-            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><input type="text" style="background-color:rgba(255,0,0,0.31);" th:field="*{teamNumberRedThree}"/></div>
+            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><label for="teamNumberRedThree">Team
+                Number Red:</label></div>
+            <div class="col-sm-2" style="background-color:rgba(255,0,0,0.31);"><input type="text"
+                                                                                      style="background-color:rgba(255,0,0,0.31);"
+                                                                                      th:field="*{teamNumberRedThree}"
+                                                                                      th:size="4" th:max="4"
+                                                                                      required="required"/></div>
 
-            <div class="col-sm-2" style="background-color:powderblue;"><label for="teamNumberBlueThree">Team Number Blue:</label></div>
-            <div class="col-sm-2" style="background-color:powderblue;"><input type="text" style="background-color:powderblue;" th:field="*{teamNumberBlueThree}"/></div>
+            <div class="col-sm-2" style="background-color:powderblue;"><label for="teamNumberBlueThree">Team Number
+                Blue:</label></div>
+            <div class="col-sm-2" style="background-color:powderblue;"><input type="text"
+                                                                              style="background-color:powderblue;"
+                                                                              th:field="*{teamNumberBlueThree}"
+                                                                              th:size="4" th:max="4" required="required"/>
+            </div>
         </div>
 
         <p></p>

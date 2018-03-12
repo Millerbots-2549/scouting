@@ -58,8 +58,6 @@
             url: "results/" + teamId,
             cache: false,
             success: function (json) {
-                alert(json.teamName);
-                alert(json.teamId);
                 json.surveys.each(function () {
                     alert($(this).surveyName);
                 });

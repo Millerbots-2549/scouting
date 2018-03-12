@@ -44,6 +44,13 @@
 
                 <div class="col-sm-3">
                     <div class="d-flex flex-column">
+                        <label for="student_id">Student:</label>
+                        <select id="student_id" name="studentId"></select>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="d-flex flex-column">
                         <label for="survey_name">Survey Name:</label>
                         <select id="survey_name" name="surveyId"></select>
                     </div>
@@ -59,6 +66,18 @@
                     </div>
                 </div>
 
+                <div class="col-sm-2">
+                    <div class="d-flex flex-column">
+                        <label for="alliance">Alliance:</label>
+                        <select id="alliance" name="alliance">
+                            <option value="1" selected></option>
+                            <option value="red">Red</option>
+                            <option value="blue">Blue</option>
+                            <option value="pit">Pit</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="col-sm-6">
                     <div class="d-flex flex-column">
                         <label for="team_matchup_id">Team ID:</label>
@@ -68,12 +87,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-3">
-                    <div class="d-flex flex-column">
-                        <label for="student_id">Student:</label>
-                        <select id="student_id" name="studentId"></select>
-                    </div>
-                </div>
+
             </div>
 
         </div>
