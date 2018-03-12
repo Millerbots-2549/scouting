@@ -1,9 +1,11 @@
 package com.frc.controller
 
 import com.frc.dto.view.QuestionResultDto
+import com.frc.dto.view.ResponseResultDto
 import com.frc.dto.view.ResultDto
 import com.frc.dto.view.SurveyResultDto
 import com.frc.entity.QuestionTypeValue
+import com.frc.entity.Response
 import com.frc.entity.Team
 import com.frc.repository.TeamRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -61,13 +63,15 @@ class ResultController {
     }
 
     private static void calculateSummary(QuestionResultDto dto) {
+        List<String> responses = dto.responses.collect { it.response }
         switch (dto.questionType) {
             case QuestionTypeValue.NUMERIC:
-                dto.summary = calculateAverage(dto.responses)
+                dto.summary = calculateAverage(responses)
                 break
             case QuestionTypeValue.BOOLEAN:
             case QuestionTypeValue.CHOICE:
-                dto.summary = calculateMostOccurring(dto.responses)
+            case QuestionTypeValue.RADIO:
+                dto.summary = calculateMostOccurring(responses)
                 break
             default:
                 dto.summary = ''
@@ -105,6 +109,10 @@ class ResultController {
         return result
     }
 
+    private static ResponseResultDto buildResult(Response response) {
+        new ResponseResultDto(response: response.response, matchup: response.teamMatchup.matchup.matchNumber)
+    }
+
     private static void getQuestionData(Team team, questions) {
         team.teamMatchups.each { teamMatchUp ->
             teamMatchUp.responses.each { response ->
@@ -112,7 +120,8 @@ class ResultController {
 
                 QuestionResultDto questionDto = new QuestionResultDto(
                         question: response.question.question,
-                        questionId: response.question.id, responses: [response.response],
+                        questionId: response.question.id,
+                        responses: [buildResult(response)],
                         questionType: QuestionTypeValue.valueOf(response.question.questionType.description.toUpperCase()),
                         questionSeq: response.question.sequence,
                         sectionSeq: response.question.surveySection.sequence

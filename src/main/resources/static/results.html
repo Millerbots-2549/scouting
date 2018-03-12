@@ -43,8 +43,7 @@
     </div>
     <p></p>
 
-    <table id="surveyResults" class="table-responsive table-bordered">
-    </table>
+    <div id="resultsDiv"></div>
 
 </div>
 
@@ -58,37 +57,68 @@
             url: "results/" + teamId,
             cache: false,
             success: function (json) {
-                json.surveys.each(function () {
-                    alert($(this).surveyName);
-                });
+                var surveyObjs = json.surveys;
+                var allSurveyData = '';
+                for (i in surveyObjs) {
+                    var survey = surveyObjs[i];
+                    allSurveyData += buildSurveySection(survey)
+                }
+                $('#resultsDiv').html(allSurveyData);
             },
+
             error: function (response) {
                 console.log(response)
             }
         });
     });
 
-    function get_responses() {
+    function buildSurveySection(survey) {
+        var surveyHtml = '';
+        surveyHtml += '<hr><h2>' + survey.surveyName + '</h2><table id="surveyResults' + survey.surveyId + '" class="table-responsive table-bordered">';
+        surveyHtml += buildTableHeader(survey.questions);
+        surveyHtml += buildTableBody(survey.questions);
+        surveyHtml += '</table>';
+        return surveyHtml
+    }
 
-        var responses = [];
+    function buildTableHeader(questions) {
+        var surveyHtml = '<thead>';
+        surveyHtml += buildHeaderRow(questions[0])
+        surveyHtml += '</thead>';
+        return surveyHtml;
+    }
 
-        $('.question').each(function () {
+    function buildTableBody(questions) {
+        var surveyHtml = '<tbody>';
+        for (i in questions) {
+            surveyHtml += buildRow(questions[i])
+        }
+        surveyHtml += '</tbody>';
+        return surveyHtml;
+    }
 
-            var questionId = $(this).data("questionId");
+    function buildHeaderRow(question) {
+        var responses = question.responses;
+        var rowHtml = '<tr>';
+        rowHtml += '<th>Question</th>';
+        for (i in responses) {
+            rowHtml += '<th>Match ' + responses[i].matchup + '</th>';
+        }
+        rowHtml += '<th>Summary</th>';
+        rowHtml += '</tr>';
+        return rowHtml;
+    }
 
-            var response = get_response(questionId);
-
-            responses.push({
-                "questionId": questionId,
-                "response": response,
-                "studentId": $('#student_id').val(),
-                "teamMatchupId": $('#team_matchup_id').val()
-            });
-
-
-        });
-
-        return responses;
+    function buildRow(question) {
+        var responses = question.responses;
+        var rowHtml = '<tr>';
+        rowHtml += '<td>' + question.question + '</td>';
+        for (i in responses) {
+            rowHtml += '<td>' + responses[i].response + '</td>';
+        }
+        rowHtml += '<td>' + question.summary + '</td>';
+        rowHtml += '</tr>';
+        return rowHtml;
     }
 
 </script>

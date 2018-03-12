@@ -10,7 +10,7 @@ class QuestionResultDto {
 
     Integer questionId
     String question
-    List<String> responses = []
+    List<ResponseResultDto> responses = []
     String summary
     QuestionTypeValue questionType
     Integer sectionSeq
