@@ -12,7 +12,7 @@ spring:
     test-on-borrow: true
     validation-query: select 1
   jpa:
-    show-sql: true
+    show-sql: false
     database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:
       naming-strategy: org.hibernate.‌​boot.model.naming.Ph‌​ysicalNamingStrategy‌​StandardImpl
