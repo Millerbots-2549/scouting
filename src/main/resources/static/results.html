@@ -40,6 +40,9 @@
         <div class="col-md-1">
             <button id="teamFindBtn" type="button" class="btn">Find</button>
         </div>
+        <div class="col-md-5">
+            <div id="team_name"></div>
+        </div>
     </div>
     <p></p>
 
@@ -57,6 +60,7 @@
             url: "results/" + teamId,
             cache: false,
             success: function (json) {
+                buildTeamData(json);
                 var surveyObjs = json.surveys;
                 var allSurveyData = '';
                 for (i in surveyObjs) {
@@ -71,6 +75,12 @@
             }
         });
     });
+
+    function buildTeamData(json) {
+        var teamData = '';
+        teamData += '<h5>'+ json.teamName + '</h5>';
+        $('#team_name').html(teamData);
+    }
 
     function buildSurveySection(survey) {
         var surveyHtml = '';
@@ -90,6 +100,7 @@
 
     function buildTableBody(questions) {
         var surveyHtml = '<tbody>';
+        surveyHtml += buildStudentNameRow(questions[0]);
         for (i in questions) {
             surveyHtml += buildRow(questions[i])
         }
@@ -105,6 +116,18 @@
             rowHtml += '<th>Match ' + responses[i].matchup + '</th>';
         }
         rowHtml += '<th>Summary</th>';
+        rowHtml += '</tr>';
+        return rowHtml;
+    }
+
+    function buildStudentNameRow(question) {
+        var responses = question.responses;
+        var rowHtml = '<tr>';
+        rowHtml += '<td><I>Student</I></td>';
+        for (i in responses) {
+            rowHtml += '<td><I>' + responses[i].studentName + '</I></td>';
+        }
+        rowHtml += '<td></td>';
         rowHtml += '</tr>';
         return rowHtml;
     }

@@ -26,7 +26,7 @@ class ResultController {
 
         Team team = teamRepository.findOne(teamId)
         if (!team) {
-            return new ResultDto(teamId: teamId)
+            return new ResultDto(teamId: teamId, teamName: 'No data found')
         }
 
         Map<SurveyResultDto, Map<Integer, List<QuestionResultDto>>> questions = [:]
@@ -56,6 +56,8 @@ class ResultController {
         questionList.each {
             dto.responses.addAll(it.responses)
         }
+
+        dto.responses.sort()
 
         calculateSummary(dto)
 
@@ -110,7 +112,9 @@ class ResultController {
     }
 
     private static ResponseResultDto buildResult(Response response) {
-        new ResponseResultDto(response: response.response, matchup: response.teamMatchup.matchup.matchNumber)
+        new ResponseResultDto(response: response.response,
+                matchup: response.teamMatchup.matchup.matchNumber,
+                studentName: "${response.student.firstName} ${response.student.lastName}")
     }
 
     private static void getQuestionData(Team team, questions) {
