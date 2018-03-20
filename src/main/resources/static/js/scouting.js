@@ -279,13 +279,23 @@ $(document).ready(function () {
     }
 
     function build_teams(teamMatchupObj, selectedAlliance) {
-
-        var teamOptions = '';
+        var teamOptions = '', teams = [];
 
         for (i in teamMatchupObj) {
-            var team = teamMatchupObj[i].team;
-            if (selectedAlliance === teamMatchupObj[i].alliance) {
-                teamOptions += '<option value="' + teamMatchupObj[i].teamMatchupId + '" data-team-id="' + team.teamId + '">' + team.teamId + ' - ' + team.name + '</option>';
+            teams.push({
+                sortBy: teamMatchupObj[i].team.teamId,
+                teamId: teamMatchupObj[i].team.teamId,
+                name: teamMatchupObj[i].team.name,
+                matchupId: teamMatchupObj[i].teamMatchupId,
+                alliance: teamMatchupObj[i].alliance
+            });
+        }
+
+        teams.sort(sortNumerically);
+
+        for (i in teams) {
+            if (selectedAlliance === teams[i].alliance) {
+                teamOptions += '<option value="' + teams[i].matchupId + '" data-team-id="' + teams[i].teamId + '">' + teams[i].teamId + ' - ' + teams[i].name + '</option>';
             }
         }
 
