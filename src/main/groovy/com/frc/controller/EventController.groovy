@@ -174,7 +174,8 @@ class EventController {
         responseValues.collect {
             new ResponseValueDto(
                     responseValueId: it.id,
-                    value: it.value
+                    value: it.value,
+                    isDefault: it.isDefault
             )
         } as TreeSet
     }

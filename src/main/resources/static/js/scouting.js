@@ -472,8 +472,12 @@ $(document).ready(function () {
         var choice = '<select name="questionId' + questionObj.questionId + '">';
 
         for (i in values) {
+            if (values[i].isDefault) {
+                choice += '<option selected="selected" value="' + values[i].value + '"> ' + values[i].value + '</option>';
+            } else {
 
-            choice += '<option value="' + values[i].value + '"> ' + values[i].value + '</option>';
+                choice += '<option value="' + values[i].value + '"> ' + values[i].value + '</option>';
+            }
 
         }
 
@@ -499,4 +503,5 @@ $(document).ready(function () {
 
     }
 
-});
+})
+;

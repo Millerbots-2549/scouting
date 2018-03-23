@@ -23,4 +23,7 @@ class ResponseValue {
 
     @Column(name = 'value', nullable = false, length = 45)
     String value
+
+    @Column(name = 'is_default', nullable = false)
+    Boolean isDefault
 }

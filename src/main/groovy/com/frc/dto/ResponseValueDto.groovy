@@ -6,4 +6,5 @@ import groovy.transform.Sortable
 class ResponseValueDto {
     Integer responseValueId
     String value
+    Boolean isDefault
 }
