@@ -78,10 +78,13 @@ class EventController {
     private static Collection<MatchupDto> convertMatchups(Collection<Matchup> matchups, SurveyDto survey) {
         List<MatchupDto> dtos = []
         matchups.each {
-            if (survey.name.contains('Pit') && it.matchNumber == -1) {
-                dtos.add(convert(it))
-            } else if (survey.name.contains('Match') && it.matchNumber != -1) {
-                dtos.add(convert(it))
+            MatchupDto dto = convert(it)
+            if (dto.teamMatchups) {
+                if (survey.name.contains('Pit') && it.matchNumber == -1) {
+                    dtos.add(dto)
+                } else if (survey.name.contains('Match') && it.matchNumber != -1) {
+                    dtos.add(dto)
+                }
             }
         }
         return dtos
@@ -98,13 +101,18 @@ class EventController {
     }
 
     private static Collection<TeamMatchupDto> convertTeamMatchups(Collection<TeamMatchup> teamMatchups) {
-        teamMatchups.collect {
-            new TeamMatchupDto(
-                    teamMatchupId: it.id,
-                    alliance: it.alliance,
-                    team: convert(it.team)
-            )
+        List<TeamMatchupDto> dtos = []
+        teamMatchups.each {
+            if (!it.responseSaved) {
+                TeamMatchupDto dto = new TeamMatchupDto(
+                        teamMatchupId: it.id,
+                        alliance: it.alliance,
+                        team: convert(it.team)
+                )
+                dtos.add(dto)
+            }
         }
+        return dtos
     }
 
     private static TeamDto convert(Team team) {

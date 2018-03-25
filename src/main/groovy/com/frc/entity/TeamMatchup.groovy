@@ -21,6 +21,9 @@ class TeamMatchup {
     @Column(name = 'alliance', nullable = false)
     String alliance
 
+    @Column(name = 'response_saved', nullable = false)
+    Boolean responseSaved
+
     @ManyToOne
     @JoinColumn(name = "matchup_id", referencedColumnName = "id", nullable = false)
     Matchup matchup
