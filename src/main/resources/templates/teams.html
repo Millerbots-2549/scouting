@@ -33,7 +33,7 @@
     <form th:action="@{/teams}" th:object="${dto}" method="post" id="teamForm" class="form-horizontal">
         <div class="row">
             <div class="col-sm-2"><label for="teamId">Team Number:</label></div>
-            <div class="col-sm-4"><input type="text" th:field="*{teamId}" required="required"/></div>
+            <div class="col-sm-4"><input type="number" th:field="*{teamId}" required="required"/></div>
         </div>
         <div class="row">
             <div class="col-sm-2"><label for="name">Team Name:</label></div>
