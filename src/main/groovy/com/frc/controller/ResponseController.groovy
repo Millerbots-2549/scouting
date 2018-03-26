@@ -1,7 +1,10 @@
 package com.frc.controller
 
 import com.frc.dto.ResponseDto
+import com.frc.entity.QuestionTypeValue
 import com.frc.entity.Response
+import com.frc.entity.Student
+import com.frc.entity.TeamMatchup
 import com.frc.repository.QuestionRepository
 import com.frc.repository.ResponseRepository
 import com.frc.repository.StudentRepository
@@ -30,16 +33,25 @@ class ResponseController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     void save(@RequestBody Collection<ResponseDto> responseDtos) {
+        Student student = studentRepository.findOne(responseDtos.first().studentId)
+        TeamMatchup tm = teamMatchupRepository.findOne(responseDtos.first().teamMatchupId)
+        tm.responseSaved = true
 
-        List<Response> responses = responseDtos.collect {
-            new Response(
+        responseDtos.each {
+
+            Response response = new Response(
                     question: questionRepository.findOne(it.questionId),
-                    teamMatchup: teamMatchupRepository.findOne(it.teamMatchupId),
-                    student: studentRepository.findOne(it.studentId),
+                    teamMatchup: tm,
+                    student: student,
                     response: it.response.trim()
             )
+            if (response.question.questionType.description.toUpperCase() == QuestionTypeValue.NUMERIC.toString() && !response.response) {
+                response.response = 0
+            }
+            tm.responses.add(response)
+
         }
 
-        responseRepository.save(responses)
+        teamMatchupRepository.save(tm)
     }
 }

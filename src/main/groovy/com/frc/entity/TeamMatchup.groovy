@@ -1,5 +1,6 @@
 package com.frc.entity
 
+import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -32,6 +33,6 @@ class TeamMatchup {
     @JoinColumn(name = "team_id", referencedColumnName = "id", nullable = false)
     Team team
 
-    @OneToMany(mappedBy = "teamMatchup")
+    @OneToMany(mappedBy = "teamMatchup", cascade = CascadeType.ALL)
     Set<Response> responses = new HashSet<>()
 }
