@@ -1,6 +1,8 @@
 package com.frc.job
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.frc.dto.blueAlliance.EventRankingDto
 import com.frc.dto.blueAlliance.RankingDto
 import com.frc.entity.Event
@@ -18,7 +20,11 @@ import org.springframework.stereotype.Service
 @Service
 class BlueAllianceClient {
 
+    private static final String blueAlllianceUrl = 'https://www.thebluealliance.com/api/v3'
+
     private static final objectMapper = new ObjectMapper()
+            .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
 
     @Autowired
     EventRepository eventRepository
@@ -31,14 +37,7 @@ class BlueAllianceClient {
     void getRankings() {
         log.info("Starting the collection of blue alliance rankings")
         Event event = eventRepository.findByCurrent(true)
-        String eventKey = event.eventKey
-        def connection = new URL("https://www.thebluealliance.com/api/v3/event/${eventKey}/rankings").openConnection() as HttpURLConnection
-
-        // set some headers
-        connection.setRequestProperty('X-TBA-Auth-Key', 'alXSYHeSPE3hFXTQMzYYYo4vkqra4S5RuvWXgEuPbVqFpCtxkc4paUvJr4OyHOcy')
-        connection.setRequestProperty('User-Agent', 'groovy-2.4.4')
-        connection.setRequestProperty('Accept', 'application/json')
-
+        HttpURLConnection connection = createConnection(event)
         if (connection.responseCode == 200) {
             int count = 0
             EventRankingDto eventRanking = objectMapper.readValue(connection.inputStream, EventRankingDto.class)
@@ -50,7 +49,18 @@ class BlueAllianceClient {
         }
     }
 
-    private void updateRanking(RankingDto dto, Team team, Event event){
+    private static HttpURLConnection createConnection(Event event) {
+        String eventKey = event.eventKey
+        HttpURLConnection connection = new URL("${blueAlllianceUrl}/event/${eventKey}/rankings").openConnection() as HttpURLConnection
+
+        // set some headers
+        connection.setRequestProperty('X-TBA-Auth-Key', 'alXSYHeSPE3hFXTQMzYYYo4vkqra4S5RuvWXgEuPbVqFpCtxkc4paUvJr4OyHOcy')
+        connection.setRequestProperty('User-Agent', 'groovy-2.4.4')
+        connection.setRequestProperty('Accept', 'application/json')
+        connection
+    }
+
+    private void updateRanking(RankingDto dto, Team team, Event event) {
         Ranking ranking = rankingRepository.findByTeamAndEvent(team, event)
         if (ranking) {
             ranking.rank = dto.rank
