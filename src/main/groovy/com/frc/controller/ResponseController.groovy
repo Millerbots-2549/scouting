@@ -38,7 +38,6 @@ class ResponseController {
         tm.responseSaved = true
 
         responseDtos.each {
-
             Response response = new Response(
                     question: questionRepository.findOne(it.questionId),
                     teamMatchup: tm,
@@ -49,7 +48,6 @@ class ResponseController {
                 response.response = 0
             }
             tm.responses.add(response)
-
         }
 
         teamMatchupRepository.save(tm)

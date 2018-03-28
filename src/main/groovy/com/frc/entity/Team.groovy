@@ -34,4 +34,7 @@ class Team {
 
     @OneToMany(mappedBy = "team")
     Set<TeamMatchup> teamMatchups = new HashSet<>()
+
+    @OneToMany(mappedBy = "team")
+    Set<Ranking> rankings = new HashSet<>()
 }

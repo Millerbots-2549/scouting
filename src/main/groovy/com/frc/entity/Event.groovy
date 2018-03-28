@@ -47,6 +47,12 @@ class Event {
     @Column(name = 'active', nullable = false)
     Boolean active
 
+    @Column(name = 'event_key', nullable = false)
+    String eventKey
+
     @OneToMany(mappedBy = "event")
     Set<Matchup> matchups = new HashSet<>()
+
+    @OneToMany(mappedBy = "event")
+    Set<Ranking> rankings = new HashSet<>()
 }

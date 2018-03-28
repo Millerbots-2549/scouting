@@ -18,6 +18,7 @@ import com.frc.entity.Survey
 import com.frc.entity.SurveySection
 import com.frc.entity.Team
 import com.frc.entity.TeamMatchup
+import com.frc.job.BlueAllianceClient
 import com.frc.repository.EventRepository
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,47 +36,55 @@ class EventController {
 
     @Autowired
     EventRepository eventRepository
+    @Autowired
+    BlueAllianceClient blueAllianceClient
 
-    @GetMapping(path = '{eventId}/surveys', produces = APPLICATION_JSON_VALUE)
+    @GetMapping(path = '/rankings', produces = APPLICATION_JSON_VALUE)
+    String getRankings() {
+        blueAllianceClient.getRankings()
+        "Done"
+    }
+
+    @GetMapping(path = '/{eventId}/surveys', produces = APPLICATION_JSON_VALUE)
     Set<SurveyDto> getSurveys(@PathVariable(name = 'eventId') Integer eventId) {
         Event event = eventRepository.findOne(eventId)
-        event.surveys.collect { convert(it, false) }
+        event.surveys.collect { convert(it) }
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     List<EventDto> getAllEvents() {
         Set<Event> events = eventRepository.findByActive(true)
-        events.collect { event ->
-            new EventDto(
-                    eventId: event.id,
-                    name: event.name,
-                    city: event.city,
-                    state: event.state,
-                    startDate: event.startDate
-            )
-        }
+        events.collect { convert(it) }
     }
 
-    @GetMapping(path = '{eventId}/surveys/{surveyId}', produces = APPLICATION_JSON_VALUE)
-    EventDto getCurrent(
+    @GetMapping(path = '/{eventId}/surveys/{surveyId}', produces = APPLICATION_JSON_VALUE)
+    EventDto getEventSurvey(
             @PathVariable(name = 'eventId') Integer eventId,
             @PathVariable(name = 'surveyId') Integer surveyId) {
 
         Event event = eventRepository.findOne(eventId)
-        SurveyDto survey = convert(event.surveys, surveyId)
-        return new EventDto(
-                eventId: event.id,
-                survey: survey,
-                name: event.name,
-                city: event.city,
-                state: event.state,
-                startDate: event.startDate,
-                current: event.current,
-                matchups: convertMatchups(event.matchups, survey)
-        )
+        Survey survey = findSurvey(event.surveys, surveyId)
+        SurveyDto surveyDto = convert(survey)
+        surveyDto.surveySections = survey.surveySections.collect { convert(it) } as TreeSet
+
+        EventDto eventDto = convert(event)
+        eventDto.survey = surveyDto
+        eventDto.matchups = convertMatchups(event.matchups, survey)
+
+        return eventDto
     }
 
-    private static Collection<MatchupDto> convertMatchups(Collection<Matchup> matchups, SurveyDto survey) {
+    private static Survey findSurvey(Set<Survey> surveys, Integer surveyId) {
+        final Survey survey
+        if (surveyId) {
+            survey = surveys.find { it.id == surveyId }
+        } else {
+            survey = surveys.find { it.current }
+        }
+        return survey
+    }
+
+    private static Collection<MatchupDto> convertMatchups(Collection<Matchup> matchups, Survey survey) {
         List<MatchupDto> dtos = []
         matchups.each {
             MatchupDto dto = convert(it)
@@ -90,6 +99,64 @@ class EventController {
         return dtos
     }
 
+    private static Collection<TeamMatchupDto> convertTeamMatchups(Collection<TeamMatchup> teamMatchups) {
+        List<TeamMatchupDto> dtos = []
+        teamMatchups.each {
+            if (!it.responseSaved) {
+                dtos.add(convert(it))
+            }
+        }
+        return dtos
+    }
+
+    /*-----------------------*/
+    /* Individual Converters */
+    /*-----------------------*/
+
+    private static EventDto convert(Event event) {
+        return new EventDto(
+                eventId: event.id,
+                name: event.name,
+                city: event.city,
+                state: event.state,
+                startDate: event.startDate,
+                current: event.current
+        )
+    }
+
+    private static SurveyDto convert(Survey survey) {
+        new SurveyDto(
+                surveyId: survey.id,
+                name: survey.name
+        )
+    }
+
+    private static TeamMatchupDto convert(TeamMatchup tm) {
+        new TeamMatchupDto(
+                teamMatchupId: tm.id,
+                alliance: tm.alliance,
+                team: convert(tm.team)
+        )
+    }
+
+    private static SurveySectionDto convert(SurveySection ss) {
+        new SurveySectionDto(
+                surveySectionId: ss.id,
+                name: ss.name,
+                sequence: ss.sequence,
+                questions: ss.questions.collect { convert(it) } as TreeSet
+        )
+    }
+
+    private static QuestionDto convert(Question q) {
+        new QuestionDto(
+                questionId: q.id,
+                question: q.question,
+                sequence: q.sequence,
+                questionType: convert(q.questionType)
+        )
+    }
+
     private static MatchupDto convert(Matchup matchup) {
         new MatchupDto(
                 matchupId: matchup.id,
@@ -98,21 +165,6 @@ class EventController {
                 type: matchup.type,
                 teamMatchups: convertTeamMatchups(matchup.teamMatchups)
         )
-    }
-
-    private static Collection<TeamMatchupDto> convertTeamMatchups(Collection<TeamMatchup> teamMatchups) {
-        List<TeamMatchupDto> dtos = []
-        teamMatchups.each {
-            if (!it.responseSaved) {
-                TeamMatchupDto dto = new TeamMatchupDto(
-                        teamMatchupId: it.id,
-                        alliance: it.alliance,
-                        team: convert(it.team)
-                )
-                dtos.add(dto)
-            }
-        }
-        return dtos
     }
 
     private static TeamDto convert(Team team) {
@@ -125,66 +177,19 @@ class EventController {
         )
     }
 
-    private static SurveyDto convert(Set<Survey> surveys, Integer surveyId) {
-
-        final Survey survey
-        if (surveyId) {
-            survey = surveys.find { it.id == surveyId }
-        } else {
-            survey = surveys.find { it.current }
-        }
-
-        return convert(survey, true)
-    }
-
-    private static SurveyDto convert(Survey survey, boolean includeSections) {
-        SurveyDto dto = new SurveyDto(
-                surveyId: survey.id,
-                name: survey.name,
-        )
-        if (includeSections) {
-            dto.surveySections = convertSurveySections(survey.surveySections)
-        }
-        return dto
-    }
-
-    private static Collection<SurveySectionDto> convertSurveySections(Collection<SurveySection> surveySections) {
-        surveySections.collect {
-            new SurveySectionDto(
-                    surveySectionId: it.id,
-                    name: it.name,
-                    sequence: it.sequence,
-                    questions: convertQuestions(it.questions)
-            )
-        } as TreeSet
-    }
-
-    private static Set<QuestionDto> convertQuestions(Set<Question> questions) {
-        questions.collect {
-            new QuestionDto(
-                    questionId: it.id,
-                    question: it.question,
-                    sequence: it.sequence,
-                    questionType: convert(it.questionType)
-            )
-        } as TreeSet
-    }
-
     private static QuestionTypeDto convert(QuestionType questionType) {
         new QuestionTypeDto(
                 questionTypeId: questionType.id,
                 description: questionType.description,
-                responseValues: convertResponseValues(questionType.responseValues)
+                responseValues: questionType.responseValues.collect { convert(it) } as TreeSet
         )
     }
 
-    private static Set<ResponseValueDto> convertResponseValues(Collection<ResponseValue> responseValues) {
-        responseValues.collect {
-            new ResponseValueDto(
-                    responseValueId: it.id,
-                    value: it.value,
-                    isDefault: it.isDefault
-            )
-        } as TreeSet
+    private static ResponseValueDto convert(ResponseValue rv) {
+        new ResponseValueDto(
+                responseValueId: rv.id,
+                value: rv.value,
+                isDefault: rv.isDefault
+        )
     }
 }
