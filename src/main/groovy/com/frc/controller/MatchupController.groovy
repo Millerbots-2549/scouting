@@ -100,12 +100,12 @@ class MatchupController {
 
     private void updateTeamMatchups(Matchup matchup, MatchDto dto) {
         Set<TeamMatchup> newMatchups = [
-                new TeamMatchup(alliance: Alliance.RED.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberRedOne)),
-                new TeamMatchup(alliance: Alliance.RED.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberRedTwo)),
-                new TeamMatchup(alliance: Alliance.RED.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberRedThree)),
-                new TeamMatchup(alliance: Alliance.BLUE.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberBlueOne)),
-                new TeamMatchup(alliance: Alliance.BLUE.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberBlueTwo)),
-                new TeamMatchup(alliance: Alliance.BLUE.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberBlueThree))
+                new TeamMatchup(alliance: Alliance.RED.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberRedOne), responseSaved: false),
+                new TeamMatchup(alliance: Alliance.RED.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberRedTwo), responseSaved: false),
+                new TeamMatchup(alliance: Alliance.RED.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberRedThree), responseSaved: false),
+                new TeamMatchup(alliance: Alliance.BLUE.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberBlueOne), responseSaved: false),
+                new TeamMatchup(alliance: Alliance.BLUE.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberBlueTwo), responseSaved: false),
+                new TeamMatchup(alliance: Alliance.BLUE.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberBlueThree), responseSaved: false)
         ]
 
         Set<TeamMatchup> deletes = [] as Set
