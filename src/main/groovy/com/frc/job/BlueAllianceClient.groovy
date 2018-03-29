@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service
 @Service
 class BlueAllianceClient {
 
-    private static final String blueAlllianceUrl = 'https://www.thebluealliance.com/api/v3'
+    private static final String blueAllianceUrl = 'https://www.thebluealliance.com/api/v3'
 
     private static final objectMapper = new ObjectMapper()
             .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
@@ -51,7 +51,7 @@ class BlueAllianceClient {
 
     private static HttpURLConnection createConnection(Event event) {
         String eventKey = event.eventKey
-        HttpURLConnection connection = new URL("${blueAlllianceUrl}/event/${eventKey}/rankings").openConnection() as HttpURLConnection
+        HttpURLConnection connection = new URL("${blueAllianceUrl}/event/${eventKey}/rankings").openConnection() as HttpURLConnection
 
         // set some headers
         connection.setRequestProperty('X-TBA-Auth-Key', 'alXSYHeSPE3hFXTQMzYYYo4vkqra4S5RuvWXgEuPbVqFpCtxkc4paUvJr4OyHOcy')
