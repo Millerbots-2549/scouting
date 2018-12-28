@@ -22,7 +22,7 @@ class BlueAllianceClient {
 
     private static final String blueAllianceUrl = 'https://www.thebluealliance.com/api/v3'
 
-    private static final objectMapper = new ObjectMapper()
+    private static final OBJECT_MAPPER = new ObjectMapper()
             .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
 
@@ -36,12 +36,18 @@ class BlueAllianceClient {
     @Scheduled(fixedRate = 3600000l, initialDelay = 600000l)
     void getRankings() {
         log.info("Starting the collection of blue alliance rankings")
-        Event event = eventRepository.findByCurrent(true)
+        Event currentEvent = eventRepository.findByCurrent(true)
+        if (currentEvent) {
+            collectRankingData(currentEvent)
+        }
+    }
+
+    private void collectRankingData(Event event) {
         HttpURLConnection connection = createConnection(event)
         if (connection.responseCode == 200) {
             int count = 0
-            EventRankingDto eventRanking = objectMapper.readValue(connection.inputStream, EventRankingDto.class)
-            eventRanking.rankings.each {
+            EventRankingDto eventRanking = OBJECT_MAPPER.readValue(connection.inputStream, EventRankingDto.class)
+            eventRanking?.rankings?.each {
                 count++
                 updateRanking(it, findTeam(it), event)
             }
@@ -57,7 +63,7 @@ class BlueAllianceClient {
         connection.setRequestProperty('X-TBA-Auth-Key', 'alXSYHeSPE3hFXTQMzYYYo4vkqra4S5RuvWXgEuPbVqFpCtxkc4paUvJr4OyHOcy')
         connection.setRequestProperty('User-Agent', 'groovy-2.4.4')
         connection.setRequestProperty('Accept', 'application/json')
-        connection
+        return connection
     }
 
     private void updateRanking(RankingDto dto, Team team, Event event) {
@@ -71,9 +77,11 @@ class BlueAllianceClient {
     }
 
     private Team findTeam(RankingDto ranking) {
-        Integer teamId = ranking.teamKey.replaceAll('frc', '').trim().toInteger()
-        teamRepository.findOne(teamId)
+        Integer teamId = ranking?.teamKey?.replaceAll('frc', '')?.trim()?.toInteger()
+        if (teamId) {
+            return teamRepository.findOne(teamId)
+        } else {
+            return null
+        }
     }
-
-
 }
