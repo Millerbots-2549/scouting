@@ -33,7 +33,7 @@ class MatchupController {
         MatchDto dto = new MatchDto()
         Event event = eventRepository.findByCurrent(true)
         dto.startDate = (new Date()).format('yyyy-MM-dd')
-        dto.eventName = event.name
+        dto.eventName = event ? event.name : "No current event found"
         model.addAttribute('dto', dto)
         return 'matchups'
     }

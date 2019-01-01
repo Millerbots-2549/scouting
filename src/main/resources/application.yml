@@ -21,3 +21,4 @@ server:
     enabled: true
   context-path: /scouting
   display-name: scouting
+  port: 80
