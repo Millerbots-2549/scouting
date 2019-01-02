@@ -1,9 +1,9 @@
 spring:
   application:
-    name: MTSService
+    name: scouting
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/scouting?verifyServerCertificate=false&useSSL=false&requireSSL=false
+    url: jdbc:mysql://scouting.cpood3za7b6g.us-east-2.rds.amazonaws.com:3306/scouting?verifyServerCertificate=false&useSSL=false&requireSSL=false
     username: scout
     password: password
     jmx-enabled: false
@@ -21,4 +21,4 @@ server:
     enabled: true
   context-path: /scouting
   display-name: scouting
-  port: 80
+  port: 8080
