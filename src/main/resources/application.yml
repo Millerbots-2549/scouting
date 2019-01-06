@@ -2,23 +2,25 @@ spring:
   application:
     name: scouting
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://scouting.cpood3za7b6g.us-east-2.rds.amazonaws.com:3306/scouting?verifyServerCertificate=false&useSSL=false&requireSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://scouting.cpood3za7b6g.us-east-2.rds.amazonaws.com:3306/scouting?verifyServerCertificate=false&useSSL=false&requireSSL=false&allowPublicKeyRetrieval=true
     username: scout
     password: password
     jmx-enabled: false
-    maximum-pool-size: 20
-    initial-size: 1
-    test-on-borrow: true
-    validation-query: select 1
+    hikari:
+      connection-test-query: select 1
+      maximum-pool-size: 15
+      connection-init-sql: select 1
   jpa:
     show-sql: false
     database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:
-      naming-strategy: org.hibernate.‌​boot.model.naming.Ph‌​ysicalNamingStrategy‌​StandardImpl
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 server:
   compression:
     enabled: true
-  context-path: /scouting
-  display-name: scouting
   port: 8080
+  servlet:
+    application-display-name: scouting
+    context-path: /scouting

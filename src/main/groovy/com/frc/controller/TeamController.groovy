@@ -32,7 +32,7 @@ class TeamController {
     @GetMapping(path = '/{id}', produces = APPLICATION_JSON_VALUE)
     @ResponseBody
     TeamDto displayTeam(@PathVariable("id") Integer id) {
-        Team team = teamRepository.findOne(id)
+        Team team = teamRepository.findById(id).orElse(null)
         new TeamDto(
                 teamId: id,
                 name: team?.name,
@@ -46,7 +46,7 @@ class TeamController {
     @PostMapping
     String createTeam(@ModelAttribute TeamDto dto, final Model model) {
 
-        Team team = teamRepository.findOne(dto.teamId)
+        Team team = teamRepository.findById(dto.teamId).orElse(null)
         if (!team) {
             team = new Team()
         }

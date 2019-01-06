@@ -18,7 +18,7 @@ import com.frc.entity.Survey
 import com.frc.entity.SurveySection
 import com.frc.entity.Team
 import com.frc.entity.TeamMatchup
-import com.frc.job.BlueAllianceClient
+import com.frc.job.RankingCollector
 import com.frc.repository.EventRepository
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
@@ -37,7 +37,7 @@ class EventController {
     @Autowired
     EventRepository eventRepository
     @Autowired
-    BlueAllianceClient blueAllianceClient
+    RankingCollector blueAllianceClient
 
     @GetMapping(path = '/rankings', produces = APPLICATION_JSON_VALUE)
     String getRankings() {
@@ -47,7 +47,7 @@ class EventController {
 
     @GetMapping(path = '/{eventId}/surveys', produces = APPLICATION_JSON_VALUE)
     Set<SurveyDto> getSurveys(@PathVariable(name = 'eventId') Integer eventId) {
-        Event event = eventRepository.findOne(eventId)
+        Event event = eventRepository.findById(eventId).orElse(null)
         event.surveys.collect { convert(it) }
     }
 
@@ -62,7 +62,7 @@ class EventController {
             @PathVariable(name = 'eventId') Integer eventId,
             @PathVariable(name = 'surveyId') Integer surveyId) {
 
-        Event event = eventRepository.findOne(eventId)
+        Event event = eventRepository.findById(eventId).orElse(null)
         Survey survey = findSurvey(event.surveys, surveyId)
         SurveyDto surveyDto = convert(survey)
         surveyDto.surveySections = survey.surveySections.collect { convert(it) } as TreeSet

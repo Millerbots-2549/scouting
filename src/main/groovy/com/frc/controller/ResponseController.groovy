@@ -33,13 +33,13 @@ class ResponseController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     void save(@RequestBody Collection<ResponseDto> responseDtos) {
-        Student student = studentRepository.findOne(responseDtos.first().studentId)
-        TeamMatchup tm = teamMatchupRepository.findOne(responseDtos.first().teamMatchupId)
+        Student student = studentRepository.findById(responseDtos.first().studentId).orElse(null)
+        TeamMatchup tm = teamMatchupRepository.findById(responseDtos.first().teamMatchupId).orElse(null)
         tm.responseSaved = true
 
         responseDtos.each {
             Response response = new Response(
-                    question: questionRepository.findOne(it.questionId),
+                    question: questionRepository.findById(it.questionId).orElse(null),
                     teamMatchup: tm,
                     student: student,
                     response: it.response.trim()

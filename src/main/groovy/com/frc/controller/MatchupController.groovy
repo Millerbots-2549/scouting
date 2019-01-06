@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 
+import java.text.SimpleDateFormat
+
 @Controller
 @RequestMapping(value = "/matchups")
 class MatchupController {
@@ -28,11 +30,15 @@ class MatchupController {
     @Autowired
     TeamMatchupRepository teamMatchupRepository
 
+    private static final String DATE_FORMAT = 'yyyy-MM-dd'
+    private static final String TIME_FORMAT = 'HH:mm'
+    private static final String DATETIME_FORMAT = 'M/d/yyyy h:mm a'
+
     @GetMapping
     String displayMatchup(final Model model) {
         MatchDto dto = new MatchDto()
         Event event = eventRepository.findByCurrent(true)
-        dto.startDate = (new Date()).format('yyyy-MM-dd')
+        dto.startDate = new SimpleDateFormat(DATE_FORMAT).format(new Date())
         dto.eventName = event ? event.name : "No current event found"
         model.addAttribute('dto', dto)
         return 'matchups'
@@ -60,10 +66,9 @@ class MatchupController {
             dto.teamNumberBlueTwo = items[5].toInteger()
             dto.teamNumberBlueThree = items[6].toInteger()
 
-            Date startDateTime = new Date().parse('M/d/yyyy h:mm a', items[7])
-
-            dto.startDate = startDateTime.format("yyyy-MM-dd")
-            dto.startTime = startDateTime.format("HH:mm")
+            Date startDateTime = new SimpleDateFormat(DATETIME_FORMAT).parse(items[7])
+            dto.startDate = new SimpleDateFormat(DATE_FORMAT).format(startDateTime)
+            dto.startTime = new SimpleDateFormat(TIME_FORMAT).format(startDateTime)
 
             saveData(dto)
         }
@@ -80,7 +85,7 @@ class MatchupController {
     private void saveData(MatchDto dto) {
         Matchup matchup = new Matchup(
                 matchNumber: dto.matchNumber,
-                startTime: Date.parse("yyyy-MM-dd HH:mm", "${dto.startDate} ${dto.startTime}"),
+                startTime: new SimpleDateFormat("${DATE_FORMAT} ${TIME_FORMAT}").parse("${dto.startDate} ${dto.startTime}"),
                 type: MatchupType.QUALIFIER.name().toLowerCase(),
                 event: eventRepository.findByCurrent(true),
                 teamMatchups: [] as Set
@@ -100,12 +105,12 @@ class MatchupController {
 
     private void updateTeamMatchups(Matchup matchup, MatchDto dto) {
         Set<TeamMatchup> newMatchups = [
-                new TeamMatchup(alliance: Alliance.RED.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberRedOne), responseSaved: false),
-                new TeamMatchup(alliance: Alliance.RED.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberRedTwo), responseSaved: false),
-                new TeamMatchup(alliance: Alliance.RED.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberRedThree), responseSaved: false),
-                new TeamMatchup(alliance: Alliance.BLUE.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberBlueOne), responseSaved: false),
-                new TeamMatchup(alliance: Alliance.BLUE.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberBlueTwo), responseSaved: false),
-                new TeamMatchup(alliance: Alliance.BLUE.name().toLowerCase(), matchup: matchup, team: teamRepository.findOne(dto.teamNumberBlueThree), responseSaved: false)
+                new TeamMatchup(alliance: Alliance.RED.name().toLowerCase(), matchup: matchup, team: teamRepository.findById(dto.teamNumberRedOne).orElse(null), responseSaved: false),
+                new TeamMatchup(alliance: Alliance.RED.name().toLowerCase(), matchup: matchup, team: teamRepository.findById(dto.teamNumberRedTwo).orElse(null), responseSaved: false),
+                new TeamMatchup(alliance: Alliance.RED.name().toLowerCase(), matchup: matchup, team: teamRepository.findById(dto.teamNumberRedThree).orElse(null), responseSaved: false),
+                new TeamMatchup(alliance: Alliance.BLUE.name().toLowerCase(), matchup: matchup, team: teamRepository.findById(dto.teamNumberBlueOne).orElse(null), responseSaved: false),
+                new TeamMatchup(alliance: Alliance.BLUE.name().toLowerCase(), matchup: matchup, team: teamRepository.findById(dto.teamNumberBlueTwo).orElse(null), responseSaved: false),
+                new TeamMatchup(alliance: Alliance.BLUE.name().toLowerCase(), matchup: matchup, team: teamRepository.findById(dto.teamNumberBlueThree).orElse(null), responseSaved: false)
         ]
 
         Set<TeamMatchup> deletes = [] as Set

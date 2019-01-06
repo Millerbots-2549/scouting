@@ -1,7 +1,5 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/scouting?verifyServerCertificate=false&useSSL=false&requireSSL=false
-    username: scout
-    password: password
+    url: jdbc:mysql://localhost:3306/scouting?verifyServerCertificate=false&useSSL=false&requireSSL=false&allowPublicKeyRetrieval=true
   jpa:
-    show-sql: false
+    show-sql: true

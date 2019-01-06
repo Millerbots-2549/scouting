@@ -4,6 +4,7 @@ import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.JoinTable
@@ -17,7 +18,7 @@ import java.sql.Date
 class Event {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     @Column(name = 'id', nullable = false)
     Integer id
 
@@ -54,5 +55,5 @@ class Event {
     Set<Matchup> matchups = new HashSet<>()
 
     @OneToMany(mappedBy = "event")
-    Set<Ranking> rankings = new HashSet<>()
+    Set<TeamRanking> rankings = new HashSet<>()
 }
