@@ -32,8 +32,7 @@ class RankingCollector {
     TeamRepository teamRepository
 
     // initial delay of 10 minutes and then once an hour after that
-    //@Scheduled(fixedRate = 3600000l, initialDelay = 600000l)
-    @Scheduled(fixedRate = 600000l, initialDelay = 60000l)
+    @Scheduled(fixedRate = 3600000l, initialDelay = 600000l)
     void getRankings() {
         log.info("Starting the collection of blue alliance rankings")
         Event currentEvent = eventRepository.findByCurrent(true)
