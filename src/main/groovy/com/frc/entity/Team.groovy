@@ -36,5 +36,5 @@ class Team {
     Set<TeamMatchup> teamMatchups = new HashSet<>()
 
     @OneToMany(mappedBy = "team")
-    Set<Ranking> rankings = new HashSet<>()
+    Set<TeamRanking> rankings = new HashSet<>()
 }

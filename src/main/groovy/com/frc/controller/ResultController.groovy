@@ -8,12 +8,14 @@ import com.frc.entity.QuestionTypeValue
 import com.frc.entity.Response
 import com.frc.entity.Team
 import com.frc.repository.TeamRepository
+import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/results")
 class ResultController {
@@ -24,7 +26,7 @@ class ResultController {
     @GetMapping('/{teamId}')
     ResultDto getResults(@PathVariable("teamId") Integer teamId) {
 
-        Team team = teamRepository.findOne(teamId)
+        Team team = teamRepository.findById(teamId).orElse(null)
         if (!team) {
             return new ResultDto(teamId: teamId, teamName: 'No data found')
         }

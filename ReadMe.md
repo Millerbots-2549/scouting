@@ -9,10 +9,10 @@ It is assuming that the database is installed on the local machine and is alread
 and a user, scout, that has access to that schema.
 
 If you do not have MySQL installed, you will need to install it locally.  Here is the [MySQL Installer](https://dev.mysql.com/downloads/installer/)
-You will want to install the server and the workbench. Once installed you can run the creation_ddl.sql and the inserts.sql scripts
-that are located in the database directory of the project. These scripts will create the database and insert some 
-sample. Then create a user with the name of 'scout' and a password of 'password' that has privileges to the scouting 
-scheme. This can be done in the workbench. Someday I will export that SQL into a script.
+You will want to install the server and the workbench. Once installed you can import the Dump.sql file that is 
+located in the "database" directory of the project. This dump file will create the database and insert all the data from the previous
+compititions into the database. Then create a user with the name of 'scout' and a password of 'password' that has privileges to the scouting 
+scheme. This can be done in the workbench. Someday I will export the user creation SQL into a script.
 
 Once the jar is built it can be run by executing this at the command line: `java -jar ./scouting.jar`
 
@@ -59,6 +59,5 @@ I have now added a menu to make it easier to navigate to the different screens
 
 This project uses bootstrap-4.0.0-alpha.6-dist
 
-#Work left to Do
-- Get all js and css references to be local. We will not have internet access all the time.
-- Get the data to save.
+# Work left to Do
+See the "Issues" section in GitHub.
