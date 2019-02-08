@@ -16,7 +16,7 @@ $(document).ready(function () {
                 build_event(events);
             },
             error: function (response) {
-                console.log(response)
+                console.log(response);
             }
         });
 
@@ -41,7 +41,7 @@ $(document).ready(function () {
                     $('#alliance').html('<option value="1" selected></option>');
                 },
                 error: function (response) {
-                    console.log(response)
+                    console.log(response);
                 }
             });
     });
@@ -54,10 +54,9 @@ $(document).ready(function () {
         $.ajax({
             dataType: "json",
             url: "events/" + eventId + "/surveys/" + surveyId,
-            //url: "../../../../surveys.json",
             cache: false,
             success: function (json) {
-                events = json
+                events = json;
                 // when the survey changes need to clear out teams. matches will be rebuilt
                 $('#team_matchup_id').html('<option value="Select a Match No" selected></option>');
                 $('#alliance').html('<option value="1" selected></option>');
@@ -66,8 +65,8 @@ $(document).ready(function () {
                 confirm_submit();
             },
             error: function (response) {
-                events = null
-                console.log(response)
+                events = null;
+                console.log(response);
             }
         });
     });
@@ -75,7 +74,7 @@ $(document).ready(function () {
     $('#matchup_id').on('change', function () {
         matchupKey = val2key(this.value, events.matchups, 'matchupId');
         $('#team_matchup_id').html('<option value="Select a Match No" selected></option>');
-        build_alliances();
+        build_alliances(events.matchups[matchupKey]);
     });
 
     $('#alliance').on('change', function () {
@@ -177,15 +176,17 @@ $(document).ready(function () {
         var teamNumber = $('#team_matchup_id option:selected').data("teamId");
 
         if (isNumber(matchNumber) && isNumber(teamNumber)) {
-
-            var messageConfirm = "You are submitting the result for Match No.: " + matchNumber;
-            messageConfirm += " and Team: " + teamNumber + ". Is this correct?";
+            var messageConfirm;
+            if (matchNumber == '-1') {
+                messageConfirm = "You are submitting the result for Pit scouting";
+            } else {
+                messageConfirm = "You are submitting the result for Match No.: " + matchNumber;
+            }
+            messageConfirm += " for Team: " + teamNumber + ". Is this correct?";
             return confirm(messageConfirm);
         }
         else {
-
             $("#message").text("Please select a Match No. and Team!").show().fadeOut(5000);
-
             return false;
         }
     }
@@ -248,34 +249,39 @@ $(document).ready(function () {
 
         // sort matchups
         for (i in matchupsObj) {
-
             matchups.push({
-                sortBy: matchupsObj[i].matchupId,
+                sortBy: matchupsObj[i].matchNumber,
                 id: matchupsObj[i].matchupId,
                 no: matchupsObj[i].matchNumber
             });
-
         }
 
         matchups.sort(sortNumerically);
 
         // build matchup options
         for (i in matchups) {
-            matchupsOptions += '<option value="' + matchups[i].id + '" data-matchup-number="' + matchups[i].no + '">' + matchups[i].no + '</option>';
+            var selectionOption = matchups[i].no;
+            if (selectionOption == '-1') {
+                selectionOption = 'Pit'
+            }
+            matchupsOptions += '<option value="' + matchups[i].id + '" data-matchup-number="' + matchups[i].no + '">' + selectionOption + '</option>';
         }
 
         $('#matchup_id').html(matchupsOptions);
     }
 
-    function build_alliances() {
+    function build_alliances(matchupObj) {
 
         var allianceOptions = '';
 
         allianceOptions += '<option value="1" selected></option>';
-        allianceOptions += '<option value="red">Red</option>';
-        allianceOptions += '<option value="blue">Blue</option>';
-        allianceOptions += '<option value="none">Pit</option>';
 
+        if (matchupObj.type == 'pit') {
+            allianceOptions += '<option value="pit">Pit</option>';
+        } else {
+            allianceOptions += '<option value="blue">Blue</option>';
+            allianceOptions += '<option value="red">Red</option>';
+        }
         $('#alliance').html(allianceOptions);
     }
 

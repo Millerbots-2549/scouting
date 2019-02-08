@@ -14,6 +14,6 @@ class EventDto {
     String city
     String state
     Date startDate
-    Boolean current
+    Date endDate
     Set<MatchupDto> matchups
 }
