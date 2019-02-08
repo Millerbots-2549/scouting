@@ -1,23 +1,8 @@
 package com.frc.controller
 
-import com.frc.dto.EventDto
-import com.frc.dto.MatchupDto
-import com.frc.dto.QuestionDto
-import com.frc.dto.QuestionTypeDto
-import com.frc.dto.ResponseValueDto
-import com.frc.dto.SurveyDto
-import com.frc.dto.SurveySectionDto
-import com.frc.dto.TeamDto
-import com.frc.dto.TeamMatchupDto
-import com.frc.entity.Event
-import com.frc.entity.Matchup
-import com.frc.entity.Question
-import com.frc.entity.QuestionType
-import com.frc.entity.ResponseValue
-import com.frc.entity.Survey
-import com.frc.entity.SurveySection
-import com.frc.entity.Team
-import com.frc.entity.TeamMatchup
+import com.frc.dto.*
+import com.frc.entity.*
+import com.frc.job.MatchupCollector
 import com.frc.job.RankingCollector
 import com.frc.repository.EventRepository
 import groovy.util.logging.Slf4j
@@ -37,24 +22,37 @@ class EventController {
     @Autowired
     EventRepository eventRepository
     @Autowired
-    RankingCollector blueAllianceClient
+    RankingCollector rankingCollector
+    @Autowired
+    MatchupCollector matchupCollector
 
     @GetMapping(path = '/rankings', produces = APPLICATION_JSON_VALUE)
     String getRankings() {
-        blueAllianceClient.getRankings()
+        rankingCollector.getRankings()
+        "Done"
+    }
+
+    @GetMapping(path = '/matchups', produces = APPLICATION_JSON_VALUE)
+    String getMatchups() {
+        matchupCollector.getMatchups()
         "Done"
     }
 
     @GetMapping(path = '/{eventId}/surveys', produces = APPLICATION_JSON_VALUE)
     Set<SurveyDto> getSurveys(@PathVariable(name = 'eventId') Integer eventId) {
         Event event = eventRepository.findById(eventId).orElse(null)
-        event.surveys.collect { convert(it) }
+        if (event && event.surveys) {
+            return event?.surveys?.collect { convert(it) }
+        } else {
+            log.warn("No event or surveys found given eventId=${eventId}")
+            return [] as Set
+        }
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     List<EventDto> getAllEvents() {
-        Set<Event> events = eventRepository.findByActive(true)
-        events.collect { convert(it) }
+        Set<Event> events = eventRepository.findActiveEvents(new Date())
+        events?.collect { convert(it) }
     }
 
     @GetMapping(path = '/{eventId}/surveys/{surveyId}', produces = APPLICATION_JSON_VALUE)
@@ -120,7 +118,7 @@ class EventController {
                 city: event.city,
                 state: event.state,
                 startDate: event.startDate,
-                current: event.current
+                endDate: event.endDate
         )
     }
 

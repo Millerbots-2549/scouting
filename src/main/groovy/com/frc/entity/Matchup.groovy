@@ -29,6 +29,12 @@ class Matchup {
     @Column(name = 'type', nullable = false, length = 45)
     String type
 
+    @Column(name = 'blue_score', nullable = true)
+    Integer blueScore
+
+    @Column(name = 'red_score', nullable = true)
+    Integer redScore
+
     @ManyToOne
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
     Event event

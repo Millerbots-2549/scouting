@@ -42,11 +42,8 @@ class Event {
     @Column(name = 'start_date', nullable = false)
     Date startDate
 
-    @Column(name = 'current', nullable = false)
-    Boolean current
-
-    @Column(name = 'active', nullable = false)
-    Boolean active
+    @Column(name = 'end_date', nullable = false)
+    Date endDate
 
     @Column(name = 'event_key', nullable = false)
     String eventKey
