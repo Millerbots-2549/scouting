@@ -20,13 +20,15 @@ class MatchupCollector extends BlueAllianceClient {
     // initial delay of 10 minutes and then once every 15 minutes after that
     @Scheduled(fixedRate = 900000l, initialDelay = 600000l)
     void getMatchups() {
-        log.debug("Starting the collection of blue alliance matchups")
-        Set<Event> events = eventRepository.findActiveEvents(new Date())
-        events?.each { event ->
-            collectTeamEventData(event)
-            collectMatchupData(event)
+        if (ENABLED) {
+            log.debug("Starting the collection of blue alliance matchups")
+            Set<Event> events = eventRepository.findActiveEvents(new Date())
+            events?.each { event ->
+                collectTeamEventData(event)
+                collectMatchupData(event)
+            }
+            log.debug("Done with the collection of blue alliance matchups")
         }
-        log.debug("Done with the collection of blue alliance matchups")
     }
 
     private void collectTeamEventData(Event event) {

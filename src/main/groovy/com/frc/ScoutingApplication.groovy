@@ -14,7 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 @SpringBootApplication
 @EnableSwagger2
 @EnableJpaRepositories
-//@EnableScheduling
+@EnableScheduling
 class ScoutingApplication {
 
     static void main(String[] args) {

@@ -14,6 +14,7 @@ abstract class BlueAllianceClient {
 
     private static final String BLUE_ALLIANCE_URL = 'https://www.thebluealliance.com/api/v3'
     private static final String BLUE_ALLIANCE_AUTH_KEY = 'alXSYHeSPE3hFXTQMzYYYo4vkqra4S5RuvWXgEuPbVqFpCtxkc4paUvJr4OyHOcy'
+    static boolean ENABLED = false
 
     static final OBJECT_MAPPER = new ObjectMapper()
             .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)

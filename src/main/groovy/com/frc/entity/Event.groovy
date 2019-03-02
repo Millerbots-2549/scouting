@@ -11,6 +11,7 @@ import javax.persistence.JoinTable
 import javax.persistence.ManyToMany
 import javax.persistence.OneToMany
 import javax.persistence.Table
+import javax.persistence.Transient
 import java.sql.Date
 
 @Entity
@@ -53,4 +54,10 @@ class Event {
 
     @OneToMany(mappedBy = "event")
     Set<TeamRanking> rankings = new HashSet<>()
+
+    @Transient
+    boolean isActive() {
+        Date now = new Date(System.currentTimeMillis())
+        startDate.before(now) && endDate.after(now)
+    }
 }
