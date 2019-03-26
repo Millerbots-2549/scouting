@@ -119,35 +119,48 @@ class ResultController {
                 studentName: "${response.student.firstName} ${response.student.lastName}")
     }
 
-    private static void getQuestionData(Team team, questions) {
+    private static void getQuestionData(Team team, Map<SurveyResultDto, Map<Integer, List<QuestionResultDto>>> questions) {
         team.teamMatchups.each { teamMatchUp ->
-            teamMatchUp.responses.each { response ->
-                Integer questionId = response.question.id
-
-                QuestionResultDto questionDto = new QuestionResultDto(
-                        question: response.question.question,
-                        questionId: response.question.id,
-                        responses: [buildResult(response)],
-                        questionType: QuestionTypeValue.valueOf(response.question.questionType.description.toUpperCase()),
-                        questionSeq: response.question.sequence,
-                        sectionSeq: response.question.surveySection.sequence
-                )
-
-                SurveyResultDto surveyDto = new SurveyResultDto(
-                        surveyId: response.question.surveySection.survey.id,
-                        surveyName: response.question.surveySection.survey.name
-                )
-
-                if (!questions.containsKey(surveyDto)) {
-                    questions.put(surveyDto, [:])
-                }
-                Map q = questions.get(surveyDto)
-                if (!q.containsKey(questionId)) {
-                    q.put(questionId, [questionDto])
-                } else {
-                    q.get(questionId).add(questionDto)
+            if (teamMatchUp.matchup.event.isActive()) {
+                teamMatchUp.responses.each { response ->
+                    populateQuestions(response, questions)
                 }
             }
         }
+    }
+
+    private static void populateQuestions(Response response, Map<SurveyResultDto, Map<Integer, List<QuestionResultDto>>> questions) {
+        Integer questionId = response.question.id
+
+        QuestionResultDto questionDto = buildQuestionDto(response)
+        SurveyResultDto surveyDto = buildSurveyDto(response)
+
+        if (!questions.containsKey(surveyDto)) {
+            questions.put(surveyDto, [:])
+        }
+        Map q = questions.get(surveyDto)
+        if (!q.containsKey(questionId)) {
+            q.put(questionId, [questionDto])
+        } else {
+            q.get(questionId).add(questionDto)
+        }
+    }
+
+    private static SurveyResultDto buildSurveyDto(Response response) {
+        new SurveyResultDto(
+                surveyId: response.question.surveySection.survey.id,
+                surveyName: response.question.surveySection.survey.name
+        )
+    }
+
+    private static QuestionResultDto buildQuestionDto(Response response) {
+        new QuestionResultDto(
+                question: response.question.question,
+                questionId: response.question.id,
+                responses: [buildResult(response)],
+                questionType: QuestionTypeValue.valueOf(response.question.questionType.description.toUpperCase()),
+                questionSeq: response.question.sequence,
+                sectionSeq: response.question.surveySection.sequence
+        )
     }
 }

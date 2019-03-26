@@ -2,8 +2,6 @@ package com.frc.controller
 
 import com.frc.dto.*
 import com.frc.entity.*
-import com.frc.job.MatchupCollector
-import com.frc.job.RankingCollector
 import com.frc.repository.EventRepository
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,22 +19,6 @@ class EventController {
 
     @Autowired
     EventRepository eventRepository
-    @Autowired
-    RankingCollector rankingCollector
-    @Autowired
-    MatchupCollector matchupCollector
-
-    @GetMapping(path = '/rankings', produces = APPLICATION_JSON_VALUE)
-    String getRankings() {
-        rankingCollector.getRankings()
-        "Done"
-    }
-
-    @GetMapping(path = '/matchups', produces = APPLICATION_JSON_VALUE)
-    String getMatchups() {
-        matchupCollector.getMatchups()
-        "Done"
-    }
 
     @GetMapping(path = '/{eventId}/surveys', produces = APPLICATION_JSON_VALUE)
     Set<SurveyDto> getSurveys(@PathVariable(name = 'eventId') Integer eventId) {
