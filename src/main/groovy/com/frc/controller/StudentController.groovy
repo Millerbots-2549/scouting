@@ -1,8 +1,8 @@
 package com.frc.controller
 
 import com.frc.dto.StudentDto
-import com.frc.entity.Student
 import com.frc.repository.StudentRepository
+import com.frc.util.Converter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -17,14 +17,7 @@ class StudentController {
 
     @GetMapping
     Collection<StudentDto> getActive() {
-        studentRepository.findByActive(true).collect { convert(it) } as TreeSet
+        studentRepository.findByActive(true).collect { Converter.convert(it) } as TreeSet
     }
 
-    private static StudentDto convert(Student student) {
-        new StudentDto(
-                studentId: student.id,
-                firstName: student.firstName,
-                lastName: student.lastName
-        )
-    }
 }

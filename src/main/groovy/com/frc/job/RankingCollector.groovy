@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 
 import javax.transaction.Transactional
+import java.time.LocalDate
 
 @Slf4j
 @Transactional
@@ -26,7 +27,7 @@ class RankingCollector extends BlueAllianceClient {
     void getRankings() {
         if (ENABLED) {
             log.debug("Starting the collection of blue alliance rankings")
-            Set<Event> events = eventRepository.findActiveEvents(new Date())
+            Set<Event> events = eventRepository.findActiveEvents(LocalDate.now())
             events?.each { event -> collectRankingData(event) }
             log.debug("Done with the collection of blue alliance rankings")
         }

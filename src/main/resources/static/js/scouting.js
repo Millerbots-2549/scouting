@@ -46,7 +46,7 @@ $(document).ready(function () {
             });
     });
 
-	$('#survey_name').on('change', function () {
+    $('#survey_name').on('change', function () {
         // get the selected value
         // make ajax call to all event data for {eventId}/surveys/{surveyId}
         surveyId = $(this).val();
@@ -138,7 +138,7 @@ $(document).ready(function () {
 
         }
 
-        return;
+
 
     });
 
@@ -184,8 +184,7 @@ $(document).ready(function () {
             }
             messageConfirm += " for Team: " + teamNumber + ". Is this correct?";
             return confirm(messageConfirm);
-        }
-        else {
+        } else {
             $("#message").text("Please select a Match No. and Team!").show().fadeOut(5000);
             return false;
         }
@@ -455,26 +454,26 @@ $(document).ready(function () {
         var numeric = '';
 
         numeric += '<input name="questionId' + questionId + '" type="number" min="0" max="100">';
-		numeric += '<button type="button" class="btn btn-primary increment"><i class="fas fa-plus"></i></button>';
-		numeric += '<button type="button" class="btn btn-primary decrement"><i class="fas fa-minus"></i></button>';
+        numeric += '<button type="button" class="btn btn-primary increment"><i class="fas fa-plus"></i></button>';
+        numeric += '<button type="button" class="btn btn-primary decrement"><i class="fas fa-minus"></i></button>';
 
         return numeric;
 
     }
 
-	$(this).on('click','button.increment',function(){
+    $(this).on('click', 'button.increment', function () {
 
-		var input = $(this).closest('button').prev('input');
+        var input = $(this).closest('button').prev('input');
 
-		input.get(0).value++;
+        input.get(0).value++;
 
     });
 
-	$(this).on('click','button.decrement',function(){
+    $(this).on('click', 'button.decrement', function () {
 
-		var input = $(this).closest('button').prev().prev('input');
+        var input = $(this).closest('button').prev().prev('input');
 
-		input.get(0).value--;
+        input.get(0).value--;
 
     });
 

@@ -8,6 +8,8 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 
 import javax.transaction.Transactional
+import java.time.Instant
+import java.time.LocalDate
 
 @Slf4j
 @Transactional
@@ -22,7 +24,7 @@ class MatchupCollector extends BlueAllianceClient {
     void getMatchups() {
         if (ENABLED) {
             log.debug("Starting the collection of blue alliance matchups")
-            Set<Event> events = eventRepository.findActiveEvents(new Date())
+            Set<Event> events = eventRepository.findActiveEvents(LocalDate.now())
             events?.each { event ->
                 collectTeamEventData(event)
                 collectMatchupData(event)
@@ -67,7 +69,7 @@ class MatchupCollector extends BlueAllianceClient {
             return existingMatchup
         } else {
             Matchup matchUp = new Matchup(
-                    startTime: new Date(),
+                    startTime: Instant.now(),
                     matchNumber: -1,
                     event: event,
                     type: 'pit'
@@ -112,7 +114,7 @@ class MatchupCollector extends BlueAllianceClient {
     private void convertToMatchup(Map<String, String> match, Event event) {
         long time = match.time as long
         Matchup matchUp = new Matchup(
-                startTime: new Date(time * 1000),
+                startTime: Instant.ofEpochSecond(time * 1000),
                 matchNumber: match.match_number as Integer,
                 event: event,
                 type: findMatchupType(match.comp_level as String),

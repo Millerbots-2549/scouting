@@ -15,17 +15,11 @@ compititions into the database. Then create a user with the name of 'scout' and 
 scheme. This can be done in the workbench. Someday I will export the user creation SQL into a script.
 
 Once the jar is built it can be run by executing this at the command line: `java -jar ./scouting.jar`
+See https://docs.spring.io/spring-boot/docs/current/reference/html/deployment-install.html for deploying in unix.
 
-The idea is to install the database and this application on a dedicated laptop that is brought to the competitions.
-This laptop is attached to a dedicated router, thus creating its own private network. 
-People are then able to connect to this network and interact with the system. Currently this network is:
-Millerbots and the passcode is millerbots2549.
-This dedicated computer would be configured to have the application and database all start when the system starts.
+An amazon account AWS account has been created and the jar is deployed to an EC2 instance. 
+The database is deployed as a separate database instance using MySQL.
 
-An alternative plan is to deploy this to AWS on an EC2 instance. 
-This would provide a nice stable environment. We could even use AWS databases, 
-which would even be more stable. The disadvantage of this approach is that we might not 
-have very good internet access at the competitions.
 
 # Building
 First ensure that you have the Oracle Java JDK installed. If not you will need to download it from Oracle. Get the 64 bit JDK.
