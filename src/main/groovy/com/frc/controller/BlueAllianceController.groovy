@@ -22,31 +22,31 @@ class BlueAllianceController {
     MatchupCollector matchupCollector
 
     @GetMapping(path = '/rankings', produces = APPLICATION_JSON_VALUE)
-    String getRankings() {
-        rankingCollector.getRankings()
-        'Done'
+    Map getRankings() {
+        int numberOfEvents = rankingCollector.getRankings()
+        return ['eventCount': numberOfEvents]
     }
 
     @GetMapping(path = '/matchups', produces = APPLICATION_JSON_VALUE)
-    String getMatchups() {
-        matchupCollector.getMatchups()
-        'Done'
+    Map getMatchups() {
+        int numberOfEvents = matchupCollector.getMatchups()
+        return ['eventCount': numberOfEvents]
     }
 
     @GetMapping(path = '/disable', produces = APPLICATION_JSON_VALUE)
-    String disable() {
+    Map disable() {
         BlueAllianceClient.ENABLED = false
-        'DISABLED'
+        return getStatus()
     }
 
     @GetMapping(path = '/enable', produces = APPLICATION_JSON_VALUE)
-    String enable() {
+    Map enable() {
         BlueAllianceClient.ENABLED = true
-        'ENABLED'
+        return getStatus()
     }
 
     @GetMapping(path = '/status', produces = APPLICATION_JSON_VALUE)
-    String getStatus() {
-        "ENABLED = ${BlueAllianceClient.ENABLED.toString()}"
+    Map getStatus() {
+        return ['ENABLED': BlueAllianceClient.ENABLED]
     }
 }

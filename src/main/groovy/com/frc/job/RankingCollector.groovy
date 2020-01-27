@@ -24,13 +24,15 @@ class RankingCollector extends BlueAllianceClient {
 
     // initial delay of 10 minutes and then once an hour after that
     @Scheduled(fixedRate = 3600000l, initialDelay = 600000l)
-    void getRankings() {
+    int getRankings() {
         if (ENABLED) {
             log.debug("Starting the collection of blue alliance rankings")
             Set<Event> events = eventRepository.findActiveEvents(LocalDate.now())
             events?.each { event -> collectRankingData(event) }
             log.debug("Done with the collection of blue alliance rankings")
+            return events ? events.size() : 0
         }
+        return 0
     }
 
     private void collectRankingData(Event event) {

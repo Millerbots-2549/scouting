@@ -4,7 +4,7 @@ plugins {
     id 'groovy'
     id 'eclipse'
     id 'idea'
-    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id 'org.springframework.boot' version '2.2.4.RELEASE'
 }
 
 apply plugin: 'io.spring.dependency-management'
