@@ -1,15 +1,15 @@
-CREATE DATABASE  IF NOT EXISTS `scouting` DEFAULT CHARACTER SET utf8;
+CREATE DATABASE  IF NOT EXISTS `scouting` /*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `scouting`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.19, for Linux (x86_64)
 --
--- Host: scouting.cpood3za7b6g.us-east-2.rds.amazonaws.com    Database: scouting
+-- Host: localhost    Database: scouting
 -- ------------------------------------------------------
--- Server version	5.6.41-log
+-- Server version	8.0.19
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,9 +23,9 @@ USE `scouting`;
 
 DROP TABLE IF EXISTS `event`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `event` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `city` varchar(100) NOT NULL,
   `state` char(2) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `event` (
   `end_date` date NOT NULL,
   `event_key` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
-INSERT INTO `event` VALUES (1,'test','test','MN','2018-01-31','2019-05-31','2019ndgf'),(2,'Lake Superior Regional 2018','Duluth','MN','2018-03-10','2018-03-13','2018mndu'),(3,'Northern Lights Regional 2018','Duluth','MN','2018-03-10','2018-03-13','2018mndu2'),(4,'Iowa Regional 2018','Cedar Falls','IA','2018-03-21','2018-03-24','2018iacf'),(5,'Minnesota North Star Regional 2018','Minneapolis','MN','2018-03-28','2018-04-01','2018mnmi2'),(6,'Great Northern Regional 2019','Grand Forks','ND','2019-03-13','2019-03-16','2019ndgf'),(7,'Minnesota North Star Regional 2019','Minneapolis','MN','2019-03-27','2019-03-31','2019mnmi2'),(8,'Lake Superior Regional 2019','Duluth','MN','2019-03-06','2019-03-09','2019mndu'),(9,'Northern Lights Regional 2019','Duluth','MN','2019-03-06','2019-03-10','2019mndu2'),(10,'FIRST Championship - Detroit','Detroit','MI','2019-04-24','2019-04-24','2019cmpmi'),(11,'Archimedes Division - 2019 Championship','Detroit','MI','2019-04-24','2019-04-24','2019arc'),(12,'Carson Division - 2019 Championship','Detroit','MI','2019-04-24','2019-04-28','2019cars'),(13,'Curie Division - 2019 Championship','Detroit','MI','2019-04-24','2019-04-24','2019cur'),(14,'Daly Division - 2019 Championship','Detroit','MI','2019-04-24','2019-04-24','2019dal'),(15,'Darwin Division - 2019 Championship','Detroit','MI','2019-04-24','2019-04-24','2019dar'),(16,'Tesla Division - 2019 Championship','Detroit','MI','2019-04-24','2019-04-24','2019tes');
+INSERT INTO `event` VALUES (1,'test','test','MN','2018-01-31','2020-05-31','2019ndgf'),(2,'Lake Superior Regional 2018','Duluth','MN','2018-03-10','2018-03-13','2018mndu'),(3,'Northern Lights Regional 2018','Duluth','MN','2018-03-10','2018-03-13','2018mndu2'),(4,'Iowa Regional 2018','Cedar Falls','IA','2018-03-21','2018-03-24','2018iacf'),(5,'Minnesota North Star Regional 2018','Minneapolis','MN','2018-03-28','2018-04-01','2018mnmi2'),(6,'Great Northern Regional 2019','Grand Forks','ND','2019-03-13','2019-03-16','2019ndgf'),(7,'Minnesota North Star Regional 2019','Minneapolis','MN','2019-03-27','2019-03-31','2019mnmi2'),(8,'Lake Superior Regional 2019','Duluth','MN','2019-03-06','2019-03-09','2019mndu'),(9,'Northern Lights Regional 2019','Duluth','MN','2019-03-06','2019-03-10','2019mndu2'),(10,'FIRST Championship - Detroit','Detroit','MI','2019-04-24','2019-04-24','2019cmpmi'),(11,'Archimedes Division - 2019 Championship','Detroit','MI','2019-04-24','2019-04-24','2019arc'),(12,'Carson Division - 2019 Championship','Detroit','MI','2019-04-24','2019-04-28','2019cars'),(13,'Curie Division - 2019 Championship','Detroit','MI','2019-04-24','2019-04-24','2019cur'),(14,'Daly Division - 2019 Championship','Detroit','MI','2019-04-24','2019-04-24','2019dal'),(15,'Darwin Division - 2019 Championship','Detroit','MI','2019-04-24','2019-04-24','2019dar'),(16,'Tesla Division - 2019 Championship','Detroit','MI','2019-04-24','2019-04-24','2019tes'),(17,'Great Northern Regional 2019','Grand Forks','ND','2020-02-26','2020-03-01','2020ndgf'),(18,'Minnesota North Star Regional 2020','Minneapolis','MN','2020-03-25','2020-03-29','2020mnmi2');
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,15 +52,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `event_survey`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `event_survey` (
-  `event_id` int(11) NOT NULL,
-  `survey_id` int(11) NOT NULL,
+  `event_id` int NOT NULL,
+  `survey_id` int NOT NULL,
   PRIMARY KEY (`event_id`,`survey_id`),
   KEY `fk_event_has_survey_survey1_idx` (`survey_id`),
   KEY `fk_event_has_survey_event1_idx` (`event_id`),
-  CONSTRAINT `fk_event_has_survey_event1` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_event_has_survey_survey1` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_event_has_survey_event1` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
+  CONSTRAINT `fk_event_has_survey_survey1` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -70,7 +70,7 @@ CREATE TABLE `event_survey` (
 
 LOCK TABLES `event_survey` WRITE;
 /*!40000 ALTER TABLE `event_survey` DISABLE KEYS */;
-INSERT INTO `event_survey` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(1,2),(2,2),(3,2),(4,2),(5,2),(1,3),(6,3),(7,3),(8,3),(9,3),(10,3),(11,3),(12,3),(13,3),(14,3),(15,3),(16,3),(1,4),(6,4),(7,4),(8,4),(9,4),(10,4),(11,4),(12,4),(13,4),(14,4),(15,4),(16,4);
+INSERT INTO `event_survey` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(1,2),(2,2),(3,2),(4,2),(5,2),(1,3),(6,3),(7,3),(8,3),(9,3),(10,3),(11,3),(12,3),(13,3),(14,3),(15,3),(16,3),(1,4),(6,4),(7,4),(8,4),(9,4),(10,4),(11,4),(12,4),(13,4),(14,4),(15,4),(16,4),(1,5),(17,5),(18,5),(1,6),(17,6),(18,6);
 /*!40000 ALTER TABLE `event_survey` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,19 +80,19 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `matchup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `matchup` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `event_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `event_id` int NOT NULL,
   `start_time` datetime NOT NULL,
-  `match_number` int(11) NOT NULL,
+  `match_number` int NOT NULL,
   `type` varchar(45) NOT NULL COMMENT 'The match type describes if this is a regular, semi-final, or final match round.',
-  `blue_score` int(11) DEFAULT NULL,
-  `red_score` int(11) DEFAULT NULL,
+  `blue_score` int DEFAULT NULL,
+  `red_score` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `matchup_uk1` (`event_id`,`match_number`,`type`),
   KEY `fk_Match_Event1_idx` (`event_id`),
-  CONSTRAINT `fk_Match_Event1` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Match_Event1` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1507 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -112,19 +112,19 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `question`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `question` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `question_type_id` int(11) NOT NULL,
-  `survey_section_id` int(11) NOT NULL,
-  `sequence` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `question_type_id` int NOT NULL,
+  `survey_section_id` int NOT NULL,
+  `sequence` int NOT NULL,
   `question` varchar(400) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Question_QuestionType1_idx` (`question_type_id`),
   KEY `fk_question_survey_section1_idx` (`survey_section_id`),
-  CONSTRAINT `fk_Question_QuestionType1` FOREIGN KEY (`question_type_id`) REFERENCES `question_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_question_survey_section1` FOREIGN KEY (`survey_section_id`) REFERENCES `survey_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_Question_QuestionType1` FOREIGN KEY (`question_type_id`) REFERENCES `question_type` (`id`),
+  CONSTRAINT `fk_question_survey_section1` FOREIGN KEY (`survey_section_id`) REFERENCES `survey_section` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=204 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,7 +133,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` VALUES (1,1,1,2,'Auto (moved)'),(2,1,1,4,'Cross Line'),(3,2,1,8,'Power Cube on Switch - Succeed'),(4,2,1,12,'Power Cube on Scale - Succeed'),(5,2,1,14,'Power Cubes in Exchange'),(6,2,2,2,'Power Cube on Switch - Attempt'),(7,2,2,4,'Power Cube on Switch - Succeed'),(8,2,2,6,'Power Cube on Scale - Attempt'),(9,2,2,8,'Power Cube on Scale - Succeed'),(10,2,2,10,'Power Cube on Opponent Switch - Attempt'),(11,2,2,12,'Power Cube on Opponent Switch - Succeed'),(12,2,2,14,'Cubes in Exchange'),(13,2,2,16,'Cubes from Portal - Attempt'),(14,1,3,2,'Got on Pad'),(15,6,3,4,'Climb'),(19,3,4,2,'Force - cube count'),(20,3,4,6,'Levitate	- cube count'),(21,3,4,10,'Boost - cube count'),(22,2,5,2,'Alliance Score'),(23,4,5,4,'Game Outcome'),(28,1,5,10,'Yellow Card'),(29,1,5,12,'Red Card'),(30,5,5,16,'Comments'),(31,2,2,18,'Cubes from Portal - Succeed'),(32,1,6,2,'No Show'),(33,1,6,4,'Broken'),(34,1,6,8,'Died'),(35,1,6,10,'Fell Over'),(36,1,4,4,'Force Activated'),(37,1,4,8,'Levitate Activated'),(38,1,4,12,'Boost Activated'),(39,5,7,2,'Drive Train'),(40,7,7,4,'Vision System'),(41,8,7,6,'What type of vision system'),(42,1,8,4,'Cross Baseline'),(43,1,8,6,'Put Cube on Switch'),(44,1,8,8,'Put Cube on Scale'),(45,1,8,10,'Put Cube in Exchange'),(46,1,11,2,'Put Cube on Switch'),(47,1,11,4,'Put Cube on Scale'),(48,1,11,6,'Put Cube in Exchange'),(49,1,11,8,'Take Cube from Portal'),(50,7,9,2,'Can it climb'),(51,5,9,4,'How does it climb, mechanism:'),(52,1,9,6,'Assist others in climbing'),(53,5,9,8,'How does it assist:'),(54,7,11,10,'Defensive'),(55,5,11,12,'Vault Goals'),(56,1,10,2,'Willing to change'),(57,5,10,4,'General Strategy'),(59,5,10,6,'Additional Notes'),(60,9,10,10,'Team Feel'),(61,2,1,6,'Power Cube on Switch - Attempt'),(62,2,1,10,'Power Cube on Scale - Attemp'),(63,5,7,8,'Cube retrieval system:'),(64,1,5,14,'The driver/team\'s strategy was good'),(65,10,8,2,'What is your preferred starting position?'),(66,5,10,8,'What is your budget for the year?'),(67,1,10,12,'Robot was built by the students'),(68,11,7,7,'What programming language do you use?'),(69,12,12,1,'Starting Height:'),(70,13,12,2,'Starting Game Piece:'),(71,1,12,3,'Drive Off:'),(72,1,12,4,'Cross Base Line:'),(73,2,13,1,'Cargo Ship - Attempt:'),(74,2,13,2,'Cargo Ship - Succeed:'),(75,2,13,3,'Rocket Level 1 - Attempt:'),(76,2,13,4,'Rocket Level 1 - Succeed:'),(77,2,13,5,'Rocket Level 2 - Attempt:'),(78,2,13,6,'Rocket Level 2 - Succeed:'),(79,2,13,7,'Rocket Level 3 - Attempt:'),(80,2,13,8,'Rocket Level 3 - Succeed:'),(81,2,14,1,'Cargo Ship - Attempt:'),(82,2,14,2,'Cargo Ship - Succeed:'),(83,2,14,3,'Rocket Level 1 - Attempt:'),(84,2,14,4,'Rocket Level 1 - Succeed:'),(85,2,14,5,'Rocket Level 2 - Attempt:'),(86,2,14,6,'Rocket Level 2 - Succeed:'),(87,2,14,7,'Rocket Level 3 - Attempt:'),(88,2,14,8,'Rocket Level 3 - Succeed:'),(89,2,15,1,'Cargo Ship - Attempt:'),(90,2,15,2,'Cargo Ship - Succeed:'),(91,2,15,3,'Rocket Level 1 - Attempt:'),(92,2,15,4,'Rocket Level 1 - Succeed:'),(93,2,15,5,'Rocket Level 2 - Attempt:'),(94,2,15,6,'Rocket Level 2 - Succeed:'),(95,2,15,7,'Rocket Level 3 - Attempt:'),(96,2,15,8,'Rocket Level 3 - Succeed:'),(97,2,16,1,'Cargo Ship - Attempt:'),(98,2,16,2,'Cargo Ship - Succeed:'),(99,2,16,3,'Rocket Level 1 - Attempt:'),(100,2,16,4,'Rocket Level 1 - Succeed:'),(101,2,16,5,'Rocket Level 2 - Attempt:'),(102,2,16,6,'Rocket Level 2 - Succeed:'),(103,2,16,7,'Rocket Level 3 - Attempt:'),(104,2,16,8,'Rocket Level 3 - Succeed:'),(105,14,17,1,'Got on which level:'),(106,1,17,2,'Assisted Others:'),(107,1,17,3,'Was assisted:'),(108,2,18,1,'Alliance Score:'),(109,4,18,2,'Game outcome:'),(110,2,18,3,'Fouls:'),(111,2,18,4,'Tech Fouls:'),(112,1,18,5,'Yellow Card:'),(113,1,18,6,'Red Card:'),(114,15,18,7,'Rate the driver from 1 (Bad) to 5 (Incredible)'),(115,5,18,8,'Comments:'),(116,5,19,4,'Drive Train:'),(117,1,19,1,'Vision System:'),(118,2,19,3,'Number of Cameras:'),(119,1,19,2,'Off-Board Vision Processing:'),(120,5,19,5,'Describe the Hatch panel mechanism:'),(121,5,19,6,'Describe the Ball mechanism:'),(122,14,20,2,'Starting Position:'),(123,1,20,3,'Cross Baseline:'),(124,1,20,4,'Put hatch panel on rocket:'),(125,1,20,5,'Put hatch panel on cargo ship:'),(126,1,20,6,'Put ball in rocket:'),(127,1,20,7,'Put ball in cargo ship:'),(128,12,20,8,'Highest level they can put the hatch:'),(129,12,20,9,'Highest level they can put the ball:'),(130,1,21,1,'Put hatch panel on rocket:'),(131,1,21,2,'Put hatch panel on cargo ship:'),(132,1,21,3,'Put ball in rocket:'),(133,1,21,4,'Put ball in cargo ship:'),(134,12,21,5,'Highest level they can put the hatch:'),(135,12,21,6,'Highest level they can put the ball:'),(136,2,21,7,'Cycle time for panel:'),(137,2,21,8,'Cycle time for ball:'),(138,5,21,9,'Describe their general strategy:'),(139,14,22,1,'Ending Position:'),(140,1,22,2,'Do you help others up a level?'),(141,1,22,3,'Are you willing to play defense?'),(142,1,22,4,'Are you able to play defense?'),(143,16,23,1,'Who do you think built the robot?'),(144,9,23,2,'General feel of the team:'),(145,17,20,1,'Type of auto:'),(146,1,24,1,'No Show'),(147,1,24,2,'Broken'),(148,1,24,3,'Died'),(149,1,24,4,'Fell Over'),(150,5,23,3,'Comments:');
+INSERT INTO `question` VALUES (1,1,1,2,'Auto (moved)'),(2,1,1,4,'Cross Line'),(3,2,1,8,'Power Cube on Switch - Succeed'),(4,2,1,12,'Power Cube on Scale - Succeed'),(5,2,1,14,'Power Cubes in Exchange'),(6,2,2,2,'Power Cube on Switch - Attempt'),(7,2,2,4,'Power Cube on Switch - Succeed'),(8,2,2,6,'Power Cube on Scale - Attempt'),(9,2,2,8,'Power Cube on Scale - Succeed'),(10,2,2,10,'Power Cube on Opponent Switch - Attempt'),(11,2,2,12,'Power Cube on Opponent Switch - Succeed'),(12,2,2,14,'Cubes in Exchange'),(13,2,2,16,'Cubes from Portal - Attempt'),(14,1,3,2,'Got on Pad'),(15,6,3,4,'Climb'),(19,3,4,2,'Force - cube count'),(20,3,4,6,'Levitate	- cube count'),(21,3,4,10,'Boost - cube count'),(22,2,5,2,'Alliance Score'),(23,4,5,4,'Game Outcome'),(28,1,5,10,'Yellow Card'),(29,1,5,12,'Red Card'),(30,5,5,16,'Comments'),(31,2,2,18,'Cubes from Portal - Succeed'),(32,1,6,2,'No Show'),(33,1,6,4,'Broken'),(34,1,6,8,'Died'),(35,1,6,10,'Fell Over'),(36,1,4,4,'Force Activated'),(37,1,4,8,'Levitate Activated'),(38,1,4,12,'Boost Activated'),(39,5,7,2,'Drive Train'),(40,7,7,4,'Vision System'),(41,8,7,6,'What type of vision system'),(42,1,8,4,'Cross Baseline'),(43,1,8,6,'Put Cube on Switch'),(44,1,8,8,'Put Cube on Scale'),(45,1,8,10,'Put Cube in Exchange'),(46,1,11,2,'Put Cube on Switch'),(47,1,11,4,'Put Cube on Scale'),(48,1,11,6,'Put Cube in Exchange'),(49,1,11,8,'Take Cube from Portal'),(50,7,9,2,'Can it climb'),(51,5,9,4,'How does it climb, mechanism:'),(52,1,9,6,'Assist others in climbing'),(53,5,9,8,'How does it assist:'),(54,7,11,10,'Defensive'),(55,5,11,12,'Vault Goals'),(56,1,10,2,'Willing to change'),(57,5,10,4,'General Strategy'),(59,5,10,6,'Additional Notes'),(60,9,10,10,'Team Feel'),(61,2,1,6,'Power Cube on Switch - Attempt'),(62,2,1,10,'Power Cube on Scale - Attemp'),(63,5,7,8,'Cube retrieval system:'),(64,1,5,14,'The driver/team\'s strategy was good'),(65,10,8,2,'What is your preferred starting position?'),(66,5,10,8,'What is your budget for the year?'),(67,1,10,12,'Robot was built by the students'),(68,11,7,7,'What programming language do you use?'),(69,12,12,1,'Starting Height:'),(70,13,12,2,'Starting Game Piece:'),(71,1,12,3,'Drive Off:'),(72,1,12,4,'Cross Base Line:'),(73,2,13,1,'Cargo Ship - Attempt:'),(74,2,13,2,'Cargo Ship - Succeed:'),(75,2,13,3,'Rocket Level 1 - Attempt:'),(76,2,13,4,'Rocket Level 1 - Succeed:'),(77,2,13,5,'Rocket Level 2 - Attempt:'),(78,2,13,6,'Rocket Level 2 - Succeed:'),(79,2,13,7,'Rocket Level 3 - Attempt:'),(80,2,13,8,'Rocket Level 3 - Succeed:'),(81,2,14,1,'Cargo Ship - Attempt:'),(82,2,14,2,'Cargo Ship - Succeed:'),(83,2,14,3,'Rocket Level 1 - Attempt:'),(84,2,14,4,'Rocket Level 1 - Succeed:'),(85,2,14,5,'Rocket Level 2 - Attempt:'),(86,2,14,6,'Rocket Level 2 - Succeed:'),(87,2,14,7,'Rocket Level 3 - Attempt:'),(88,2,14,8,'Rocket Level 3 - Succeed:'),(89,2,15,1,'Cargo Ship - Attempt:'),(90,2,15,2,'Cargo Ship - Succeed:'),(91,2,15,3,'Rocket Level 1 - Attempt:'),(92,2,15,4,'Rocket Level 1 - Succeed:'),(93,2,15,5,'Rocket Level 2 - Attempt:'),(94,2,15,6,'Rocket Level 2 - Succeed:'),(95,2,15,7,'Rocket Level 3 - Attempt:'),(96,2,15,8,'Rocket Level 3 - Succeed:'),(97,2,16,1,'Cargo Ship - Attempt:'),(98,2,16,2,'Cargo Ship - Succeed:'),(99,2,16,3,'Rocket Level 1 - Attempt:'),(100,2,16,4,'Rocket Level 1 - Succeed:'),(101,2,16,5,'Rocket Level 2 - Attempt:'),(102,2,16,6,'Rocket Level 2 - Succeed:'),(103,2,16,7,'Rocket Level 3 - Attempt:'),(104,2,16,8,'Rocket Level 3 - Succeed:'),(105,14,17,1,'Got on which level:'),(106,1,17,2,'Assisted Others:'),(107,1,17,3,'Was assisted:'),(108,2,18,1,'Alliance Score:'),(109,4,18,2,'Game outcome:'),(110,2,18,3,'Fouls:'),(111,2,18,4,'Tech Fouls:'),(112,1,18,5,'Yellow Card:'),(113,1,18,6,'Red Card:'),(114,15,18,7,'Rate the driver from 1 (Bad) to 5 (Incredible)'),(115,5,18,8,'Comments:'),(116,5,19,4,'Drive Train:'),(117,1,19,1,'Vision System:'),(118,2,19,3,'Number of Cameras:'),(119,1,19,2,'Off-Board Vision Processing:'),(120,5,19,5,'Describe the Hatch panel mechanism:'),(121,5,19,6,'Describe the Ball mechanism:'),(122,14,20,2,'Starting Position:'),(123,1,20,3,'Cross Baseline:'),(124,1,20,4,'Put hatch panel on rocket:'),(125,1,20,5,'Put hatch panel on cargo ship:'),(126,1,20,6,'Put ball in rocket:'),(127,1,20,7,'Put ball in cargo ship:'),(128,12,20,8,'Highest level they can put the hatch:'),(129,12,20,9,'Highest level they can put the ball:'),(130,1,21,1,'Put hatch panel on rocket:'),(131,1,21,2,'Put hatch panel on cargo ship:'),(132,1,21,3,'Put ball in rocket:'),(133,1,21,4,'Put ball in cargo ship:'),(134,12,21,5,'Highest level they can put the hatch:'),(135,12,21,6,'Highest level they can put the ball:'),(136,2,21,7,'Cycle time for panel:'),(137,2,21,8,'Cycle time for ball:'),(138,5,21,9,'Describe their general strategy:'),(139,14,22,1,'Ending Position:'),(140,1,22,2,'Do you help others up a level?'),(141,1,22,3,'Are you willing to play defense?'),(142,1,22,4,'Are you able to play defense?'),(143,16,23,1,'Who do you think built the robot?'),(144,9,23,2,'General feel of the team:'),(145,17,20,1,'Type of auto:'),(146,1,24,1,'No Show'),(147,1,24,2,'Broken'),(148,1,24,3,'Died'),(149,1,24,4,'Fell Over'),(150,5,23,3,'Comments:'),(151,2,25,1,'Starting number of power cells:'),(152,1,25,2,'Crossed the line:'),(153,2,25,3,'LOW - Total success:'),(154,2,25,4,'HEX - Total success:'),(155,2,25,5,'HOLE - Total success:'),(156,2,26,1,'LOW - Total success:'),(157,2,26,2,'HEX - Total success:'),(158,2,26,3,'HOLE - Total success:'),(159,1,26,4,'Spun Wheel for count successfully:'),(160,1,26,5,'Spun For Color successfully:'),(161,1,27,1,'Attempted Climb:'),(162,1,27,2,'Climbed successfully:'),(163,1,27,3,'Parked:'),(164,1,27,4,'Generator Switch Level:'),(165,2,28,2,'Alliance Score:'),(166,4,28,1,'Game Outcome:'),(167,2,28,3,'Fouls:'),(168,2,28,4,'Tech Fouls:'),(169,1,28,5,'Yellow Card:'),(170,1,28,6,'Red Card:'),(171,15,28,7,'Rate the drivers strategy: (1 is bad)'),(172,15,28,8,'Defensive maneuvering: (1 is bad)'),(173,1,29,1,'No Show:'),(174,1,29,2,'Broken:'),(175,1,29,3,'Died:'),(176,1,29,4,'Fell Over:'),(177,5,29,5,'Final Comments:'),(178,1,30,1,'Vision System:'),(179,1,30,2,'Off-Board vision processing:'),(180,2,30,3,'Number of cameras:'),(181,5,30,4,'Describe Drivetrain:'),(182,5,30,5,'Describe Power Cell Mech:'),(183,5,30,6,'Describe Wheel Mech:'),(184,5,30,7,'Describe Climb Mech:'),(185,2,30,8,'Max Number of Power Cells able to hold:'),(186,2,30,9,'Cycle time (in seconds):'),(187,2,30,10,'Weight (in pounds):'),(188,1,30,11,'Able to do trench run:'),(189,1,31,1,'Can do autonomous:'),(190,1,31,2,'Can cross line:'),(191,1,31,3,'Can score LOW:'),(192,1,31,4,'Can score HEX:'),(193,1,31,5,'Can score HOLE:'),(194,1,32,1,'Can score LOW:'),(195,1,32,2,'Can score HEX:'),(196,1,32,3,'Can score HOLE:'),(197,1,32,4,'Can spin wheel for count:'),(198,1,32,4,'Can spin wheel for color:'),(199,1,33,1,'Can climb:'),(200,5,33,2,'Any preferred climb spot:'),(201,1,34,1,'Can play defense:'),(202,1,34,2,'Willing to play defence:'),(203,5,34,3,'Comments:');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,9 +143,9 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `question_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `question_type` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `description` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
@@ -167,20 +167,20 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `response`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `response` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `question_id` int(11) NOT NULL,
-  `team_matchup_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `question_id` int NOT NULL,
+  `team_matchup_id` int NOT NULL,
   `response` varchar(400) NOT NULL,
-  `student_id` int(11) NOT NULL,
+  `student_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Response_Question1_idx` (`question_id`),
   KEY `fk_Response_TeamMatch1_idx` (`team_matchup_id`),
   KEY `fk_response_student1_idx` (`student_id`),
-  CONSTRAINT `fk_Response_Question1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Response_TeamMatch1` FOREIGN KEY (`team_matchup_id`) REFERENCES `team_matchup` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_response_student1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Response_Question1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`),
+  CONSTRAINT `fk_response_student1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`),
+  CONSTRAINT `fk_Response_TeamMatch1` FOREIGN KEY (`team_matchup_id`) REFERENCES `team_matchup` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=141519 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -203,15 +203,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `response_value`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `response_value` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `question_type_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `question_type_id` int NOT NULL,
   `value` varchar(45) NOT NULL,
-  `is_default` tinyint(4) NOT NULL DEFAULT '0',
+  `is_default` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_ResponseType_QuestionType1_idx` (`question_type_id`),
-  CONSTRAINT `fk_ResponseType_QuestionType1` FOREIGN KEY (`question_type_id`) REFERENCES `question_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_ResponseType_QuestionType1` FOREIGN KEY (`question_type_id`) REFERENCES `question_type` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -231,17 +231,17 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `student`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `student` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `team_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `team_id` int NOT NULL,
   `first_name` varchar(45) NOT NULL,
   `last_name` varchar(45) NOT NULL,
-  `active` tinyint(4) NOT NULL DEFAULT '1',
+  `active` tinyint NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `student_uk1` (`first_name`,`last_name`),
   KEY `fk_student_belongs_team_idx` (`team_id`),
-  CONSTRAINT `fk_student_belongs_team` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_student_belongs_team` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -261,11 +261,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `survey`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `survey` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(45) NOT NULL,
-  `default` tinyint(4) NOT NULL DEFAULT '0',
+  `default` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -276,7 +276,7 @@ CREATE TABLE `survey` (
 
 LOCK TABLES `survey` WRITE;
 /*!40000 ALTER TABLE `survey` DISABLE KEYS */;
-INSERT INTO `survey` VALUES (1,'Match Scouting 2018',0),(2,'Pit Scouting 2018',0),(3,'Match Scouting 2019',1),(4,'Pit Scouting 2019',0);
+INSERT INTO `survey` VALUES (1,'Match Scouting 2018',0),(2,'Pit Scouting 2018',0),(3,'Match Scouting 2019',0),(4,'Pit Scouting 2019',0),(5,'Match Scouting 2020',1),(6,'Pit Scouting 2020',0);
 /*!40000 ALTER TABLE `survey` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,16 +286,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `survey_section`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `survey_section` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `survey_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `survey_id` int NOT NULL,
   `name` varchar(100) NOT NULL,
-  `sequence` int(11) NOT NULL,
+  `sequence` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Survey_has_Question_Survey1_idx` (`survey_id`),
-  CONSTRAINT `fk_Survey_has_Question_Survey1` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_Survey_has_Question_Survey1` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -304,7 +304,7 @@ CREATE TABLE `survey_section` (
 
 LOCK TABLES `survey_section` WRITE;
 /*!40000 ALTER TABLE `survey_section` DISABLE KEYS */;
-INSERT INTO `survey_section` VALUES (1,1,'Autonomous',2),(2,1,'Teleop',4),(3,1,'End Game Climb',6),(4,1,'Vault',8),(5,1,'Other',10),(6,1,'Bad Outcomes',12),(7,2,'Mechanical',2),(8,2,'Auto',4),(9,2,'Climb',8),(10,2,'Other',10),(11,2,'Teleop',6),(12,3,'Sandstorm Start',1),(13,3,'Sandstorm Panel',2),(14,3,'Sandstorm Ball',3),(15,3,'Teleop Panel',4),(16,3,'Teleop Ball',5),(17,3,'End Game',6),(18,3,'Other',7),(19,4,'Mechanical',1),(20,4,'Sandstorm',2),(21,4,'Teleop',3),(22,4,'End Game',4),(23,4,'Your Own Thoughts',5),(24,3,'Bad Outcomes',8);
+INSERT INTO `survey_section` VALUES (1,1,'Autonomous',2),(2,1,'Teleop',4),(3,1,'End Game Climb',6),(4,1,'Vault',8),(5,1,'Other',10),(6,1,'Bad Outcomes',12),(7,2,'Mechanical',2),(8,2,'Auto',4),(9,2,'Climb',8),(10,2,'Other',10),(11,2,'Teleop',6),(12,3,'Sandstorm Start',1),(13,3,'Sandstorm Panel',2),(14,3,'Sandstorm Ball',3),(15,3,'Teleop Panel',4),(16,3,'Teleop Ball',5),(17,3,'End Game',6),(18,3,'Other',7),(19,4,'Mechanical',1),(20,4,'Sandstorm',2),(21,4,'Teleop',3),(22,4,'End Game',4),(23,4,'Your Own Thoughts',5),(24,3,'Bad Outcomes',8),(25,5,'Autonomous',1),(26,5,'Teleop',2),(27,5,'End Game',3),(28,5,'Other',4),(29,5,'Bad Outcomes',5),(30,6,'Mechanical',1),(31,6,'Auto',2),(32,6,'Tele-Op',3),(33,6,'End Game',4),(34,6,'Other',5);
 /*!40000 ALTER TABLE `survey_section` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -314,9 +314,9 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `team`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `team` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(100) NOT NULL,
   `school` varchar(100) DEFAULT NULL,
   `city` varchar(100) NOT NULL,
@@ -342,19 +342,19 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `team_matchup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `team_matchup` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `matchup_id` int(11) NOT NULL,
-  `team_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `matchup_id` int NOT NULL,
+  `team_id` int NOT NULL,
   `alliance` varchar(45) NOT NULL,
-  `response_saved` tinyint(4) NOT NULL DEFAULT '0',
+  `response_saved` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `team_match_ui1` (`matchup_id`,`team_id`),
   KEY `fk_Match_has_Team_Team1_idx` (`team_id`),
   KEY `fk_Match_has_Team_Match1_idx` (`matchup_id`),
-  CONSTRAINT `fk_Match_has_Team_Match1` FOREIGN KEY (`matchup_id`) REFERENCES `matchup` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Match_has_Team_Team1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Match_has_Team_Match1` FOREIGN KEY (`matchup_id`) REFERENCES `matchup` (`id`),
+  CONSTRAINT `fk_Match_has_Team_Team1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9877 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -374,18 +374,18 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `team_ranking`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `team_ranking` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `event_id` int(11) NOT NULL,
-  `team_id` int(11) NOT NULL,
-  `team_rank` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `event_id` int NOT NULL,
+  `team_id` int NOT NULL,
+  `team_rank` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ranking_uk1` (`event_id`,`team_id`),
   KEY `fk_event_has_team_team1_idx` (`team_id`),
   KEY `fk_event_has_team_event1_idx` (`event_id`),
-  CONSTRAINT `fk_event_has_team_event1` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_event_has_team_team1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_event_has_team_event1` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
+  CONSTRAINT `fk_event_has_team_team1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=591 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -408,4 +408,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-05 20:26:46
+-- Dump completed on 2020-02-03 19:10:14

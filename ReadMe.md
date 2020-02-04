@@ -10,9 +10,10 @@ and a user, scout, that has access to that schema.
 
 If you do not have MySQL installed, you will need to install it locally.  Here is the [MySQL Installer](https://dev.mysql.com/downloads/installer/)
 You will want to install the server and the workbench. Once installed you can import the Dump.sql file that is 
-located in the "database" directory of the project. This dump file will create the database and insert all the data from the previous
-compititions into the database. Then create a user with the name of 'scout' and a password of 'password' that has privileges to the scouting 
-scheme. This can be done in the workbench. Someday I will export the user creation SQL into a script.
+located in the "database" directory of the project. You can do this with MySQL Workbench. Use the import/export commands.
+This dump file will create the database and insert all the data from the previous
+competitions into the database. Then run the `createUser.sql` script in MySQL Workbench. This will create the scout user
+and set the password and permissions for the user.
 
 Once the jar is built it can be run by executing this at the command line: `java -jar ./scouting.jar`
 See https://docs.spring.io/spring-boot/docs/current/reference/html/deployment-install.html for deploying in unix.
@@ -55,3 +56,36 @@ This project uses bootstrap-4.0.0-alpha.6-dist
 
 # Work left to Do
 See the "Issues" section in GitHub.
+
+#Setting up an event
+Go to https://www.thebluealliance.com/apidocs/v3 and look up the new events. 
+The request URL is: https://www.thebluealliance.com/api/v3/events/2020/simple. 
+Use the auth key found in BlueAllianceClient.groovy which is `alXSYHeSPE3hFXTQMzYYYo4vkqra4S5RuvWXgEuPbVqFpCtxkc4paUvJr4OyHOcy`
+In the response locate the events you want to set up. You will need to get the 'key'
+and the start and end dates. Add one day to the end day. This data needs to be inserted
+into the event table. Then create the survey and link the event to the survey.
+Once the event is set up in the blue alliance the system will download the data and
+set up all the teams and matches. This could be automated by knowing the event name and year.
+
+For creating a new survey first add the data in the survey table. Generally you will create
+two new surveys, one for pit scouting and one for match scouting. Then associate the new 
+surveys to an event. I always associate them to event_id = 1 which is the test survey.
+Then create new entries in the survey_section table for the different sections of the new
+survey. Then create the questions in the question table. Link the question to the section
+it should belong to. Look at the question_type table and response_value table when creating
+the questions to know what question type to use. The sequence number is only valid within 
+the given section. You can start over at 1 for the different sections.
+
+SQL used to create a survey:
+
+`select * from event order by start_date;`
+`select * from survey;`
+`select * from event_survey order by event_id, survey_id;`
+`select * from survey_section order by survey_id, sequence;`
+`select * from question order by survey_section_id, sequence;`
+`select * from question_type;`
+`select * from response_value order by question_type_id;`
+
+In MySQL you can edit the result grids like a spread sheet and enter new data. When
+done insert statements will be generated that you can execute. Once the data is inserted
+the stuff is created and should be immediately viewable on the web site.
