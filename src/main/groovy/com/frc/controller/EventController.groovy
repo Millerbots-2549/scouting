@@ -51,24 +51,22 @@ class EventController {
 
         Event event = eventRepository.findById(eventId).orElse(null)
         Survey survey = findSurvey(event.surveys, surveyId)
-        SurveyDto surveyDto = Converter.convert(survey)
-        surveyDto.surveySections = survey.surveySections.collect { Converter.convert(it) } as TreeSet
 
         EventDto eventDto = Converter.convert(event)
-        eventDto.survey = surveyDto
+        eventDto.survey = convertFullSurvey(survey)
         eventDto.matchups = convertMatchups(event.matchups, survey)
 
         return eventDto
     }
 
     private static Survey findSurvey(Set<Survey> surveys, Integer surveyId) {
-        final Survey survey
-        if (surveyId) {
-            survey = surveys.find { it.id == surveyId }
-        } else {
-            survey = surveys.find { it.current }
-        }
-        return survey
+        return surveys.find { it.id == surveyId }
+    }
+
+    private static SurveyDto convertFullSurvey(Survey survey) {
+        SurveyDto surveyDto = Converter.convert(survey)
+        surveyDto.surveySections = survey.surveySections.collect { Converter.convert(it) } as TreeSet
+        return surveyDto
     }
 
     private static Collection<MatchupDto> convertMatchups(Collection<Matchup> matchups, Survey survey) {

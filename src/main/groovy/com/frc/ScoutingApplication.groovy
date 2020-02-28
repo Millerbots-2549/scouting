@@ -22,10 +22,10 @@ class ScoutingApplication {
     }
 
     @Bean
-    Docket api() {
+    public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage('com.frc'))
                 .paths(PathSelectors.any())
                 .build()
     }

@@ -13,9 +13,6 @@ class Survey {
     @Column(name = 'name', nullable = false)
     String name
 
-    @Column(name = 'default', nullable = false)
-    Boolean current = Boolean.FALSE
-
     @ManyToMany(mappedBy = "surveys")
     Set<Event> events = new HashSet<>()
 

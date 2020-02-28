@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-
 @Slf4j
 @RestController
 @RequestMapping(value = "/results")
@@ -90,15 +89,21 @@ class ResultController {
         }
     }
 
-    private static Integer calculateAverage(List<String> responses) {
-        int count = 0
-        int total = 0
+    private static String calculateAverage(List<String> responses) {
+        double count = 0
+        double total = 0
         responses.each {
             count++
-            int value = it.trim() ? it.trim().toInteger() : 0
+            double value = it.trim() ? it.trim().toFloat() : 0
             total += value
         }
-        return total / count
+
+        if (count == 0) {
+            return '0'
+        } else {
+            double avg = (total / count).round(2)
+            return avg.toString()
+        }
     }
 
     private static String calculateMostOccurring(List<String> responses) {

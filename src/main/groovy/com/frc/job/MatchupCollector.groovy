@@ -116,7 +116,7 @@ class MatchupCollector extends BlueAllianceClient {
     private void convertToMatchup(Map<String, String> match, Event event) {
         long time = match.time as long
         Matchup matchUp = new Matchup(
-                startTime: Instant.ofEpochSecond(time * 1000),
+                startTime: Instant.ofEpochSecond(time),
                 matchNumber: match.match_number as Integer,
                 event: event,
                 type: findMatchupType(match.comp_level as String),
