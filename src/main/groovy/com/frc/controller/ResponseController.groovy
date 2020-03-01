@@ -48,7 +48,6 @@ class ResponseController {
                     response: cleanResponse(it.response, question)
             )
 
-
             tm.responses.add(response)
         }
 
