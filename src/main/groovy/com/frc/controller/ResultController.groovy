@@ -24,6 +24,8 @@ class ResultController {
     TeamRepository teamRepository
 
     /**
+     * TODO change this page to allow for the selection of an event. Get list of teams and then select the team.
+     *
      * This method builds a dto for all the results for a specific team. The results include all the match and pit
      * scouting for the currently active events.
      *

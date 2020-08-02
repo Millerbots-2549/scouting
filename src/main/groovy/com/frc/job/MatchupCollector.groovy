@@ -37,7 +37,7 @@ class MatchupCollector extends BlueAllianceClient {
 
     private void collectTeamEventData(Event event) {
         HttpURLConnection connection = createConnection(event, 'teams/simple')
-        if (connection.responseCode == 200) {
+        if (connection && connection.responseCode == 200) {
             int count = 0
             List teams = OBJECT_MAPPER.readValue(connection.inputStream, List.class)
 
@@ -53,7 +53,7 @@ class MatchupCollector extends BlueAllianceClient {
 
     private void collectMatchupData(Event event) {
         HttpURLConnection connection = createConnection(event, 'matches/simple')
-        if (connection.responseCode == 200) {
+        if (connection && connection.responseCode == 200) {
             int count = 0
             List matches = OBJECT_MAPPER.readValue(connection.inputStream, List.class)
 

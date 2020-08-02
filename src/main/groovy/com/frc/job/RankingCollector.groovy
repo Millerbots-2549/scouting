@@ -37,7 +37,7 @@ class RankingCollector extends BlueAllianceClient {
 
     private void collectRankingData(Event event) {
         HttpURLConnection connection = createConnection(event, 'rankings')
-        if (connection.responseCode == 200) {
+        if (connection && connection.responseCode == 200) {
             int count = 0
             EventRankingDto eventRanking = OBJECT_MAPPER.readValue(connection.inputStream, EventRankingDto.class)
             eventRanking?.rankings?.each { ranking ->

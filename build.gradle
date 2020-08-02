@@ -4,17 +4,16 @@ plugins {
     id 'groovy'
     id 'eclipse'
     id 'idea'
-    id 'org.springframework.boot' version '2.2.4.RELEASE'
+    id 'org.springframework.boot' version '2.3.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 }
-
-apply plugin: 'io.spring.dependency-management'
 
 group = 'com.frc'
 version = '1.0.0'
-sourceCompatibility = 1.8
 
 repositories {
     mavenLocal()
+    jcenter()
     mavenCentral()
 }
 
@@ -23,16 +22,16 @@ bootJar {
 }
 
 dependencies {
+    implementation('org.apache.commons:commons-lang3:3.11')
+
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
     implementation('org.springframework.boot:spring-boot-starter-web')
-    implementation("org.codehaus.groovy:groovy-all:${groovyVersion}")
-    implementation("io.springfox:springfox-swagger2:${swaggerVersion}")
-    implementation("io.springfox:springfox-swagger-ui:${swaggerVersion}")
-    implementation("org.apache.commons:commons-lang3:${commonsLangVersion}")
+    implementation('org.codehaus.groovy:groovy:3.0.5')
+    implementation('io.springfox:springfox-boot-starter:3.0.0')
 
     runtimeOnly('mysql:mysql-connector-java')
     
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation("org.spockframework:spock-spring:${spockSpringVersion}")
+    testImplementation('org.spockframework:spock-spring:2.0-M3-groovy-3.0')
 }

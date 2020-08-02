@@ -39,7 +39,7 @@ class Converter {
         if (event) {
             return new EventDto(
                     eventId: event.id,
-                    name: event.name,
+                    name: event.name + ' ' + event.startDate.year.toString(),
                     city: event.city,
                     state: event.state,
                     startDate: event.startDate,

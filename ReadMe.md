@@ -37,7 +37,11 @@ you can type CTRL+C to terminate it.
 
 # Helpful Application Links
 
-The link to the Swagger docs is: http://localhost:8080/scouting/swagger-ui.html
+- The main page is: http://localhost:8080/scouting
+- The main survey page is: http://localhost:8080/scouting/scouting.html
+- The main results page is: http://localhost:8080/scouting/results.html
+
+The link to the Swagger docs is: http://localhost:8080/scouting/swagger-ui/
 
 The other links are:
 - GET: http://localhost:8080/scouting/events
@@ -79,12 +83,19 @@ the given section. You can start over at 1 for the different sections.
 SQL used to create a survey:
 
 `select * from event order by start_date;`
+
 `select * from survey;`
+
 `select * from event_survey order by event_id, survey_id;`
+
 `select * from survey_section order by survey_id, sequence;`
+
 `select * from question order by survey_section_id, sequence;`
+
 `select * from question_type;`
+
 `select * from response_value order by question_type_id;`
+
 
 In MySQL you can edit the result grids like a spread sheet and enter new data. When
 done insert statements will be generated that you can execute. Once the data is inserted
