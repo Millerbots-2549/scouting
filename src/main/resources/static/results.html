@@ -4,6 +4,7 @@
     <title>Scouting Results</title>
     <meta charset="utf-8" content="width=device-width, initial-scale=1" name="viewport"/>
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/fontawesome-all.min.css" rel="stylesheet" type="text/css"/>
     <link href="css/millerbots.css" rel="stylesheet" type="text/css"/>
     <script src="js/jquery.min.js" type="text/javascript"></script>
     <script src="js/popper.min.js" type="text/javascript"></script>
@@ -27,21 +28,24 @@
 </div>
 
 <div class="container-fluid">
+    <div class="" id="event_info">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="d-flex flex-column">
+                    <label for="event_name">Event Name:</label>
+                    <select id="event_name" name="eventId"></select>
+                </div>
+            </div>
 
-    <p></p>
-    <div class="row">
-        <div class="col-md-3">
-            <label for="team_number">Team Number:</label>
-            <input autofocus id="team_number" maxlength="5" name="teamNumber" size="5" type="number"/>
-        </div>
-        <div class="col-md-2">
-            <button class="btn" id="teamFindBtn" type="button">Find</button>
-        </div>
-        <div class="col-md-5">
-            <div id="team_name"></div>
+            <div class="col-sm-3">
+                <div class="d-flex flex-column">
+                    <label for="team_number">Team:</label>
+                    <select id="team_number" name="teamId"></select>
+                </div>
+            </div>
+
         </div>
     </div>
-    <p></p>
 
     <div id="resultsDiv"></div>
 
@@ -49,35 +53,67 @@
 
 <script type="text/javascript">
 
+    var eventId;
+    var teamId;
 
-    $('#teamFindBtn').on('click', function () {
-        var teamId = $('#team_number').val();
-        $.ajax({
+    $.ajax(
+        {
+            type: "GET",
+            url: "results/events",
             dataType: "json",
-            url: "results/" + teamId,
-            cache: false,
-            success: function (json) {
-                buildTeamData(json);
-                var surveyObjs = json.surveys;
-                var allSurveyData = '';
-                for (i in surveyObjs) {
-                    var survey = surveyObjs[i];
-                    allSurveyData += buildSurveySection(survey)
-                }
-                $('#resultsDiv').html(allSurveyData);
+            success: function (events) {
+                buildEvent(events);
             },
-
             error: function (response) {
-                console.log(response)
+                console.log(response);
             }
         });
+
+
+    $('#event_name').on('change', function () {
+        eventId = $(this).val();
+        $.ajax(
+            {
+                type: "GET",
+                url: "results/events/" + eventId + "/teams",
+                dataType: "json",
+                success: function (teams) {
+                    $('#resultsDiv').html('');
+                    buildTeamList(teams);
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
     });
 
-    function buildTeamData(json) {
-        var teamData = '';
-        teamData += '<h5>' + json.teamName + '</h5>';
-        $('#team_name').html(teamData);
-    }
+    $('#team_number').on('change', function () {
+        teamId = $(this).val();
+        $.ajax(
+            {
+                type: "GET",
+                url: "results/events/" + eventId + "/teams/" + teamId,
+                dataType: "json",
+                cache: false,
+                success: function (json) {
+                    var allSurveyData = '';
+                    var surveyObjs = json.surveys;
+                    if (surveyObjs === undefined || surveyObjs.length === 0) {
+                        allSurveyData += '<hr><h4>No Data Found</h4>';
+                    } else {
+                        for (i in surveyObjs) {
+                            var survey = surveyObjs[i];
+                            allSurveyData += buildSurveySection(survey)
+                        }
+                    }
+
+                    $('#resultsDiv').html(allSurveyData);
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+    });
 
     function buildSurveySection(survey) {
         var surveyHtml = '';
@@ -139,6 +175,29 @@
         rowHtml += '<td>' + question.summary + '</td>';
         rowHtml += '</tr>';
         return rowHtml;
+    }
+
+    function buildEvent(eventsObj) {
+        var eventOptions = '<option value="-1"></option>';
+
+        for (i in eventsObj) {
+            var event = eventsObj[i];
+            eventOptions += '<option value="' + event.eventId + '">' + event.city + ' - ' + event.name + '</option>';
+        }
+
+        $('#event_name').html(eventOptions);
+    }
+
+    function buildTeamList(teamObjs) {
+        var teamOptions = '<option value="-1"></option>';
+
+        for (i in teamObjs) {
+            var team = teamObjs[i];
+            var selection = '[' + team.teamId + '] ' + team.name;
+            teamOptions += '<option value="' + team.teamId + '">' + selection + '</option>';
+        }
+
+        $('#team_number').html(teamOptions);
     }
 
 </script>

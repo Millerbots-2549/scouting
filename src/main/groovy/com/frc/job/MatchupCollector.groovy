@@ -66,7 +66,7 @@ class MatchupCollector extends BlueAllianceClient {
     }
 
     private Matchup getPitMatchup(Event event) {
-        Matchup existingMatchup = matchupRepository.findByMatchNumberAndTypeAndEvent(-1, 'pit', event)
+        Matchup existingMatchup = matchupRepository.findByMatchNumberAndTypeAndEvent(-1, MatchupType.PIT.name().toLowerCase(), event)
         if (existingMatchup) {
             return existingMatchup
         } else {
@@ -74,7 +74,7 @@ class MatchupCollector extends BlueAllianceClient {
                     startTime: Instant.now(),
                     matchNumber: -1,
                     event: event,
-                    type: 'pit'
+                    type: MatchupType.PIT.name().toLowerCase()
             )
             return matchupRepository.save(matchUp)
         }
@@ -84,7 +84,7 @@ class MatchupCollector extends BlueAllianceClient {
         Team team = convertTeam(teamDto)
 
         TeamMatchup tm = new TeamMatchup(
-                alliance: 'pit',
+                alliance: MatchupType.PIT.name().toLowerCase(),
                 matchup: matchup,
                 responseSaved: false,
                 team: team)

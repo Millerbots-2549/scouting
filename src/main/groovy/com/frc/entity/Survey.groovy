@@ -18,4 +18,13 @@ class Survey {
 
     @OneToMany(mappedBy = "survey")
     Set<SurveySection> surveySections = new HashSet<>()
+
+    @Transient
+    SurveyType getType() {
+        if (this.name.contains('Pit')) {
+            return SurveyType.PIT
+        } else {
+            return SurveyType.MATCH
+        }
+    }
 }

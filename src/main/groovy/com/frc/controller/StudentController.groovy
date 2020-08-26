@@ -1,8 +1,7 @@
 package com.frc.controller
 
 import com.frc.dto.StudentDto
-import com.frc.repository.StudentRepository
-import com.frc.util.Converter
+import com.frc.service.StudentService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -13,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController
 class StudentController {
 
     @Autowired
-    StudentRepository studentRepository
+    StudentService service
 
     @GetMapping
     Collection<StudentDto> getActive() {
-        studentRepository.findByActive(true).collect { Converter.convert(it) } as TreeSet
+        service.getActiveStudents()
     }
 
 }

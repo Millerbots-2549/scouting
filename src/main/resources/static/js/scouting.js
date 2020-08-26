@@ -10,7 +10,6 @@ $(document).ready(function () {
         {
             type: "GET",
             url: "events",
-            //url: "events.json",
             dataType: "json",
             success: function (events) {
                 build_event(events);
@@ -29,7 +28,6 @@ $(document).ready(function () {
             {
                 type: "GET",
                 url: "events/" + eventId + "/surveys",
-                //url: "surveys.json",
                 dataType: "json",
                 success: function (surveys) {
                     build_survey_list(surveys);

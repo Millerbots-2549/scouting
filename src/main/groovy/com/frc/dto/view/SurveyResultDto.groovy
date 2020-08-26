@@ -2,7 +2,7 @@ package com.frc.dto.view
 
 import groovy.transform.EqualsAndHashCode
 
-@EqualsAndHashCode(includes = ['surveyId'])
+@EqualsAndHashCode(includes = ['surveyName', 'surveyId'])
 class SurveyResultDto {
 
     String surveyName
