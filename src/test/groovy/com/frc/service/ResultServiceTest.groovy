@@ -1,14 +1,15 @@
-package com.frc.controller
+package com.frc.service
 
+import com.frc.controller.ResultController
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class ResultControllerTest extends Specification {
+class ResultServiceTest extends Specification {
 
     @Unroll
     def 'test calculateAverage'() {
         expect:
-        ResultController.calculateAverage(values) == result
+        ResultService.calculateAverage(values) == result
 
         where:
         values| result
