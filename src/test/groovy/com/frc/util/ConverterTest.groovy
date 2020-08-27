@@ -68,7 +68,7 @@ class ConverterTest extends Specification {
 
         then:
         result.eventId == event.id
-        result.name == event.name
+        result.name == 'event1 2020'
         result.city == event.city
         result.state == event.state
         result.startDate == event.startDate
@@ -112,7 +112,7 @@ class ConverterTest extends Specification {
         result.surveySectionId == section.id
         result.name == section.name
         result.sequence == section.sequence
-        result.questions == section.questions
+        result.questions.size() == section.questions.size()
     }
 
     def "convert question"() {
@@ -144,7 +144,7 @@ class ConverterTest extends Specification {
         result.startTime == matchup.startTime
         result.matchNumber == matchup.matchNumber
         result.type == matchup.type
-        result.teamMatchups == matchup.teamMatchups
+        result.teamMatchups.size() == matchup.teamMatchups.size()
     }
 
     def "convert team"() {
@@ -172,7 +172,7 @@ class ConverterTest extends Specification {
         then:
         result.questionTypeId == questionType.id
         result.description == questionType.description
-        result.responseValues == questionType.responseValues
+        result.responseValues.size() == questionType.responseValues.size()
     }
 
     def "convert response value"() {
