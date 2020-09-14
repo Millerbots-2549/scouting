@@ -1,1 +1,0 @@
-pscp -i "C:\Users\dholl\Google Drive\Millerbots Scouting app\scouting.ppk" "C:\Users\dholl\Google Drive\Millerbots Scouting app\scouting.jar" ec2-user@ec2-18-219-14-237.us-east-2.compute.amazonaws.com:/home/ec2-user/scouting.jar
