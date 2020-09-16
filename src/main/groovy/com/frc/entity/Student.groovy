@@ -35,5 +35,5 @@ class Student {
     Set<Response> responses = new HashSet<>()
 
     @OneToMany(mappedBy = "student")
-    Set<StudentRole> studentRoles = new HashSet<>()
+    Set<StudentRole> roles = new HashSet<>()
 }

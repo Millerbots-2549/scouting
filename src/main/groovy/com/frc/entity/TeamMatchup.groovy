@@ -17,6 +17,9 @@ class TeamMatchup {
     @Column(name = 'response_saved', nullable = false)
     Boolean responseSaved
 
+    @Column(name = 'alliance_order', nullable = false)
+    Integer allianceOrder
+
     @ManyToOne
     @JoinColumn(name = "matchup_id", referencedColumnName = "id", nullable = false)
     Matchup matchup

@@ -62,7 +62,7 @@ $(document).ready(function () {
 
     function buildSurveySection(survey) {
         let surveyHtml = '';
-        surveyHtml += '<hr><h2>' + survey.surveyName + '</h2><table id="surveyResults' + survey.surveyId + '" class="table-responsive table-bordered">';
+        surveyHtml += '<hr><h2>' + survey.surveyName + '</h2><table id="surveyResults' + survey.surveyId + '" class="table table-responsive table-bordered table-striped">';
         surveyHtml += buildTableHeader(survey.questions);
         surveyHtml += buildTableBody(survey.questions);
         surveyHtml += '</table>';
@@ -70,7 +70,7 @@ $(document).ready(function () {
     }
 
     function buildTableHeader(questions) {
-        let surveyHtml = '<thead>';
+        let surveyHtml = '<thead class="thead-dark">';
         surveyHtml += buildHeaderRow(questions[0]);
         surveyHtml += '</thead>';
         return surveyHtml;
@@ -117,7 +117,7 @@ $(document).ready(function () {
         for (let response of responses) {
             rowHtml += '<td>' + response.response + '</td>';
         }
-        rowHtml += '<td>' + question.summary + '</td>';
+        rowHtml += '<td class="table-warning">' + question.summary + '</td>';
         rowHtml += '</tr>';
         return rowHtml;
     }

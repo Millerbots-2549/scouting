@@ -85,6 +85,7 @@ class MatchupCollector extends BlueAllianceClient {
 
         TeamMatchup tm = new TeamMatchup(
                 alliance: MatchupType.PIT.name().toLowerCase(),
+                allianceOrder: team.id,
                 matchup: matchup,
                 responseSaved: false,
                 team: team)
@@ -123,12 +124,14 @@ class MatchupCollector extends BlueAllianceClient {
                 redScore: convertScore(match.alliances.red.score as String),
                 blueScore: convertScore(match.alliances.blue.score as String))
 
+        int order = 1
         match.alliances.red.team_keys.each {
-            TeamMatchup tm = createTeamMatchup(matchUp, it as String, Alliance.RED.name().toLowerCase(), matchUp.redScore)
+            TeamMatchup tm = createTeamMatchup(matchUp, it as String, Alliance.RED.name().toLowerCase(), matchUp.redScore, order++)
             matchUp.teamMatchups.add(tm)
         }
+        order = 1
         match.alliances.blue.team_keys.each {
-            TeamMatchup tm = createTeamMatchup(matchUp, it as String, Alliance.BLUE.name().toLowerCase(), matchUp.blueScore)
+            TeamMatchup tm = createTeamMatchup(matchUp, it as String, Alliance.BLUE.name().toLowerCase(), matchUp.blueScore, order++)
             matchUp.teamMatchups.add(tm)
         }
         saveOrUpdate(matchUp)
@@ -162,9 +165,10 @@ class MatchupCollector extends BlueAllianceClient {
         }
     }
 
-    private TeamMatchup createTeamMatchup(Matchup matchup, String teamKey, String alliance, Integer score) {
+    private TeamMatchup createTeamMatchup(Matchup matchup, String teamKey, String alliance, Integer score, int order) {
         return new TeamMatchup(
                 alliance: alliance,
+                allianceOrder: order,
                 matchup: matchup,
                 responseSaved: score != null,
                 team: findTeam(teamKey))

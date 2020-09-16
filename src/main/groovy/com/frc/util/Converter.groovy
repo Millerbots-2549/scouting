@@ -66,6 +66,7 @@ class Converter {
             new TeamMatchupDto(
                     teamMatchupId: tm.id,
                     alliance: tm.alliance,
+                    allianceOrder: tm.allianceOrder,
                     team: convert(tm.team)
             )
         } else {

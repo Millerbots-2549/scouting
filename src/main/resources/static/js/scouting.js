@@ -247,23 +247,32 @@ $(document).ready(function () {
     }
 
     function build_teams(teamMatchupObjs, selectedAlliance) {
-        let teamOptions = '', teams = [];
-
+        let teams = [];
         for (let teamMatchup of teamMatchupObjs) {
             teams.push({
-                sortBy: teamMatchup.team.teamId,
+                sortBy: teamMatchup.allianceOrder,
                 teamId: teamMatchup.team.teamId,
                 name: teamMatchup.team.name,
                 matchupId: teamMatchup.teamMatchupId,
                 alliance: teamMatchup.alliance
             });
         }
-
         teams.sort(sortNumerically);
 
-        for (let matches of teams) {
-            if (selectedAlliance === matches.alliance) {
-                teamOptions += '<option value="' + matches.matchupId + '" data-team-id="' + matches.teamId + '">' + matches.teamId + ' - ' + matches.name + '</option>';
+        let teamOptions = ''
+        for (let team of teams) {
+            if (selectedAlliance === team.alliance) {
+                teamOptions += '<option value="';
+                teamOptions += team.matchupId;
+                teamOptions += '" data-team-id="';
+                teamOptions += team.teamId;
+                teamOptions += '">';
+                teamOptions += team.sortBy;
+                teamOptions += ' - ';
+                teamOptions += team.teamId;
+                teamOptions += ' - ';
+                teamOptions += team.name;
+                teamOptions += '</option>';
             }
         }
 
