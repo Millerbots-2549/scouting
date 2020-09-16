@@ -22,7 +22,6 @@ class EventController {
 
     @GetMapping(path = '/{eventId}/surveys', produces = APPLICATION_JSON_VALUE)
     Set<SurveyDto> getSurveys(@PathVariable(name = 'eventId', required = true) Integer eventId) {
-
         service.getEventSurveys(eventId)
     }
 

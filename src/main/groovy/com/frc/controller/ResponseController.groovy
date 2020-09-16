@@ -4,13 +4,12 @@ import com.frc.dto.ResponseDto
 import com.frc.service.ResponseService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
+import org.springframework.security.access.annotation.Secured
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/responses")
 class ResponseController {
-
-    private static final String ZERO = '0'
 
     @Autowired
     ResponseService service

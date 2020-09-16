@@ -7,10 +7,6 @@
     width: 100px;
 }
 
-label {
-    font-weight: bold;
-}
-
 .section {
     margin-top: 15px;
 }
@@ -43,16 +39,12 @@ label {
 }
 
 button.btn {
-
     font-weight: bold;
     margin-left: 1em;
     width: 2.75em;
-
 }
 
 button.btn-primary-lighter {
-
     background-color: #7ebcff;
     border-color: #7ebcff;
-
 }

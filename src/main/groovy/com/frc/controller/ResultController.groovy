@@ -7,6 +7,7 @@ import com.frc.service.EventService
 import com.frc.service.ResultService
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.annotation.Secured
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -21,7 +22,6 @@ class ResultController {
     ResultService service
     @Autowired
     EventService eventService
-
 
     /**
      *

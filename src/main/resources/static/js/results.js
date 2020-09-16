@@ -1,60 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Scouting Results</title>
-    <meta charset="utf-8" content="width=device-width, initial-scale=1" name="viewport"/>
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/fontawesome-all.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/millerbots.css" rel="stylesheet" type="text/css"/>
-    <script src="js/jquery.min.js" type="text/javascript"></script>
-    <script src="js/popper.min.js" type="text/javascript"></script>
-    <script src="js/bootstrap.min.js" type="text/javascript"></script>
-</head>
-<body>
+$(document).ready(function () {
 
-<div class="jumbotron text-center">
-    <div class="container">
-        <img alt="" id="millerbots-logo" src="images/miller_bots.jpg"/>
-        <h1>Washburn Millerbots Scouting System</h1>
-        <p>Team 2549</p>
-    </div>
-    <nav class="navbar navbar-expand-sm bg-light navbar-light">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="scouting.html">Scouting</a></li>
-        </ul>
-    </nav>
-    <p></p>
-</div>
-
-<div class="container-fluid">
-    <div class="" id="event_info">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="d-flex flex-column">
-                    <label for="event_name">Event Name:</label>
-                    <select id="event_name" name="eventId"></select>
-                </div>
-            </div>
-
-            <div class="col-sm-3">
-                <div class="d-flex flex-column">
-                    <label for="team_number">Team:</label>
-                    <select id="team_number" name="teamId"></select>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div id="resultsDiv"></div>
-
-</div>
-
-<script type="text/javascript">
-
-    var eventId;
-    var teamId;
+    let eventId;
+    let teamId;
 
     $.ajax(
         {
@@ -68,7 +15,6 @@
                 console.log(response);
             }
         });
-
 
     $('#event_name').on('change', function () {
         eventId = $(this).val();
@@ -96,13 +42,12 @@
                 dataType: "json",
                 cache: false,
                 success: function (json) {
-                    var allSurveyData = '';
-                    var surveyObjs = json.surveys;
+                    let allSurveyData = '';
+                    let surveyObjs = json.surveys;
                     if (surveyObjs === undefined || surveyObjs.length === 0) {
                         allSurveyData += '<hr><h4>No Data Found</h4>';
                     } else {
-                        for (i in surveyObjs) {
-                            var survey = surveyObjs[i];
+                        for (let survey of surveyObjs) {
                             allSurveyData += buildSurveySection(survey)
                         }
                     }
@@ -116,7 +61,7 @@
     });
 
     function buildSurveySection(survey) {
-        var surveyHtml = '';
+        let surveyHtml = '';
         surveyHtml += '<hr><h2>' + survey.surveyName + '</h2><table id="surveyResults' + survey.surveyId + '" class="table-responsive table-bordered">';
         surveyHtml += buildTableHeader(survey.questions);
         surveyHtml += buildTableBody(survey.questions);
@@ -125,28 +70,28 @@
     }
 
     function buildTableHeader(questions) {
-        var surveyHtml = '<thead>';
+        let surveyHtml = '<thead>';
         surveyHtml += buildHeaderRow(questions[0]);
         surveyHtml += '</thead>';
         return surveyHtml;
     }
 
     function buildTableBody(questions) {
-        var surveyHtml = '<tbody>';
+        let surveyHtml = '<tbody>';
         surveyHtml += buildStudentNameRow(questions[0]);
-        for (i in questions) {
-            surveyHtml += buildRow(questions[i])
+        for (let question of questions) {
+            surveyHtml += buildRow(question)
         }
         surveyHtml += '</tbody>';
         return surveyHtml;
     }
 
     function buildHeaderRow(question) {
-        var responses = question.responses;
-        var rowHtml = '<tr>';
+        let responses = question.responses;
+        let rowHtml = '<tr>';
         rowHtml += '<th>Question</th>';
-        for (i in responses) {
-            rowHtml += '<th>Match ' + responses[i].matchup + '</th>';
+        for (let response of responses) {
+            rowHtml += '<th>Match ' + response.matchup + '</th>';
         }
         rowHtml += '<th>Summary</th>';
         rowHtml += '</tr>';
@@ -154,11 +99,11 @@
     }
 
     function buildStudentNameRow(question) {
-        var responses = question.responses;
-        var rowHtml = '<tr>';
+        let responses = question.responses;
+        let rowHtml = '<tr>';
         rowHtml += '<td><I>Student</I></td>';
-        for (i in responses) {
-            rowHtml += '<td><I>' + responses[i].studentName + '</I></td>';
+        for (let response of responses) {
+            rowHtml += '<td><I>' + response.studentName + '</I></td>';
         }
         rowHtml += '<td></td>';
         rowHtml += '</tr>';
@@ -166,11 +111,11 @@
     }
 
     function buildRow(question) {
-        var responses = question.responses;
-        var rowHtml = '<tr>';
+        let responses = question.responses;
+        let rowHtml = '<tr>';
         rowHtml += '<td>' + question.question + '</td>';
-        for (i in responses) {
-            rowHtml += '<td>' + responses[i].response + '</td>';
+        for (let response of responses) {
+            rowHtml += '<td>' + response.response + '</td>';
         }
         rowHtml += '<td>' + question.summary + '</td>';
         rowHtml += '</tr>';
@@ -178,10 +123,9 @@
     }
 
     function buildEvent(eventsObj) {
-        var eventOptions = '<option value="-1"></option>';
+        let eventOptions = '<option value="-1"></option>';
 
-        for (i in eventsObj) {
-            var event = eventsObj[i];
+        for (let event of eventsObj) {
             eventOptions += '<option value="' + event.eventId + '">' + event.city + ' - ' + event.name + '</option>';
         }
 
@@ -189,18 +133,15 @@
     }
 
     function buildTeamList(teamObjs) {
-        var teamOptions = '<option value="-1"></option>';
+        let teamOptions = '<option value="-1"></option>';
 
-        for (i in teamObjs) {
-            var team = teamObjs[i];
-            var selection = '[' + team.teamId + '] ' + team.name;
+        for (let team of teamObjs) {
+            let selection = '[' + team.teamId + '] ' + team.name;
             teamOptions += '<option value="' + team.teamId + '">' + selection + '</option>';
         }
 
         $('#team_number').html(teamOptions);
     }
 
-</script>
-
-</body>
-</html>
+})
+;

@@ -14,6 +14,7 @@ import com.frc.repository.TeamRepository
 import com.frc.util.Converter
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Service
 
 import javax.transaction.Transactional
@@ -28,6 +29,7 @@ class ResultService {
     @Autowired
     EventRepository eventRepository
 
+    @Secured('ROLE_ADMIN')
     Set<TeamDto> getTeams(Integer eventId) {
         Set<TeamDto> teamDtos = [] as TreeSet
         Event event = eventRepository.getOne(eventId)
@@ -39,6 +41,7 @@ class ResultService {
         teamDtos
     }
 
+    @Secured('ROLE_ADMIN')
     ResultDto getResults(Integer eventId, Integer teamId) {
 
         Team team = teamRepository.findById(teamId).orElse(null)

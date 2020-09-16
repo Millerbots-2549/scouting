@@ -9,6 +9,7 @@ import com.frc.repository.TeamMatchupRepository
 import groovy.util.logging.Slf4j
 import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
 import javax.transaction.Transactional
@@ -30,7 +31,7 @@ class ResponseService {
     QuestionRepository questionRepository
 
     void save(Collection<ResponseDto> responseDtos) {
-        Student student = getStudent(responseDtos)
+        Student student = getStudent(SecurityContextHolder.getContext().authentication.name)
         TeamMatchup tm = getTeamMatchup(responseDtos)
         tm.responseSaved = true
 
@@ -59,10 +60,10 @@ class ResponseService {
         tm
     }
 
-    private Student getStudent(Collection<ResponseDto> responseDtos) {
-        Student student = studentRepository.findById(responseDtos.first().studentId).orElse(null)
+    private Student getStudent(String username) {
+        Student student = studentRepository.findByUsername(username)
         if (student == null) {
-            throw new RuntimeException("Not able to find student with id=${responseDtos.first().studentId}")
+            throw new RuntimeException("Not able to find student with username=${username}")
         }
         student
     }
