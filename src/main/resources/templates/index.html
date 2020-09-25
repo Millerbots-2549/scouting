@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link href="css/millerbots.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/millerbots.css}" rel="stylesheet" type="text/css"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -18,7 +18,7 @@
     <!--Top of page and menu-->
     <div class="jumbotron text-center">
         <div class="container">
-            <img alt="" id="millerbots-logo" src="images/miller_bots.jpg"/>
+            <img alt="" id="millerbots-logo" th:src="@{/images/miller_bots.jpg}"/>
             <h1>Washburn Millerbots Scouting System</h1>
             <h5 class="text-primary">Team 2549</h5>
             <p></p>

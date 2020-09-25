@@ -11,8 +11,9 @@ class StudentRole {
     @Column(name = 'id', nullable = false)
     Integer id
 
+    @Enumerated(EnumType.STRING)
     @Column(name = 'role', nullable = false, length = 50)
-    String role
+    RoleType role
 
     @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "id", nullable = false)

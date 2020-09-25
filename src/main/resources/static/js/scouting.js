@@ -111,7 +111,6 @@ $(document).ready(function () {
     }
 
     $("#submit").on('click', function () {
-        event.preventDefault();
         if (confirm_submit()) {
             let responses = get_responses();
             submit_responses(responses);
