@@ -1,3 +1,3 @@
 ps -ef | grep java | grep scout | grep -v grep | awk '{print $2}' | xargs kill
-sudo cp ./build/libs/scouting-1.0.0.jar /usr/local/bin/scouting/scouting.jar
+cp ./build/libs/scouting-1.0.0.jar /usr/local/bin/scouting/scouting.jar
 /usr/local/bin/scouting/startup
