@@ -7,4 +7,5 @@ interface StudentRepository extends JpaRepository<Student, Integer> {
 
     Set<Student> findByActive(Boolean active)
 
+    Student findByUsername(String username)
 }

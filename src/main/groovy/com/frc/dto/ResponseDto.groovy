@@ -5,5 +5,4 @@ class ResponseDto {
     String response
     Integer questionId
     Integer teamMatchupId
-    Integer studentId
 }

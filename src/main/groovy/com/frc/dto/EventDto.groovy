@@ -1,11 +1,13 @@
 package com.frc.dto
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect
+import groovy.transform.Sortable
 
-import java.sql.Date
+import java.time.LocalDate
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY
 
+@Sortable(includes = ['name', 'startDate', 'eventId'])
 @JsonAutoDetect(fieldVisibility = ANY)
 class EventDto {
     Integer eventId
@@ -13,7 +15,7 @@ class EventDto {
     String name
     String city
     String state
-    Date startDate
-    Date endDate
+    LocalDate startDate
+    LocalDate endDate
     Set<MatchupDto> matchups
 }

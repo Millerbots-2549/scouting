@@ -1,11 +1,6 @@
 package com.frc.entity
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.ManyToMany
-import javax.persistence.OneToMany
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = 'survey')
@@ -18,12 +13,18 @@ class Survey {
     @Column(name = 'name', nullable = false)
     String name
 
-    @Column(name = 'default', nullable = false)
-    Boolean current = Boolean.FALSE
-
     @ManyToMany(mappedBy = "surveys")
     Set<Event> events = new HashSet<>()
 
     @OneToMany(mappedBy = "survey")
     Set<SurveySection> surveySections = new HashSet<>()
+
+    @Transient
+    SurveyType getType() {
+        if (this.name.contains('Pit')) {
+            return SurveyType.PIT
+        } else {
+            return SurveyType.MATCH
+        }
+    }
 }

@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 
 import javax.transaction.Transactional
+import java.time.LocalDate
 
 @Slf4j
 @Transactional
@@ -23,18 +24,20 @@ class RankingCollector extends BlueAllianceClient {
 
     // initial delay of 10 minutes and then once an hour after that
     @Scheduled(fixedRate = 3600000l, initialDelay = 600000l)
-    void getRankings() {
+    int getRankings() {
         if (ENABLED) {
             log.debug("Starting the collection of blue alliance rankings")
-            Set<Event> events = eventRepository.findActiveEvents(new Date())
+            Set<Event> events = eventRepository.findActiveEvents(LocalDate.now())
             events?.each { event -> collectRankingData(event) }
             log.debug("Done with the collection of blue alliance rankings")
+            return events ? events.size() : 0
         }
+        return 0
     }
 
     private void collectRankingData(Event event) {
         HttpURLConnection connection = createConnection(event, 'rankings')
-        if (connection.responseCode == 200) {
+        if (connection && connection.responseCode == 200) {
             int count = 0
             EventRankingDto eventRanking = OBJECT_MAPPER.readValue(connection.inputStream, EventRankingDto.class)
             eventRanking?.rankings?.each { ranking ->

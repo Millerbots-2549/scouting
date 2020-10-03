@@ -1,0 +1,1 @@
+cp ./build/libs/scouting-1.0.0.war /var/lib/tomcat9/webapps/scouting.war

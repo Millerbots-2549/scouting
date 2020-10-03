@@ -4,4 +4,5 @@ class TeamMatchupDto {
     Integer teamMatchupId
     TeamDto team
     String alliance
+    Integer allianceOrder
 }

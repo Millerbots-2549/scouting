@@ -8,6 +8,8 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 
 import javax.transaction.Transactional
+import java.time.Instant
+import java.time.LocalDate
 
 @Slf4j
 @Transactional
@@ -19,21 +21,23 @@ class MatchupCollector extends BlueAllianceClient {
 
     // initial delay of 10 minutes and then once every 15 minutes after that
     @Scheduled(fixedRate = 900000l, initialDelay = 600000l)
-    void getMatchups() {
+    int getMatchups() {
         if (ENABLED) {
             log.debug("Starting the collection of blue alliance matchups")
-            Set<Event> events = eventRepository.findActiveEvents(new Date())
+            Set<Event> events = eventRepository.findActiveEvents(LocalDate.now())
             events?.each { event ->
                 collectTeamEventData(event)
                 collectMatchupData(event)
             }
             log.debug("Done with the collection of blue alliance matchups")
+            return events ? events.size() : 0
         }
+        return 0
     }
 
     private void collectTeamEventData(Event event) {
         HttpURLConnection connection = createConnection(event, 'teams/simple')
-        if (connection.responseCode == 200) {
+        if (connection && connection.responseCode == 200) {
             int count = 0
             List teams = OBJECT_MAPPER.readValue(connection.inputStream, List.class)
 
@@ -49,7 +53,7 @@ class MatchupCollector extends BlueAllianceClient {
 
     private void collectMatchupData(Event event) {
         HttpURLConnection connection = createConnection(event, 'matches/simple')
-        if (connection.responseCode == 200) {
+        if (connection && connection.responseCode == 200) {
             int count = 0
             List matches = OBJECT_MAPPER.readValue(connection.inputStream, List.class)
 
@@ -62,15 +66,15 @@ class MatchupCollector extends BlueAllianceClient {
     }
 
     private Matchup getPitMatchup(Event event) {
-        Matchup existingMatchup = matchupRepository.findByMatchNumberAndTypeAndEvent(-1, 'pit', event)
+        Matchup existingMatchup = matchupRepository.findByMatchNumberAndTypeAndEvent(-1, MatchupType.PIT.name().toLowerCase(), event)
         if (existingMatchup) {
             return existingMatchup
         } else {
             Matchup matchUp = new Matchup(
-                    startTime: new Date(),
+                    startTime: Instant.now(),
                     matchNumber: -1,
                     event: event,
-                    type: 'pit'
+                    type: MatchupType.PIT.name().toLowerCase()
             )
             return matchupRepository.save(matchUp)
         }
@@ -80,7 +84,8 @@ class MatchupCollector extends BlueAllianceClient {
         Team team = convertTeam(teamDto)
 
         TeamMatchup tm = new TeamMatchup(
-                alliance: 'pit',
+                alliance: MatchupType.PIT.name().toLowerCase(),
+                allianceOrder: team.id,
                 matchup: matchup,
                 responseSaved: false,
                 team: team)
@@ -112,19 +117,21 @@ class MatchupCollector extends BlueAllianceClient {
     private void convertToMatchup(Map<String, String> match, Event event) {
         long time = match.time as long
         Matchup matchUp = new Matchup(
-                startTime: new Date(time * 1000),
+                startTime: Instant.ofEpochSecond(time),
                 matchNumber: match.match_number as Integer,
                 event: event,
                 type: findMatchupType(match.comp_level as String),
                 redScore: convertScore(match.alliances.red.score as String),
                 blueScore: convertScore(match.alliances.blue.score as String))
 
+        int order = 1
         match.alliances.red.team_keys.each {
-            TeamMatchup tm = createTeamMatchup(matchUp, it as String, Alliance.RED.name().toLowerCase(), matchUp.redScore)
+            TeamMatchup tm = createTeamMatchup(matchUp, it as String, Alliance.RED.name().toLowerCase(), matchUp.redScore, order++)
             matchUp.teamMatchups.add(tm)
         }
+        order = 1
         match.alliances.blue.team_keys.each {
-            TeamMatchup tm = createTeamMatchup(matchUp, it as String, Alliance.BLUE.name().toLowerCase(), matchUp.blueScore)
+            TeamMatchup tm = createTeamMatchup(matchUp, it as String, Alliance.BLUE.name().toLowerCase(), matchUp.blueScore, order++)
             matchUp.teamMatchups.add(tm)
         }
         saveOrUpdate(matchUp)
@@ -158,9 +165,10 @@ class MatchupCollector extends BlueAllianceClient {
         }
     }
 
-    private TeamMatchup createTeamMatchup(Matchup matchup, String teamKey, String alliance, Integer score) {
+    private TeamMatchup createTeamMatchup(Matchup matchup, String teamKey, String alliance, Integer score, int order) {
         return new TeamMatchup(
                 alliance: alliance,
+                allianceOrder: order,
                 matchup: matchup,
                 responseSaved: score != null,
                 team: findTeam(teamKey))

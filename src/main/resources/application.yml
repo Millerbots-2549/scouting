@@ -3,24 +3,21 @@ spring:
     name: scouting
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://scouting.cpood3za7b6g.us-east-2.rds.amazonaws.com:3306/scouting?verifyServerCertificate=false&useSSL=false&requireSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/scouting?verifyServerCertificate=false&useSSL=false&requireSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: scout
-    password: password
-    jmx-enabled: false
+    password: Pa$$word4
     hikari:
       connection-test-query: select 1
       maximum-pool-size: 15
       connection-init-sql: select 1
+    tomcat:
+      jmx-enabled: false
   jpa:
     show-sql: false
-    database-platform: org.hibernate.dialect.MySQL5Dialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-server:
-  compression:
-    enabled: true
-  port: 8080
-  servlet:
-    application-display-name: scouting
-    context-path: /scouting
+  groovy:
+    template:
+      check-template-location: false
