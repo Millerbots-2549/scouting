@@ -21,10 +21,3 @@ spring:
   groovy:
     template:
       check-template-location: false
-server:
-  compression:
-    enabled: true
-  port: 8080
-  servlet:
-    application-display-name: scouting
-    context-path: /scouting

@@ -1,3 +1,1 @@
-ps -ef | grep java | grep scout | grep -v grep | awk '{print $2}' | xargs kill
-cp ./build/libs/scouting-1.0.0.jar /usr/local/bin/scouting/scouting.jar
-/usr/local/bin/scouting/startup
+cp ./build/libs/scouting-1.0.0.war /var/lib/tomcat9/webapps/scouting.war
