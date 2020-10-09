@@ -42,7 +42,6 @@ class EventService {
     }
 
     EventDto getEventSurvey(Integer eventId, Integer surveyId) {
-
         Event event = getEvent(eventId)
         Survey survey = getSurvey(event.surveys, surveyId)
 

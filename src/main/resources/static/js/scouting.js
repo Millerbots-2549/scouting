@@ -21,9 +21,9 @@ $(document).ready(function () {
 
     $('#event_name').on('change', function () {
         eventId = $(this).val();
-        surveyId = null;
-        events = null;
-        matchupKey = null;
+        surveyId = undefined;
+        events = undefined;
+        matchupKey = undefined;
         $.ajax(
             {
                 type: "GET",
@@ -55,11 +55,10 @@ $(document).ready(function () {
             success: function (json) {
                 events = json;
                 // when the survey changes need to clear out teams. matches will be rebuilt
-                $('#team_matchup_id').html('<option value="Select a Match No" selected></option>');
+                $('#team_matchup_id').html('<option value="1" selected></option>');
                 $('#alliance').html('<option value="1" selected></option>');
+                $('#survey').html("");
                 build_matchups(events);
-                $('#survey').html(build_survey(events.survey));
-                confirm_submit();
             },
             error: function (response) {
                 events = null;
@@ -76,6 +75,10 @@ $(document).ready(function () {
 
     $('#alliance').on('change', function () {
         build_teams(events.matchups[matchupKey].teamMatchups, this.value);
+    });
+
+    $('#team_matchup_id').on('change', function () {
+        $('#survey').html(build_survey(events.survey));
     });
 
     function get_responses() {
@@ -126,7 +129,7 @@ $(document).ready(function () {
             data: JSON.stringify(responses),
             success: function (result) {
                 alert("Your match data has been submitted.");
-                window.location = "index";
+                window.location = "scouting";
             },
 
             error: function (xhr, resp, text) {
@@ -259,6 +262,7 @@ $(document).ready(function () {
         teams.sort(sortNumerically);
 
         let teamOptions = ''
+        teamOptions += '<option value="-1" selected></option>';
         for (let team of teams) {
             if (selectedAlliance === team.alliance) {
                 teamOptions += '<option value="';
@@ -295,7 +299,6 @@ $(document).ready(function () {
         for (let questionObj of questionsObj) {
             let elementId = 'questionId' + questionObj.questionId;
             questionHTML += '<div class="question row" data-question-id="' + questionObj.questionId + '">';
-            questionHTML += '<label class="label label-default" for="' + elementId + '">' + questionObj.question + '</label>';
             questionHTML += build_response(questionObj, elementId);
             questionHTML += '</div>';
         }
@@ -309,10 +312,10 @@ $(document).ready(function () {
         switch (questionType) {
 
             case 'boolean':
-                return response_boolean(elementId);
+                return response_boolean(questionObj, elementId);
 
             case 'numeric':
-                return response_numeric(elementId);
+                return response_numeric(questionObj, elementId);
 
             case 'choice':
                 return response_choice(questionObj, elementId);
@@ -321,7 +324,7 @@ $(document).ready(function () {
                 return response_radio(questionObj, elementId);
 
             case 'text':
-                return response_text(questionObj.questionId, elementId);
+                return response_text(questionObj, elementId);
 
             default:
                 return '';
@@ -330,19 +333,84 @@ $(document).ready(function () {
 
     }
 
-    function response_boolean(elementId) {
-        let checkbox = '';
-        checkbox += '<input id="' + elementId + '" name="' + elementId + '" type="checkbox">';
-        return checkbox;
+    function response_boolean(questionObj, elementId) {
+        let html = '';
+        html += '<div class="col-sm-3">';
+        html += '<label class="checkbox-inline" for="' + elementId + '">' + questionObj.question + '</label> ';
+        html += '</div>';
+        html += '<div class="col-sm-1">';
+        html += '<input class="input-lg" id="' + elementId + '" name="' + elementId + '" type="checkbox">';
+        html += '</div>';
+        return html;
     }
 
-    function response_numeric(elementId) {
-        let numeric = '';
-        numeric += '<input id="' + elementId + '" name="' + elementId + '" type="number" min="0" max="100">';
-        numeric += '<button type="button" class="btn btn-primary increment"><i class="fas fa-plus"></i></button>';
-        numeric += '<button type="button" class="btn btn-primary decrement"><i class="fas fa-minus"></i></button>';
-        return numeric;
+    function response_numeric(questionObj, elementId) {
+        let html = '';
+        html += '<div class="col-sm-3">';
+        html += '<label class="label label-default" for="' + elementId + '">' + questionObj.question + '</label>';
+        html += '</div>';
+        html += '<div class="col-sm-8">';
+        html += '<input id="' + elementId + '" name="' + elementId + '" type="number" min="0" max="100">';
+        html += '<button type="button" class="btn btn-primary increment"><i class="fas fa-plus"></i></button>';
+        html += '<button type="button" class="btn btn-primary decrement"><i class="fas fa-minus"></i></button>';
+        html += '</div>';
+        return html;
 
+    }
+
+    function response_text(questionObj, elementId) {
+        let html = '';
+        html += '<div class="col-sm-3">';
+        html += '<label class="label label-default" for="' + elementId + '">' + questionObj.question + '</label>';
+        html += '</div>';
+        html += '<div class="col-sm-4 d-flex flex-column">';
+        html += '<textarea';
+        html += ' id="' + elementId + '"';
+        html += ' name="' + elementId + '"';
+        html += ' rows="2" maxlength="400"></textarea>';
+        html += '</div>';
+        return html;
+    }
+
+    function response_choice(questionObj, elementId) {
+
+        let values = questionObj.questionType.responseValues;
+        let html = ''
+        html += '<div class="col-sm-3">';
+        html += '<label class="label label-default" for="' + elementId + '">' + questionObj.question + '</label>';
+        html += '</div>';
+        html += '<div class="col-sm-4">';
+        html += '<select id="' + elementId + '" name="' + elementId + '">';
+
+        for (let aValue of values) {
+            if (aValue.isDefault) {
+                html += '<option selected="selected" value="' + aValue.value + '"> ' + aValue.value + '</option>';
+            } else {
+                html += '<option value="' + aValue.value + '"> ' + aValue.value + '</option>';
+            }
+        }
+
+        html += '</select>';
+        html += '</div>';
+        return html;
+
+    }
+
+    function response_radio(questionObj, elementId) {
+        let values = questionObj.questionType.responseValues;
+        let html = '';
+        html += '<div class="col-sm-3">';
+        html += '<label class="label label-default">' + questionObj.question + '</label> ';
+        html += '</div>';
+        for (let aValue of values) {
+            html += '<div class="col-sm-1">';
+            html += '  <label class="radio-inline input-lg">'
+            html += '<input id="' + elementId + '" name="' + elementId + '" type="radio" value="' + aValue.value + '"> ' + aValue.value;
+            html += '</label>  '
+            html += '</div>';
+        }
+
+        return html;
     }
 
     $(this).on('click', 'button.increment', function () {
@@ -354,44 +422,6 @@ $(document).ready(function () {
         let input = $(this).closest('button').prev().prev('input');
         input.get(0).value--;
     });
-
-    function response_text(questionId, elementId) {
-        let text = '';
-        text += '<textarea';
-        text += ' id="' + elementId + '"';
-        text += ' name="' + elementId + '"';
-        text += ' rows="2" cols="50" maxlength="400"></textarea>';
-        return text;
-    }
-
-    function response_choice(questionObj, elementId) {
-
-        let values = questionObj.questionType.responseValues;
-        let choice = '<select id="' + elementId + '" name="' + elementId + '">';
-
-        for (let aValue of values) {
-            if (aValue.isDefault) {
-                choice += '<option selected="selected" value="' + aValue.value + '"> ' + aValue.value + '</option>';
-            } else {
-                choice += '<option value="' + aValue.value + '"> ' + aValue.value + '</option>';
-            }
-        }
-
-        choice += '</select>';
-        return choice;
-
-    }
-
-    function response_radio(questionObj, elementId) {
-        let values = questionObj.questionType.responseValues;
-        let radio = '';
-
-        for (let aValue of values) {
-            radio += '<input id="' + elementId + '" name="' + elementId + '" type="radio" value="' + aValue.value + '"> ' + aValue.value;
-        }
-
-        return radio;
-    }
 
 })
 ;
