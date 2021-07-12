@@ -4,12 +4,10 @@ import com.frc.dto.ResponseDto
 import com.frc.entity.*
 import com.frc.repository.QuestionRepository
 import com.frc.repository.ResponseRepository
-import com.frc.repository.StudentRepository
 import com.frc.repository.TeamMatchupRepository
 import groovy.util.logging.Slf4j
 import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
 import javax.transaction.Transactional
@@ -26,12 +24,12 @@ class ResponseService {
     @Autowired
     TeamMatchupRepository teamMatchupRepository
     @Autowired
-    StudentRepository studentRepository
+    StudentService studentService
     @Autowired
     QuestionRepository questionRepository
 
     void save(Collection<ResponseDto> responseDtos) {
-        Student student = getStudent(SecurityContextHolder.getContext().authentication.name)
+        Student student = studentService.getAuthenticatedStudent()
         TeamMatchup tm = getTeamMatchup(responseDtos)
         tm.responseSaved = true
 
@@ -58,14 +56,6 @@ class ResponseService {
             throw new RuntimeException("Not able to find team match up with id=${responseDtos.first().teamMatchupId}")
         }
         tm
-    }
-
-    private Student getStudent(String username) {
-        Student student = studentRepository.findByUsername(username)
-        if (student == null) {
-            throw new RuntimeException("Not able to find student with username=${username}")
-        }
-        student
     }
 
     private Question getQuestion(ResponseDto it) {

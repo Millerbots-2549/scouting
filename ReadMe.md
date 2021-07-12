@@ -68,7 +68,7 @@ Use the auth key found in BlueAllianceClient.groovy which is `alXSYHeSPE3hFXTQMz
 In the response locate the events you want to set up. You will need to get the 'key'
 and the start and end dates. Add one day to the end day. This data needs to be inserted
 into the event table. Then create the survey and link the event to the survey.
-Once the event is set up in the blue alliance the system will download the data and
+Once the event is setup in the blue alliance the system will download the data and
 set up all the teams and matches. This could be automated by knowing the event name and year.
 
 For creating a new survey first add the data in the survey table. Generally you will create
