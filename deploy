@@ -1,1 +1,4 @@
-cp ./build/libs/scouting-1.0.0.war /var/lib/tomcat9/webapps/scouting.war
+./gradlew clean build
+cp ./build/libs/scouting*0.war /var/lib/tomcat9/webapps/scouting.war
+chgrp -R dan ./build
+chown -R dan ./build
