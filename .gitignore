@@ -1,6 +1,7 @@
 build/
 .gradle/
 .idea/
-scouting.iml
+*.iml
 database/*.mwb.bak
+database/defaults.cnf
 out/

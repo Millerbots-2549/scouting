@@ -1,8 +1,11 @@
 package com.frc.entity
 
+import groovy.transform.CompileStatic
+
 import javax.persistence.*
 import java.time.LocalDate
 
+@CompileStatic
 @Entity
 @Table(name = 'event')
 class Event {

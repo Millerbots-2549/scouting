@@ -2,7 +2,10 @@ package com.frc.util
 
 import com.frc.dto.*
 import com.frc.entity.*
+import groovy.transform.CompileStatic
+import org.apache.commons.lang3.StringUtils
 
+@CompileStatic
 class Converter {
 
     static def convert(Object object) {
@@ -13,8 +16,8 @@ class Converter {
         }
     }
 
-    static Collection<TeamMatchupDto> convertTeamMatchups(Collection<TeamMatchup> teamMatchups) {
-        List<TeamMatchupDto> dtos = []
+    static Set<TeamMatchupDto> convertTeamMatchups(Set<TeamMatchup> teamMatchups) {
+        Set<TeamMatchupDto> dtos = [] as TreeSet
         teamMatchups?.each {
             if (it && !it.responseSaved) {
                 dtos.add(convert(it))
@@ -28,7 +31,13 @@ class Converter {
             new StudentDto(
                     studentId: student.id,
                     firstName: student.firstName,
-                    lastName: student.lastName
+                    lastName: student.lastName,
+                    username: student.username,
+                    password: '',
+                    enabled: student.active,
+                    roleAdmin: student.roles.any { it.role == RoleType.ROLE_ADMIN },
+                    rolePowerUser: student.roles.any { it.role == RoleType.ROLE_POWER_USER },
+                    roleUser: student.roles.any { it.role == RoleType.ROLE_USER }
             )
         } else {
             return null
@@ -150,6 +159,32 @@ class Converter {
         } else {
             return null
         }
+    }
+
+    // ------------------------------------------------------
+
+    static Student merge(StudentDto dto, Student entity) {
+        entity.id = dto.studentId
+        entity.firstName = StringUtils.stripToNull(dto.firstName)
+        entity.lastName = StringUtils.stripToNull(dto.lastName)
+        entity.username = StringUtils.stripToNull(dto.username)
+        entity.active = dto.enabled
+
+        // only mess with roles for a new reporter
+        if (entity.id == null) {
+            entity.roles = [] as HashSet
+            if (dto.roleUser) {
+                entity.roles.add(new StudentRole(student: entity, role: RoleType.ROLE_USER))
+            }
+            if (dto.rolePowerUser) {
+                entity.roles.add(new StudentRole(student: entity, role: RoleType.ROLE_POWER_USER))
+            }
+            if (dto.roleAdmin) {
+                entity.roles.add(new StudentRole(student: entity, role: RoleType.ROLE_ADMIN))
+            }
+        }
+
+        return entity
     }
 
 }

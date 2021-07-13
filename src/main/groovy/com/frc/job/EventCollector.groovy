@@ -3,6 +3,7 @@ package com.frc.job
 import com.frc.dto.blueAlliance.SimpleEventDto
 import com.frc.entity.Event
 import com.frc.repository.EventRepository
+import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -11,6 +12,7 @@ import javax.net.ssl.HttpsURLConnection
 import javax.transaction.Transactional
 
 @Slf4j
+//@CompileStatic
 @Transactional
 @Service
 class EventCollector {
@@ -35,7 +37,7 @@ class EventCollector {
         BlueAllianceClient.addHeaders(connection)
         if (connection.responseCode == 200) {
             SimpleEventDto[] simpleEvents = BlueAllianceClient.OBJECT_MAPPER.readValue(connection.inputStream, SimpleEventDto[].class)
-            return simpleEvents
+            return simpleEvents as List
         }
         return null
     }

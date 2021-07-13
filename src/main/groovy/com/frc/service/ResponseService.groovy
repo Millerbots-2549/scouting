@@ -5,6 +5,7 @@ import com.frc.entity.*
 import com.frc.repository.QuestionRepository
 import com.frc.repository.ResponseRepository
 import com.frc.repository.TeamMatchupRepository
+import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,9 +13,10 @@ import org.springframework.stereotype.Service
 
 import javax.transaction.Transactional
 
+@CompileStatic
+@Slf4j
 @Service
 @Transactional
-@Slf4j
 class ResponseService {
 
     private static final String ZERO = '0'

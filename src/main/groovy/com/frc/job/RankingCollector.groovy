@@ -6,6 +6,7 @@ import com.frc.entity.Event
 import com.frc.entity.Team
 import com.frc.entity.TeamRanking
 import com.frc.repository.RankingRepository
+import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
@@ -15,6 +16,7 @@ import javax.transaction.Transactional
 import java.time.LocalDate
 
 @Slf4j
+//@CompileStatic
 @Transactional
 @Service
 class RankingCollector extends BlueAllianceClient {

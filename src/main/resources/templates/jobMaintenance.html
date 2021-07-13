@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Millerbots Issue</title>
+    <title>Job Maintenance</title>
 
     <link rel="apple-touch-icon" sizes="180x180" th:href="@{/ico/apple-touch-icon.png}"/>
     <link rel="icon" type="image/png" sizes="32x32" th:href="@{/ico/favicon-32x32.png}"/>
@@ -12,13 +12,17 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" crossorigin="anonymous" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" type="text/css"/>
     <link rel="stylesheet" th:href="@{/css/millerbots.css}" type="text/css"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js" type="text/javascript"></script>
+
 </head>
-<body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
+<body>
 
 <!--Top of page and menu-->
 <div class="jumbotron text-center">
@@ -28,7 +32,6 @@
         <h5 class="text-primary">Team 2549</h5>
         <p></p>
     </div>
-
     <nav class="navbar navbar-expand-sm bg-light navbar-light">
         <div class="container-fluid">
             <ul class="nav navbar-nav">
@@ -39,7 +42,7 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="nav-maintenance">Maintenance</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" th:href="@{/studentMaintenance}">Students</a>
-                        <a class="dropdown-item" th:href="@{/jobMaintenance}">Jobs</a>
+                        <a class="dropdown-item active" th:href="@{/jobMaintenance}">Jobs</a>
                     </div>
                 </li>
             </ul>
@@ -48,16 +51,19 @@
             </ul>
         </div>
     </nav>
-
     <p></p>
+    <div class="container-fluid text-center">
+        <div class="row content">
+            <div class="col-sm-12 text-left" id="resultDiv">
+                <span id="message" class="bg-danger text-white"></span><br>
+                <div class="container-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--Main part of page-->
-<div class="container p-3 my-3">
-    <h5>There was a problem:</h5>
-    <p th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|"></p>
-    <p th:utext="${errorMessage}"></p>
-</div>
 
 </body>
 </html>

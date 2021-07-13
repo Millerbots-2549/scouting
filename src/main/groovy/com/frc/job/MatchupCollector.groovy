@@ -2,6 +2,7 @@ package com.frc.job
 
 import com.frc.entity.*
 import com.frc.repository.MatchupRepository
+import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
@@ -12,6 +13,7 @@ import java.time.Instant
 import java.time.LocalDate
 
 @Slf4j
+//@CompileStatic
 @Transactional
 @Service
 class MatchupCollector extends BlueAllianceClient {

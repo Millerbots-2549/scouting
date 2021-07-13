@@ -2,11 +2,12 @@ package com.frc.controller
 
 import com.frc.dto.ResponseDto
 import com.frc.service.ResponseService
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
-import org.springframework.security.access.annotation.Secured
 import org.springframework.web.bind.annotation.*
 
+@CompileStatic
 @RestController
 @RequestMapping("/responses")
 class ResponseController {

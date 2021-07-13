@@ -1,7 +1,10 @@
 package com.frc.entity
 
+import groovy.transform.CompileStatic
+
 import javax.persistence.*
 
+@CompileStatic
 @Entity
 @Table(name = 'team_ranking')
 class TeamRanking {
@@ -14,11 +17,11 @@ class TeamRanking {
     @Column(name = 'team_rank', nullable = false)
     Integer rank
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
     Event event
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "team_id", referencedColumnName = "id", nullable = false)
     Team team
 

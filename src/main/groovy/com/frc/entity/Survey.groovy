@@ -1,7 +1,10 @@
 package com.frc.entity
 
+import groovy.transform.CompileStatic
+
 import javax.persistence.*
 
+@CompileStatic
 @Entity
 @Table(name = 'survey')
 class Survey {

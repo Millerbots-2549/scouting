@@ -1,7 +1,10 @@
 package com.frc.entity
 
+import groovy.transform.CompileStatic
+
 import javax.persistence.*
 
+@CompileStatic
 @Entity
 @Table(name = 'student_role')
 class StudentRole {
@@ -15,7 +18,7 @@ class StudentRole {
     @Column(name = 'role', nullable = false, length = 50)
     RoleType role
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "student_id", referencedColumnName = "id", nullable = false)
     Student student
 }

@@ -9,6 +9,7 @@ import com.frc.entity.Survey
 import com.frc.entity.SurveyType
 import com.frc.repository.EventRepository
 import com.frc.util.Converter
+import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -16,9 +17,10 @@ import org.springframework.stereotype.Service
 import javax.transaction.Transactional
 import java.time.LocalDate
 
+@Slf4j
+@CompileStatic
 @Service
 @Transactional
-@Slf4j
 class EventService {
 
     @Autowired
@@ -30,7 +32,7 @@ class EventService {
     }
 
     Set<EventDto> getEvents() {
-        Set<Event> events = eventRepository.findAll()
+        List<Event> events = eventRepository.findAll()
         events.collect { Converter.convert(it) } as TreeSet
     }
 
@@ -38,6 +40,8 @@ class EventService {
         Event event = getEvent(eventId)
         if (event.surveys) {
             return event.surveys.collect { Converter.convert(it) } as TreeSet
+        } else {
+            return Collections.emptySet()
         }
     }
 
@@ -74,8 +78,8 @@ class EventService {
         return surveyDto
     }
 
-    private static Collection<MatchupDto> convertMatchups(Collection<Matchup> matchups, Survey survey) {
-        List<MatchupDto> dtos = []
+    private static Set<MatchupDto> convertMatchups(Collection<Matchup> matchups, Survey survey) {
+        Set<MatchupDto> dtos = [] as TreeSet
         matchups.each {
             MatchupDto dto = Converter.convert(it)
             if (dto.teamMatchups) {

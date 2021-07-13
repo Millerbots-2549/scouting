@@ -3,6 +3,7 @@ package com.frc.controller
 import com.frc.dto.EventDto
 import com.frc.dto.SurveyDto
 import com.frc.service.EventService
+import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 
 @Slf4j
+@CompileStatic
 @RestController
 @RequestMapping("/events")
 class EventController {

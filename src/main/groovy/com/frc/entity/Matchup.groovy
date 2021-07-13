@@ -1,8 +1,11 @@
 package com.frc.entity
 
+import groovy.transform.CompileStatic
+
 import javax.persistence.*
 import java.time.Instant
 
+@CompileStatic
 @Entity
 @Table(name = 'matchup')
 class Matchup {
@@ -27,7 +30,7 @@ class Matchup {
     @Column(name = 'red_score', nullable = true)
     Integer redScore
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
     Event event
 

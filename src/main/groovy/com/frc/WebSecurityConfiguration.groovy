@@ -1,5 +1,6 @@
 package com.frc
 
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 
 import javax.sql.DataSource
 
+@CompileStatic
 @Configuration
 class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -23,11 +25,14 @@ class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) {
-        http.authorizeRequests()
-                .anyRequest().authenticated()
-                .and().formLogin()
+        http
+                .csrf().disable()
+                .formLogin()
+                .and().logout().logoutSuccessUrl('/')
                 .and().httpBasic()
-                .and().csrf().disable()
+                .and().authorizeRequests()
+                .antMatchers('/js/**', '/ico/**', '/favicon.ico').permitAll()
+                .anyRequest().authenticated()
     }
 
     @Bean
