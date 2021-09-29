@@ -1,5 +1,6 @@
 spring:
   datasource:
+    username: root
     password: password
   jpa:
     show-sql: true

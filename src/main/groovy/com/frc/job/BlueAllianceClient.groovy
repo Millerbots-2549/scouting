@@ -32,34 +32,30 @@ abstract class BlueAllianceClient {
     @Autowired
     EventCollector eventCollector
 
-    HttpURLConnection createConnection(final Event event, final String endpoint) {
+    HttpsURLConnection createConnection(final Event event, final String endpoint) {
         String eventKey = eventCollector.getEventKey(event)
         if (eventKey) {
             String url = "${BLUE_ALLIANCE_URL}/event/${eventKey}/${endpoint}"
             HttpsURLConnection connection = new URL(url).openConnection() as HttpsURLConnection
-            addHeaders(connection)
-            addLastModifiedHeader(endpoint, connection)
+            addHeaders(endpoint, connection)
             return connection
         } else {
             return null
         }
     }
 
-    static void addHeaders(final HttpsURLConnection connection) {
+    static void addHeaders(final String mapKey, final HttpsURLConnection connection) {
         connection.setRequestProperty('X-TBA-Auth-Key', BLUE_ALLIANCE_AUTH_KEY)
         connection.setRequestProperty('User-Agent', 'groovy-2.4.4')
         connection.setRequestProperty('Accept', 'application/json')
+        if (LAST_MODIFIED.get(mapKey)) {
+            connection.setRequestProperty('If-Modified-Since', LAST_MODIFIED.get(mapKey))
+        }
     }
 
-    private static void addLastModifiedHeader(String endpoint, HttpsURLConnection connection) {
-        if (LAST_MODIFIED.get(endpoint)) {
-            connection.setRequestProperty('If-Modified-Since', LAST_MODIFIED.get(endpoint))
-        }
-
-        if (connection.responseCode == 200) {
-            String lastModified = connection.getHeaderField('Last-Modified')
-            LAST_MODIFIED.put(endpoint, lastModified)
-        }
+    static void updateLastModified(final String mapKey, final HttpsURLConnection connection) {
+        String lastModified = connection.getHeaderField('Last-Modified')
+        LAST_MODIFIED.put(mapKey, lastModified)
     }
 
     Team findTeam(final String teamKey) {

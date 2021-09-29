@@ -27,7 +27,8 @@ class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) {
         http
                 .csrf().disable()
-                .formLogin()
+                .rememberMe()
+                .and().formLogin()
                 .and().logout().logoutSuccessUrl('/')
                 .and().httpBasic()
                 .and().authorizeRequests()

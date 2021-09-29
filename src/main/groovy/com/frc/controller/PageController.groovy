@@ -1,10 +1,8 @@
 package com.frc.controller
 
-
 import groovy.transform.CompileStatic
 import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Controller
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
@@ -29,7 +27,7 @@ class PageController {
         return 'scouting'
     }
 
-    @Secured(['ROLE_POWER_USER','ROLE_ADMIN'])
+    @Secured(['ROLE_POWER_USER', 'ROLE_ADMIN'])
     @RequestMapping('/resultsPage')
     String results() {
         return 'results'
@@ -43,7 +41,7 @@ class PageController {
 
     @Secured('ROLE_ADMIN')
     @RequestMapping('/jobMaintenance')
-    String jobMaintenance(Model model) {
+    String jobMaintenance() {
         return 'jobMaintenance'
     }
 

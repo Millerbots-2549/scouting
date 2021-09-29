@@ -12,9 +12,9 @@ class StudentControllerTest extends Specification {
     @Autowired
     StudentController controller
 
-    def 'get active students'() {
+    def 'get all students'() {
         expect:
-        def results = controller.getActive()
+        def results = controller.getAll()
         results
     }
 

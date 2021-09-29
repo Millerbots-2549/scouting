@@ -33,20 +33,20 @@ class ResultController {
      * @param teamId
      * @return
      */
-    @Secured(['ROLE_POWER_USER','ROLE_ADMIN'])
+    @Secured(['ROLE_POWER_USER', 'ROLE_ADMIN'])
     @GetMapping('/events/{eventId}/teams/{teamId}')
     ResultDto getResults(@PathVariable('eventId') Integer eventId,
                          @PathVariable('teamId') Integer teamId) {
         service.getResults(eventId, teamId)
     }
 
-    @Secured(['ROLE_POWER_USER','ROLE_ADMIN'])
+    @Secured(['ROLE_POWER_USER', 'ROLE_ADMIN'])
     @GetMapping('/events/{eventId}/teams')
     Set<TeamDto> getTeams(@PathVariable('eventId') Integer eventId) {
         service.getTeams(eventId)
     }
 
-    @Secured(['ROLE_POWER_USER','ROLE_ADMIN'])
+    @Secured(['ROLE_POWER_USER', 'ROLE_ADMIN'])
     @GetMapping('/events')
     Set<EventDto> getEvents() {
         eventService.getEvents()

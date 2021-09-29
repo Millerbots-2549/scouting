@@ -31,10 +31,10 @@ class ResultService {
     @Autowired
     EventRepository eventRepository
 
-    @Secured(['ROLE_POWER_USER','ROLE_ADMIN'])
+    @Secured(['ROLE_POWER_USER', 'ROLE_ADMIN'])
     Set<TeamDto> getTeams(Integer eventId) {
         Set<TeamDto> teamDtos = [] as TreeSet
-        Event event = eventRepository.getOne(eventId)
+        Event event = eventRepository.getById(eventId)
         event.matchups.each { matchup ->
             matchup.teamMatchups.each { teamMatchup ->
                 teamDtos.add(Converter.convert(teamMatchup.team))
@@ -43,7 +43,7 @@ class ResultService {
         teamDtos
     }
 
-    @Secured(['ROLE_POWER_USER','ROLE_ADMIN'])
+    @Secured(['ROLE_POWER_USER', 'ROLE_ADMIN'])
     ResultDto getResults(Integer eventId, Integer teamId) {
 
         Team team = teamRepository.findById(teamId).orElse(null)

@@ -2,12 +2,12 @@ package com.frc.job
 
 import com.frc.entity.*
 import com.frc.repository.MatchupRepository
-import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 
+import javax.net.ssl.HttpsURLConnection
 import javax.transaction.Transactional
 import java.time.Instant
 import java.time.LocalDate
@@ -38,8 +38,9 @@ class MatchupCollector extends BlueAllianceClient {
     }
 
     private void collectTeamEventData(Event event) {
-        HttpURLConnection connection = createConnection(event, 'teams/simple')
-        if (connection && connection.responseCode == 200) {
+        String endpoint = 'teams/simple'
+        HttpsURLConnection connection = createConnection(event, endpoint)
+        if (connection?.responseCode == 200) {
             int count = 0
             List teams = OBJECT_MAPPER.readValue(connection.inputStream, List.class)
 
@@ -49,12 +50,14 @@ class MatchupCollector extends BlueAllianceClient {
                 count++
                 convertToPitMatchup(match as Map, pitMatchup)
             }
+            updateLastModified(endpoint, connection)
             log.info("Collected ${count} teams for pit matches")
         }
     }
 
     private void collectMatchupData(Event event) {
-        HttpURLConnection connection = createConnection(event, 'matches/simple')
+        String endPoint = 'matches/simple'
+        HttpsURLConnection connection = createConnection(event, endPoint)
         if (connection && connection.responseCode == 200) {
             int count = 0
             List matches = OBJECT_MAPPER.readValue(connection.inputStream, List.class)
@@ -63,6 +66,7 @@ class MatchupCollector extends BlueAllianceClient {
                 count++
                 convertToMatchup(match as Map, event)
             }
+            updateLastModified(endPoint, connection)
             log.info("Collected ${count} matches")
         }
     }

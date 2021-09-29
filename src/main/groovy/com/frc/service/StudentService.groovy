@@ -4,7 +4,6 @@ import com.frc.dto.StudentDto
 import com.frc.entity.RoleType
 import com.frc.entity.Student
 import com.frc.entity.StudentRole
-import com.frc.entity.Team
 import com.frc.repository.StudentRepository
 import com.frc.repository.TeamRepository
 import com.frc.util.Converter
