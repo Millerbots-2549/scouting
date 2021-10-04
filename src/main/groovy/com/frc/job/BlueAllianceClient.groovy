@@ -2,15 +2,17 @@ package com.frc.job
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.PropertyNamingStrategy
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.frc.entity.Event
 import com.frc.entity.Team
 import com.frc.repository.EventRepository
 import com.frc.repository.TeamRepository
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 
 import javax.net.ssl.HttpsURLConnection
 
+@CompileStatic
 abstract class BlueAllianceClient {
 
     static final String BLUE_ALLIANCE_URL = 'https://www.thebluealliance.com/api/v3'
@@ -18,7 +20,7 @@ abstract class BlueAllianceClient {
     static boolean ENABLED = false
 
     static final OBJECT_MAPPER = new ObjectMapper()
-            .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+            .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
 
     static final Map<String, String> LAST_MODIFIED = [:]
@@ -30,35 +32,30 @@ abstract class BlueAllianceClient {
     @Autowired
     EventCollector eventCollector
 
-    HttpURLConnection createConnection(final Event event, final String endpoint) {
+    HttpsURLConnection createConnection(final Event event, final String endpoint) {
         String eventKey = eventCollector.getEventKey(event)
         if (eventKey) {
             String url = "${BLUE_ALLIANCE_URL}/event/${eventKey}/${endpoint}"
             HttpsURLConnection connection = new URL(url).openConnection() as HttpsURLConnection
-            addHeaders(connection)
-            addLastModifiedHeader(endpoint, connection)
+            addHeaders(endpoint, connection)
             return connection
         } else {
             return null
         }
-
     }
 
-    static void addHeaders(final HttpsURLConnection connection) {
+    static void addHeaders(final String mapKey, final HttpsURLConnection connection) {
         connection.setRequestProperty('X-TBA-Auth-Key', BLUE_ALLIANCE_AUTH_KEY)
         connection.setRequestProperty('User-Agent', 'groovy-2.4.4')
         connection.setRequestProperty('Accept', 'application/json')
+        if (LAST_MODIFIED.get(mapKey)) {
+            connection.setRequestProperty('If-Modified-Since', LAST_MODIFIED.get(mapKey))
+        }
     }
 
-    private static void addLastModifiedHeader(String endpoint, HttpsURLConnection connection) {
-        if (LAST_MODIFIED.get(endpoint)) {
-            connection.setRequestProperty('If-Modified-Since', LAST_MODIFIED.get(endpoint))
-        }
-
-        if (connection.responseCode == 200) {
-            String lastModified = connection.getHeaderField('Last-Modified')
-            LAST_MODIFIED.put(endpoint, lastModified)
-        }
+    static void updateLastModified(final String mapKey, final HttpsURLConnection connection) {
+        String lastModified = connection.getHeaderField('Last-Modified')
+        LAST_MODIFIED.put(mapKey, lastModified)
     }
 
     Team findTeam(final String teamKey) {
@@ -70,6 +67,5 @@ abstract class BlueAllianceClient {
         }
         return null
     }
-
 
 }

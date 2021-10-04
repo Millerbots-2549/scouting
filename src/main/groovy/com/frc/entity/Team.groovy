@@ -1,9 +1,11 @@
 package com.frc.entity
 
+import groovy.transform.CompileStatic
 import groovy.transform.ToString
 
 import javax.persistence.*
 
+@CompileStatic
 @Entity
 @ToString
 @Table(name = 'team')

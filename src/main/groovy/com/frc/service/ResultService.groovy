@@ -12,6 +12,7 @@ import com.frc.entity.Team
 import com.frc.repository.EventRepository
 import com.frc.repository.TeamRepository
 import com.frc.util.Converter
+import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.annotation.Secured
@@ -19,9 +20,10 @@ import org.springframework.stereotype.Service
 
 import javax.transaction.Transactional
 
+@CompileStatic
+@Slf4j
 @Service
 @Transactional
-@Slf4j
 class ResultService {
 
     @Autowired
@@ -29,10 +31,10 @@ class ResultService {
     @Autowired
     EventRepository eventRepository
 
-    @Secured('ROLE_ADMIN')
+    @Secured(['ROLE_POWER_USER', 'ROLE_ADMIN'])
     Set<TeamDto> getTeams(Integer eventId) {
         Set<TeamDto> teamDtos = [] as TreeSet
-        Event event = eventRepository.getOne(eventId)
+        Event event = eventRepository.getById(eventId)
         event.matchups.each { matchup ->
             matchup.teamMatchups.each { teamMatchup ->
                 teamDtos.add(Converter.convert(teamMatchup.team))
@@ -41,7 +43,7 @@ class ResultService {
         teamDtos
     }
 
-    @Secured('ROLE_ADMIN')
+    @Secured(['ROLE_POWER_USER', 'ROLE_ADMIN'])
     ResultDto getResults(Integer eventId, Integer teamId) {
 
         Team team = teamRepository.findById(teamId).orElse(null)

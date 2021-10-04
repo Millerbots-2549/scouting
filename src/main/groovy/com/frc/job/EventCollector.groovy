@@ -11,6 +11,7 @@ import javax.net.ssl.HttpsURLConnection
 import javax.transaction.Transactional
 
 @Slf4j
+//@CompileStatic
 @Transactional
 @Service
 class EventCollector {
@@ -32,10 +33,10 @@ class EventCollector {
     private static List<SimpleEventDto> collectSimpleEvents(final Event event) {
         String url = "${BlueAllianceClient.BLUE_ALLIANCE_URL}/events/${event.startDate.year}/simple"
         HttpsURLConnection connection = new URL(url).openConnection() as HttpsURLConnection
-        BlueAllianceClient.addHeaders(connection)
+        BlueAllianceClient.addHeaders(url, connection)
         if (connection.responseCode == 200) {
             SimpleEventDto[] simpleEvents = BlueAllianceClient.OBJECT_MAPPER.readValue(connection.inputStream, SimpleEventDto[].class)
-            return simpleEvents
+            return simpleEvents as List
         }
         return null
     }

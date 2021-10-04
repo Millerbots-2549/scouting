@@ -37,11 +37,11 @@ you can type CTRL+C to terminate it.
 
 # Helpful Application Links
 
-- The main page is: http://localhost:8080/scouting
-- The main survey page is: http://localhost:8080/scouting/scouting.html
-- The main results page is: http://localhost:8080/scouting/results.html
+- The main page is: http://localhost:8082
+- The main survey page is: http://localhost:8082/scouting.html
+- The main results page is: http://localhost:8082/results.html
 
-The link to the Swagger docs is: http://localhost:8080/scouting/swagger-ui/
+The link to the Swagger docs is: http://localhost:8082/swagger-ui/
 
 The other links are:
 - GET: http://localhost:8080/scouting/events
@@ -96,7 +96,6 @@ SQL used to create a survey:
 
 `select * from response_value order by question_type_id;`
 
-
-In MySQL you can edit the result grids like a spread sheet and enter new data. When
+In MySQL you can edit the result grids like a spreadsheet and enter new data. When
 done insert statements will be generated that you can execute. Once the data is inserted
-the stuff is created and should be immediately viewable on the web site.
+the stuff is created and should be immediately viewable on the website.

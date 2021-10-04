@@ -1,7 +1,10 @@
 package com.frc.entity
 
+import groovy.transform.CompileStatic
+
 import javax.persistence.*
 
+@CompileStatic
 @Entity
 @Table(name = 'question')
 class Question {
@@ -17,11 +20,11 @@ class Question {
     @Column(name = 'sequence', nullable = false)
     Integer sequence
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "question_type_id", referencedColumnName = "id", nullable = false)
     QuestionType questionType
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "survey_section_id", referencedColumnName = "id", nullable = false)
     SurveySection surveySection
 
