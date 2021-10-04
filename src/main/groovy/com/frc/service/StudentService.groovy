@@ -50,6 +50,10 @@ class StudentService {
         return filteredStudents
     }
 
+    Set<StudentDto> getAll() {
+        studentRepository.findAll().collect { Converter.convert(it) } as TreeSet
+    }
+
     Student getAuthenticatedStudent() {
         String username = SecurityContextHolder.getContext().authentication.name
         Student student = studentRepository.findByUsername(username)
