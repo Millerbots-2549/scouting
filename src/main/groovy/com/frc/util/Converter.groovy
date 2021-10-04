@@ -26,6 +26,8 @@ class Converter {
         return dtos
     }
 
+    // ------------------------------------------------------
+
     static StudentDto convert(Student student) {
         if (student) {
             new StudentDto(
@@ -170,7 +172,7 @@ class Converter {
         entity.username = StringUtils.stripToNull(dto.username)
         entity.active = dto.enabled
 
-        // only mess with roles for a new reporter
+        // only mess with roles for a new student
         if (entity.id == null) {
             entity.roles = [] as HashSet
             if (dto.roleUser) {

@@ -6,7 +6,7 @@ $(function () {
         height: "auto",
         width: "100%",
 
-        filtering: false,
+        filtering: true,
         editing: true,
         inserting: true,
         sorting: true,
@@ -69,7 +69,7 @@ $(function () {
             {title: "First Name", name: "firstName", type: "text", width: 100, validate: "required"},
             {title: "Last Name", name: "lastName", type: "text", width: 100, validate: "required"},
             {title: "User Name", name: "username", type: "text", width: 100, validate: "required"},
-            {title: "Password", name: "password", type: "text", width: 100},
+            {title: "Password", name: "password", type: "text", width: 100, filtering: false},
             {title: "Enabled", name: "enabled", type: "checkbox", width: 100},
             {title: "ROLE POWER USER", name: "rolePowerUser", type: "checkbox", width: 100},
             {title: "ROLE ADMIN", name: "roleAdmin", type: "checkbox", width: 100},

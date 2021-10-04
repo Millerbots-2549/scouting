@@ -21,8 +21,13 @@ class StudentController {
 
     @GetMapping
     @Secured(['ROLE_ADMIN'])
-    Collection<StudentDto> getAll() {
-        service.getAll()
+    Collection<StudentDto> getAll(@RequestParam(name = 'firstName', required = false) String firstName,
+                                  @RequestParam(name = 'lastName', required = false) String lastName,
+                                  @RequestParam(name = 'username', required = false) String username,
+                                  @RequestParam(name = 'enabled', required = false) Boolean enabled,
+                                  @RequestParam(name = 'rolePowerUser', required = false) Boolean rolePowerUser,
+                                  @RequestParam(name = 'roleAdmin', required = false) Boolean roleAdmin) {
+        service.getAll(firstName, lastName, username, enabled, rolePowerUser, roleAdmin)
     }
 
     @Secured('ROLE_ADMIN')

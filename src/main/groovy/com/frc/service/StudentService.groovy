@@ -33,8 +33,21 @@ class StudentService {
     @Autowired
     PasswordEncoder passwordEncoder
 
-    Set<StudentDto> getActiveStudents() {
-        studentRepository.findByActive(true).collect { Converter.convert(it) } as TreeSet
+    Set<StudentDto> getAll(String firstName, String lastName, String username, Boolean enabled, Boolean rolePowerUser, Boolean roleAdmin) {
+        Set<StudentDto> allStudents = studentRepository.findAll().collect { Converter.convert(it) } as TreeSet
+        Set<StudentDto> filteredStudents = new TreeSet<>()
+        allStudents.each { StudentDto student ->
+            if ((!firstName || (firstName && student.firstName.containsIgnoreCase(firstName)))
+                    && (!lastName || (lastName && student.lastName.containsIgnoreCase(lastName)))
+                    && (!username || (username && student.username.containsIgnoreCase(username)))
+                    && (enabled == null || (enabled != null && student.enabled == enabled))
+                    && (rolePowerUser == null || (rolePowerUser != null && student.rolePowerUser == rolePowerUser))
+                    && (roleAdmin == null || (roleAdmin != null && student.roleAdmin == roleAdmin))) {
+
+                filteredStudents.add(student)
+            }
+        }
+        return filteredStudents
     }
 
     Set<StudentDto> getAll() {
