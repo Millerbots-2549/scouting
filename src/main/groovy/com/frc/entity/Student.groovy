@@ -1,6 +1,8 @@
 package com.frc.entity
 
 import groovy.transform.CompileStatic
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
 
 import javax.persistence.*
 
@@ -36,6 +38,7 @@ class Student {
 //    @OneToMany(mappedBy = "student")
 //    Set<Response> responses = new HashSet<>()
 
-    @OneToMany(mappedBy = 'student', cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = 'student', fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
     Set<StudentRole> roles = new HashSet<>()
 }
