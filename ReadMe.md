@@ -41,7 +41,7 @@ you can type CTRL+C to terminate it.
 - The main survey page is: http://localhost:8082/scouting.html
 - The main results page is: http://localhost:8082/results.html
 
-The link to the Swagger docs is: http://localhost:8082/swagger-ui/
+The link to the Swagger docs is: http://localhost:8082/swagger-ui.html
 
 The other links are:
 - GET: http://localhost:8080/scouting/events

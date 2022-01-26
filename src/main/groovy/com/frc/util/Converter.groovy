@@ -54,6 +54,7 @@ class Converter {
                     city: event.city,
                     state: event.state,
                     startDate: event.startDate,
+                    eventKey: event.eventKey,
                     endDate: event.endDate
             )
         } else {
@@ -164,6 +165,17 @@ class Converter {
     }
 
     // ------------------------------------------------------
+
+    static Event merge(EventDto dto, Event entity) {
+        entity.id = dto.eventId
+        entity.city = StringUtils.stripToNull(dto.city)
+        entity.endDate = dto.endDate
+        entity.eventKey = StringUtils.stripToNull(dto.eventKey)
+        entity.name = StringUtils.stripToNull(dto.name)
+        entity.startDate = dto.startDate
+        entity.state = StringUtils.stripToNull(dto.state)
+        return entity
+    }
 
     static Student merge(StudentDto dto, Student entity) {
         entity.id = dto.studentId

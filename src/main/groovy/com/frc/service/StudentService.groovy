@@ -64,6 +64,11 @@ class StudentService {
     }
 
     @Secured('ROLE_ADMIN')
+    void delete(Integer studentId) {
+        studentRepository.deleteById(studentId)
+    }
+
+    @Secured('ROLE_ADMIN')
     StudentDto save(StudentDto dto) {
         dto.roleUser = true
         Student entity = Converter.merge(dto, new Student())

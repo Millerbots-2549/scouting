@@ -3,61 +3,57 @@ let teamId;
 
 $(document).ready(function () {
 
-    $.ajax(
-        {
+    $.ajax({
+        type: "GET",
+        url: "results/events",
+        dataType: "json",
+        success: function (events) {
+            buildEvent(events);
+        },
+        error: function (response) {
+            console.log(response);
+        }
+    });
+
+    $('#event_name').on('change', function () {
+        eventId = $(this).val();
+        $.ajax({
             type: "GET",
-            url: "results/events",
+            url: "results/events/" + eventId + "/teams",
             dataType: "json",
-            success: function (events) {
-                buildEvent(events);
+            success: function (teams) {
+                $('#resultsDiv').html('');
+                buildTeamList(teams);
             },
             error: function (response) {
                 console.log(response);
             }
         });
-
-    $('#event_name').on('change', function () {
-        eventId = $(this).val();
-        $.ajax(
-            {
-                type: "GET",
-                url: "results/events/" + eventId + "/teams",
-                dataType: "json",
-                success: function (teams) {
-                    $('#resultsDiv').html('');
-                    buildTeamList(teams);
-                },
-                error: function (response) {
-                    console.log(response);
-                }
-            });
     });
 
     $('#team_number').on('change', function () {
         teamId = $(this).val();
-        $.ajax(
-            {
-                type: "GET",
-                url: "results/events/" + eventId + "/teams/" + teamId,
-                dataType: "json",
-                cache: false,
-                success: function (json) {
-                    let allSurveyData = '';
-                    let surveyObjs = json.surveys;
-                    if (surveyObjs === undefined || surveyObjs.length === 0) {
-                        allSurveyData += '<hr><h4>No Data Found</h4>';
-                    } else {
-                        for (let survey of surveyObjs) {
-                            allSurveyData += buildSurveySection(survey)
-                        }
+        $.ajax({
+            type: "GET",
+            url: "results/events/" + eventId + "/teams/" + teamId,
+            dataType: "json",
+            success: function (json) {
+                let allSurveyData = '';
+                let surveyObjs = json.surveys;
+                if (surveyObjs === undefined || surveyObjs.length === 0) {
+                    allSurveyData += '<hr><h4>No Data Found</h4>';
+                } else {
+                    for (let survey of surveyObjs) {
+                        allSurveyData += buildSurveySection(survey)
                     }
-
-                    $('#resultsDiv').html(allSurveyData);
-                },
-                error: function (response) {
-                    console.log(response);
                 }
-            });
+
+                $('#resultsDiv').html(allSurveyData);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
     });
 })
 ;
@@ -126,21 +122,17 @@ function buildRow(question) {
 
 function buildEvent(eventsObj) {
     let eventOptions = '<option value="-1"></option>';
-
     for (let event of eventsObj) {
         eventOptions += '<option value="' + event.eventId + '">' + event.city + ' - ' + event.name + '</option>';
     }
-
     $('#event_name').html(eventOptions);
 }
 
 function buildTeamList(teamObjs) {
     let teamOptions = '<option value="-1"></option>';
-
     for (let team of teamObjs) {
         let selection = '[' + team.teamId + '] ' + team.name;
         teamOptions += '<option value="' + team.teamId + '">' + selection + '</option>';
     }
-
     $('#team_number').html(teamOptions);
 }

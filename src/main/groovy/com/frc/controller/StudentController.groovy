@@ -4,6 +4,7 @@ import com.frc.dto.StudentDto
 import com.frc.service.StudentService
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
+import org.apache.commons.lang3.NotImplementedException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.annotation.Secured
 import org.springframework.web.bind.annotation.*
@@ -45,7 +46,6 @@ class StudentController {
     @Secured('ROLE_ADMIN')
     @DeleteMapping(value = '/{studentId}', produces = APPLICATION_JSON_VALUE)
     void delete(@PathVariable(name = 'studentId', required = true) Integer studentId) {
-
+        service.delete(studentId)
     }
-
 }

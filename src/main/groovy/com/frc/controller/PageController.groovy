@@ -34,6 +34,12 @@ class PageController {
     }
 
     @Secured('ROLE_ADMIN')
+    @RequestMapping('/eventMaintenance')
+    String events() {
+        return 'events'
+    }
+
+    @Secured('ROLE_ADMIN')
     @RequestMapping('/studentMaintenance')
     String students() {
         return 'students'
