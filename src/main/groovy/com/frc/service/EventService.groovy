@@ -12,6 +12,7 @@ import com.frc.util.Converter
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Service
 
 import javax.transaction.Transactional
@@ -34,6 +35,24 @@ class EventService {
     Set<EventDto> getEvents() {
         List<Event> events = eventRepository.findAll()
         events.collect { Converter.convert(it) } as TreeSet
+    }
+
+    @Secured('ROLE_ADMIN')
+    EventDto save(EventDto dto) {
+        Event entity = Converter.merge(dto, new Event())
+        Converter.convert(eventRepository.saveAndFlush(entity))
+    }
+
+    @Secured('ROLE_ADMIN')
+    EventDto update(Integer eventId, EventDto dto) {
+        Event event = eventRepository.getById(eventId)
+        Event entity = Converter.merge(dto, event)
+        Converter.convert(eventRepository.saveAndFlush(entity))
+    }
+
+    @Secured('ROLE_ADMIN')
+    void delete(Integer eventId) {
+        eventRepository.deleteById(eventId)
     }
 
     Set<SurveyDto> getEventSurveys(Integer eventId) {

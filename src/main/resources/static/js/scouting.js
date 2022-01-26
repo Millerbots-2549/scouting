@@ -9,7 +9,7 @@ $(document).ready(function () {
     $.ajax(
         {
             type: "GET",
-            url: "events",
+            url: "events/active",
             dataType: "json",
             success: function (events) {
                 build_event(events);
@@ -24,23 +24,22 @@ $(document).ready(function () {
         surveyId = undefined;
         events = undefined;
         matchupKey = undefined;
-        $.ajax(
-            {
-                type: "GET",
-                url: "events/" + eventId + "/surveys",
-                dataType: "json",
-                success: function (surveys) {
-                    build_survey_list(surveys);
+        $.ajax({
+            type: "GET",
+            url: "events/" + eventId + "/surveys",
+            dataType: "json",
+            success: function (surveys) {
+                build_survey_list(surveys);
 
-                    // When we change events we need to clear out teams and matches.
-                    $('#team_matchup_id').html('<option value="Select a Match No" selected></option>');
-                    $('#matchup_id').html('<option value="Select a Match No" selected></option>');
-                    $('#alliance').html('<option value="1" selected></option>');
-                },
-                error: function (response) {
-                    console.log(response);
-                }
-            });
+                // When we change events we need to clear out teams and matches.
+                $('#team_matchup_id').html('<option value="Select a Match No" selected></option>');
+                $('#matchup_id').html('<option value="Select a Match No" selected></option>');
+                $('#alliance').html('<option value="1" selected></option>');
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
     });
 
     $('#survey_name').on('change', function () {
@@ -49,9 +48,9 @@ $(document).ready(function () {
         surveyId = $(this).val();
 
         $.ajax({
-            dataType: "json",
+            type: "GET",
             url: "events/" + eventId + "/surveys/" + surveyId,
-            cache: false,
+            dataType: "json",
             success: function (json) {
                 events = json;
                 // when the survey changes need to clear out teams. matches will be rebuilt

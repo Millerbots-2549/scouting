@@ -19,6 +19,7 @@ class EventDto {
     String name
     String city
     String state
+    String eventKey
     LocalDate startDate
     LocalDate endDate
     Set<MatchupDto> matchups
