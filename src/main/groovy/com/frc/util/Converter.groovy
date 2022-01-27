@@ -48,6 +48,16 @@ class Converter {
 
     static EventDto convert(Event event) {
         if (event) {
+            EventDto dto = convertForMaintenance(event)
+            dto.name = "${event.name} ${event.startDate.year}"
+            return dto
+        } else {
+            return null
+        }
+    }
+
+    static EventDto convertForMaintenance(Event event) {
+        if (event) {
             return new EventDto(
                     eventId: event.id,
                     name: event.name,
@@ -170,7 +180,7 @@ class Converter {
         entity.id = dto.eventId
         entity.city = StringUtils.stripToNull(dto.city)
         entity.endDate = dto.endDate
-        entity.eventKey = StringUtils.stripToNull(dto.eventKey)
+        entity.eventKey = StringUtils.stripToNull(dto.eventKey) ?: entity.eventKey
         entity.name = StringUtils.stripToNull(dto.name)
         entity.startDate = dto.startDate
         entity.state = StringUtils.stripToNull(dto.state)

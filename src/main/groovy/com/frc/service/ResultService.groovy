@@ -9,7 +9,6 @@ import com.frc.entity.Event
 import com.frc.entity.QuestionTypeValue
 import com.frc.entity.Response
 import com.frc.entity.Team
-import com.frc.repository.EventRepository
 import com.frc.repository.TeamRepository
 import com.frc.util.Converter
 import groovy.transform.CompileStatic
@@ -29,12 +28,12 @@ class ResultService {
     @Autowired
     TeamRepository teamRepository
     @Autowired
-    EventRepository eventRepository
+    EventService eventService
 
     @Secured(['ROLE_POWER_USER', 'ROLE_ADMIN'])
     Set<TeamDto> getTeams(Integer eventId) {
         Set<TeamDto> teamDtos = [] as TreeSet
-        Event event = eventRepository.getById(eventId)
+        Event event = eventService.getEvent(eventId)
         event.matchups.each { matchup ->
             matchup.teamMatchups.each { teamMatchup ->
                 teamDtos.add(Converter.convert(teamMatchup.team))

@@ -7,10 +7,12 @@ import com.frc.entity.Event
 import com.frc.entity.Matchup
 import com.frc.entity.Survey
 import com.frc.entity.SurveyType
+import com.frc.job.BlueAllianceClient
 import com.frc.repository.EventRepository
 import com.frc.util.Converter
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
+import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Service
@@ -32,22 +34,32 @@ class EventService {
         events.collect { Converter.convert(it) } as TreeSet
     }
 
+    @Secured(['ROLE_POWER_USER', 'ROLE_ADMIN'])
     Set<EventDto> getEvents() {
         List<Event> events = eventRepository.findAll()
         events.collect { Converter.convert(it) } as TreeSet
     }
 
     @Secured('ROLE_ADMIN')
+    Set<EventDto> getEventsForMaintenance() {
+        List<Event> events = eventRepository.findAll()
+        events.collect { Converter.convertForMaintenance(it) } as TreeSet
+    }
+
+    @Secured('ROLE_ADMIN')
     EventDto save(EventDto dto) {
         Event entity = Converter.merge(dto, new Event())
-        Converter.convert(eventRepository.saveAndFlush(entity))
+        if (StringUtils.isBlank(entity.eventKey)) {
+            entity.eventKey = BlueAllianceClient.getEventKey(entity)
+        }
+        Converter.convertForMaintenance(eventRepository.saveAndFlush(entity))
     }
 
     @Secured('ROLE_ADMIN')
     EventDto update(Integer eventId, EventDto dto) {
-        Event event = eventRepository.getById(eventId)
+        Event event = getEvent(eventId)
         Event entity = Converter.merge(dto, event)
-        Converter.convert(eventRepository.saveAndFlush(entity))
+        Converter.convertForMaintenance(eventRepository.saveAndFlush(entity))
     }
 
     @Secured('ROLE_ADMIN')
