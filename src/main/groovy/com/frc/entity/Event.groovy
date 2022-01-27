@@ -15,14 +15,6 @@ class Event {
     @Column(name = 'id', nullable = false)
     Integer id
 
-    @ManyToMany(cascade = [CascadeType.ALL])
-    @JoinTable(
-            name = "event_survey",
-            joinColumns = [@JoinColumn(name = "event_id")],
-            inverseJoinColumns = [@JoinColumn(name = "survey_id")]
-    )
-    Set<Survey> surveys = new HashSet<>()
-
     @Column(name = 'name', nullable = false, length = 100)
     String name
 
@@ -38,7 +30,7 @@ class Event {
     @Column(name = 'end_date', nullable = false)
     LocalDate endDate
 
-    @Column(name = 'event_key', nullable = false)
+    @Column(name = 'event_key', nullable = false, length = 20)
     String eventKey
 
     @OneToMany(mappedBy = "event")
@@ -46,6 +38,14 @@ class Event {
 
     @OneToMany(mappedBy = "event")
     Set<TeamRanking> rankings = new HashSet<>()
+
+    @ManyToMany(cascade = [CascadeType.ALL])
+    @JoinTable(
+            name = "event_survey",
+            joinColumns = [@JoinColumn(name = "event_id")],
+            inverseJoinColumns = [@JoinColumn(name = "survey_id")]
+    )
+    Set<Survey> surveys = new HashSet<>()
 
     @Transient
     boolean isActive() {

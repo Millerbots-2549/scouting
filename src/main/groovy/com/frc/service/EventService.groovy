@@ -9,6 +9,7 @@ import com.frc.entity.Survey
 import com.frc.entity.SurveyType
 import com.frc.job.BlueAllianceClient
 import com.frc.repository.EventRepository
+import com.frc.repository.SurveyRepository
 import com.frc.util.Converter
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
@@ -28,6 +29,8 @@ class EventService {
 
     @Autowired
     EventRepository eventRepository
+    @Autowired
+    SurveyRepository surveyRepository
 
     Set<EventDto> getActiveEvents() {
         Set<Event> events = eventRepository.findActiveEvents(LocalDate.now())
@@ -52,6 +55,7 @@ class EventService {
         if (StringUtils.isBlank(entity.eventKey)) {
             entity.eventKey = BlueAllianceClient.getEventKey(entity)
         }
+        entity.surveys = surveyRepository.findByYear(entity.startDate.year)
         Converter.convertForMaintenance(eventRepository.saveAndFlush(entity))
     }
 
@@ -114,9 +118,9 @@ class EventService {
         matchups.each {
             MatchupDto dto = Converter.convert(it)
             if (dto.teamMatchups) {
-                if (survey.getType() == SurveyType.PIT && it.matchNumber == -1) {
+                if (survey.type == SurveyType.PIT && it.matchNumber == -1) {
                     dtos.add(dto)
-                } else if (survey.getType() == SurveyType.MATCH && it.matchNumber != -1) {
+                } else if (survey.type == SurveyType.MATCH && it.matchNumber != -1) {
                     dtos.add(dto)
                 }
             }
