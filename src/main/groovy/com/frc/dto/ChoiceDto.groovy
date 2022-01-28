@@ -6,9 +6,9 @@ import groovy.transform.Sortable
 
 @CompileStatic
 @EqualsAndHashCode
-@Sortable(includes = ['description', 'questionTypeId'])
-class QuestionTypeDto {
-    Integer questionTypeId
-    String description
-    Set<ResponseValueDto> responseValues
+@Sortable(includes = ['value', 'choiceId'])
+class ChoiceDto {
+    Integer choiceId
+    String value
+    Boolean isDefault
 }

@@ -48,6 +48,16 @@ class Converter {
 
     static EventDto convert(Event event) {
         if (event) {
+            EventDto dto = convertForMaintenance(event)
+            dto.name = "${event.name} ${event.startDate.year}"
+            return dto
+        } else {
+            return null
+        }
+    }
+
+    static EventDto convertForMaintenance(Event event) {
+        if (event) {
             return new EventDto(
                     eventId: event.id,
                     name: event.name,
@@ -105,7 +115,8 @@ class Converter {
                     questionId: q.id,
                     question: q.question,
                     sequence: q.sequence,
-                    questionType: convert(q.questionType)
+                    type: q.type.name(),
+                    choiceGroup: convert(q.choiceGroup)
             )
         } else {
             return null
@@ -140,22 +151,22 @@ class Converter {
         }
     }
 
-    static QuestionTypeDto convert(QuestionType questionType) {
-        if (questionType) {
-            new QuestionTypeDto(
-                    questionTypeId: questionType.id,
-                    description: questionType.description,
-                    responseValues: questionType.responseValues.collect { convert(it) } as TreeSet
+    static ChoiceGroupDto convert(ChoiceGroup choiceGroup) {
+        if (choiceGroup) {
+            new ChoiceGroupDto(
+                    choiceGroupId: choiceGroup.id,
+                    description: choiceGroup.description,
+                    choices: choiceGroup.choices.collect { convert(it) } as TreeSet
             )
         } else {
             return null
         }
     }
 
-    static ResponseValueDto convert(ResponseValue rv) {
+    static ChoiceDto convert(Choice rv) {
         if (rv) {
-            new ResponseValueDto(
-                    responseValueId: rv.id,
+            new ChoiceDto(
+                    choiceId: rv.id,
                     value: rv.value,
                     isDefault: rv.isDefault
             )
@@ -170,7 +181,7 @@ class Converter {
         entity.id = dto.eventId
         entity.city = StringUtils.stripToNull(dto.city)
         entity.endDate = dto.endDate
-        entity.eventKey = StringUtils.stripToNull(dto.eventKey)
+        entity.eventKey = StringUtils.stripToNull(dto.eventKey) ?: entity.eventKey
         entity.name = StringUtils.stripToNull(dto.name)
         entity.startDate = dto.startDate
         entity.state = StringUtils.stripToNull(dto.state)

@@ -1,6 +1,6 @@
 package com.frc.dto.view
 
-import com.frc.entity.QuestionTypeValue
+import com.frc.entity.QuestionType
 import groovy.transform.CompileStatic
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.Sortable
@@ -14,7 +14,7 @@ class QuestionResultDto {
     String question
     List<ResponseResultDto> responses = []
     String summary
-    QuestionTypeValue questionType
+    QuestionType questionType
     Integer sectionSeq
     Integer questionSeq
 

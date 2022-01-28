@@ -7,10 +7,13 @@ import com.frc.entity.Event
 import com.frc.entity.Matchup
 import com.frc.entity.Survey
 import com.frc.entity.SurveyType
+import com.frc.job.BlueAllianceClient
 import com.frc.repository.EventRepository
+import com.frc.repository.SurveyRepository
 import com.frc.util.Converter
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
+import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Service
@@ -26,28 +29,41 @@ class EventService {
 
     @Autowired
     EventRepository eventRepository
+    @Autowired
+    SurveyRepository surveyRepository
 
     Set<EventDto> getActiveEvents() {
         Set<Event> events = eventRepository.findActiveEvents(LocalDate.now())
         events.collect { Converter.convert(it) } as TreeSet
     }
 
+    @Secured(['ROLE_POWER_USER', 'ROLE_ADMIN'])
     Set<EventDto> getEvents() {
         List<Event> events = eventRepository.findAll()
         events.collect { Converter.convert(it) } as TreeSet
     }
 
     @Secured('ROLE_ADMIN')
+    Set<EventDto> getEventsForMaintenance() {
+        List<Event> events = eventRepository.findAll()
+        events.collect { Converter.convertForMaintenance(it) } as TreeSet
+    }
+
+    @Secured('ROLE_ADMIN')
     EventDto save(EventDto dto) {
         Event entity = Converter.merge(dto, new Event())
-        Converter.convert(eventRepository.saveAndFlush(entity))
+        if (StringUtils.isBlank(entity.eventKey)) {
+            entity.eventKey = BlueAllianceClient.getEventKey(entity)
+        }
+        entity.surveys = surveyRepository.findByYear(entity.startDate.year)
+        Converter.convertForMaintenance(eventRepository.saveAndFlush(entity))
     }
 
     @Secured('ROLE_ADMIN')
     EventDto update(Integer eventId, EventDto dto) {
-        Event event = eventRepository.getById(eventId)
+        Event event = getEvent(eventId)
         Event entity = Converter.merge(dto, event)
-        Converter.convert(eventRepository.saveAndFlush(entity))
+        Converter.convertForMaintenance(eventRepository.saveAndFlush(entity))
     }
 
     @Secured('ROLE_ADMIN')
@@ -102,9 +118,9 @@ class EventService {
         matchups.each {
             MatchupDto dto = Converter.convert(it)
             if (dto.teamMatchups) {
-                if (survey.getType() == SurveyType.PIT && it.matchNumber == -1) {
+                if (survey.type == SurveyType.PIT && it.matchNumber == -1) {
                     dtos.add(dto)
-                } else if (survey.getType() == SurveyType.MATCH && it.matchNumber != -1) {
+                } else if (survey.type == SurveyType.MATCH && it.matchNumber != -1) {
                     dtos.add(dto)
                 }
             }

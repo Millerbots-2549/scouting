@@ -71,7 +71,7 @@ class ResponseService {
     private static String cleanResponse(String response, Question question) {
         String cleanResponse = StringUtils.trim(StringUtils.stripToEmpty(response))
         // if the response is empty and its numeric set it to zero
-        if (!cleanResponse && question.questionType.description.toUpperCase() == QuestionTypeValue.NUMERIC.toString()) {
+        if (!cleanResponse && question.type == QuestionType.NUMERIC) {
             return ZERO
         }
 

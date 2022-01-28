@@ -43,7 +43,7 @@ class EventController {
     @Secured(['ROLE_ADMIN'])
     @GetMapping
     Set<EventDto> getEvents() {
-        service.getEvents()
+        service.getEventsForMaintenance()
     }
 
     @Secured('ROLE_ADMIN')

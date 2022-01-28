@@ -6,10 +6,9 @@ import com.frc.dto.view.ResponseResultDto
 import com.frc.dto.view.ResultDto
 import com.frc.dto.view.SurveyResultDto
 import com.frc.entity.Event
-import com.frc.entity.QuestionTypeValue
+import com.frc.entity.QuestionType
 import com.frc.entity.Response
 import com.frc.entity.Team
-import com.frc.repository.EventRepository
 import com.frc.repository.TeamRepository
 import com.frc.util.Converter
 import groovy.transform.CompileStatic
@@ -29,12 +28,12 @@ class ResultService {
     @Autowired
     TeamRepository teamRepository
     @Autowired
-    EventRepository eventRepository
+    EventService eventService
 
     @Secured(['ROLE_POWER_USER', 'ROLE_ADMIN'])
     Set<TeamDto> getTeams(Integer eventId) {
         Set<TeamDto> teamDtos = [] as TreeSet
-        Event event = eventRepository.getById(eventId)
+        Event event = eventService.getEvent(eventId)
         event.matchups.each { matchup ->
             matchup.teamMatchups.each { teamMatchup ->
                 teamDtos.add(Converter.convert(teamMatchup.team))
@@ -87,12 +86,12 @@ class ResultService {
     private static void calculateSummary(QuestionResultDto dto) {
         List<String> responses = dto.responses.collect { it.response }
         switch (dto.questionType) {
-            case QuestionTypeValue.NUMERIC:
+            case QuestionType.NUMERIC:
                 dto.summary = calculateAverage(responses)
                 break
-            case QuestionTypeValue.BOOLEAN:
-            case QuestionTypeValue.CHOICE:
-            case QuestionTypeValue.RADIO:
+            case QuestionType.BOOLEAN:
+            case QuestionType.CHOICE:
+            case QuestionType.RADIO:
                 dto.summary = calculateMostOccurring(responses)
                 break
             default:
@@ -182,7 +181,7 @@ class ResultService {
                 question: response.question.question,
                 questionId: response.question.id,
                 responses: [buildResult(response)],
-                questionType: QuestionTypeValue.valueOf(response.question.questionType.description.toUpperCase()),
+                questionType: response.question.type,
                 questionSeq: response.question.sequence,
                 sectionSeq: response.question.surveySection.sequence
         )

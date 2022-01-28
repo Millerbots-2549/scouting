@@ -13,21 +13,19 @@ class Survey {
     @Column(name = 'id', nullable = false)
     Integer id
 
-    @Column(name = 'name', nullable = false)
+    @Column(name = 'name', nullable = false, unique = true, length=45)
     String name
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = 'type', nullable = false, length = 10)
+    SurveyType type
+
+    @Column(name = 'year', nullable = false)
+    Integer year
 
     @ManyToMany(mappedBy = "surveys")
     Set<Event> events = new HashSet<>()
 
     @OneToMany(mappedBy = "survey")
     Set<SurveySection> surveySections = new HashSet<>()
-
-    @Transient
-    SurveyType getType() {
-        if (this.name.contains('Pit')) {
-            return SurveyType.PIT
-        } else {
-            return SurveyType.MATCH
-        }
-    }
 }
