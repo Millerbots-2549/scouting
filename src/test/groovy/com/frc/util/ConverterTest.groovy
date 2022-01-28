@@ -15,7 +15,7 @@ class ConverterTest extends Specification {
                                                 new TeamMatchup(id: 2, alliance: 'BLUE', team: newTeam())]
 
         when:
-        Collection<TeamMatchupDto> results = Converter.convertTeamMatchups(teamMatchups)
+        Collection<TeamMatchupDto> results = Converter.convertTeamMatchups(teamMatchups as Set<TeamMatchup>)
 
         then:
         results.size() == 2
@@ -28,7 +28,7 @@ class ConverterTest extends Specification {
 
     def "convert empty team matchups"() {
         expect:
-        [] == Converter.convertTeamMatchups([])
+        [] == Converter.convertTeamMatchups([] as Set<TeamMatchup>)
     }
 
     def 'convert null student'() {
@@ -121,7 +121,8 @@ class ConverterTest extends Specification {
                 id: 1,
                 question: 'Why?',
                 sequence: 1,
-                questionType: new QuestionType())
+                type: 'TEXT',
+                choiceGroup: new ChoiceGroup())
 
         when:
         QuestionDto result = Converter.convert(question)
@@ -129,6 +130,7 @@ class ConverterTest extends Specification {
         then:
         result.questionId == question.id
         result.question == question.question
+        result.type == question.type.name()
         result.sequence == question.sequence
     }
 
@@ -162,30 +164,30 @@ class ConverterTest extends Specification {
         result.school == team.school
     }
 
-    def "convert question type"() {
+    def "convert choice group"() {
         given:
-        QuestionType questionType = new QuestionType(id: 1, description: 'bob', responseValues: [])
+        ChoiceGroup choiceGroup = new ChoiceGroup(id: 1, description: 'bob', choices: [])
 
         when:
-        QuestionTypeDto result = Converter.convert(questionType)
+        ChoiceGroupDto result = Converter.convert(choiceGroup)
 
         then:
-        result.questionTypeId == questionType.id
-        result.description == questionType.description
-        result.responseValues.size() == questionType.responseValues.size()
+        result.choiceGroupId == choiceGroup.id
+        result.description == choiceGroup.description
+        result.choices.size() == choiceGroup.choices.size()
     }
 
-    def "convert response value"() {
+    def "convert choice"() {
         given:
-        ResponseValue responseValue = new ResponseValue(id: 1, value: 'bob', isDefault: true)
+        Choice choice = new Choice(id: 1, value: 'bob', isDefault: true)
 
         when:
-        ResponseValueDto result = Converter.convert(responseValue)
+        ChoiceDto result = Converter.convert(choice)
 
         then:
-        result.responseValueId == responseValue.id
-        result.value == responseValue.value
-        result.isDefault == responseValue.isDefault
+        result.choiceId == choice.id
+        result.value == choice.value
+        result.isDefault == choice.isDefault
     }
 
     private static Team newTeam() {

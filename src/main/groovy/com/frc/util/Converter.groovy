@@ -115,7 +115,8 @@ class Converter {
                     questionId: q.id,
                     question: q.question,
                     sequence: q.sequence,
-                    questionType: convert(q.questionType)
+                    type: q.type.name(),
+                    choiceGroup: convert(q.choiceGroup)
             )
         } else {
             return null
@@ -150,22 +151,22 @@ class Converter {
         }
     }
 
-    static QuestionTypeDto convert(QuestionType questionType) {
-        if (questionType) {
-            new QuestionTypeDto(
-                    questionTypeId: questionType.id,
-                    description: questionType.description,
-                    responseValues: questionType.responseValues.collect { convert(it) } as TreeSet
+    static ChoiceGroupDto convert(ChoiceGroup choiceGroup) {
+        if (choiceGroup) {
+            new ChoiceGroupDto(
+                    choiceGroupId: choiceGroup.id,
+                    description: choiceGroup.description,
+                    choices: choiceGroup.choices.collect { convert(it) } as TreeSet
             )
         } else {
             return null
         }
     }
 
-    static ResponseValueDto convert(ResponseValue rv) {
+    static ChoiceDto convert(Choice rv) {
         if (rv) {
-            new ResponseValueDto(
-                    responseValueId: rv.id,
+            new ChoiceDto(
+                    choiceId: rv.id,
                     value: rv.value,
                     isDefault: rv.isDefault
             )

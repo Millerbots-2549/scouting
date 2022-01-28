@@ -11,5 +11,6 @@ class QuestionDto {
     Integer questionId
     String question
     Integer sequence
-    QuestionTypeDto questionType
+    String type
+    ChoiceGroupDto choiceGroup
 }

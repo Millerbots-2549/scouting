@@ -298,13 +298,13 @@ function build_survey(surveyObj) {
     return sectionHTML;
 }
 
-function build_questions(questionsObj) {
+function build_questions(questions) {
     let questionHTML = '';
 
-    for (let questionObj of questionsObj) {
-        let elementId = 'questionId' + questionObj.questionId;
-        questionHTML += '<div class="question row" data-question-id="' + questionObj.questionId + '">';
-        questionHTML += build_response(questionObj, elementId);
+    for (let question of questions) {
+        let elementId = 'questionId' + question.questionId;
+        questionHTML += '<div class="question row" data-question-id="' + question.questionId + '">';
+        questionHTML += build_response(question, elementId);
         questionHTML += '</div>';
     }
 
@@ -312,23 +312,23 @@ function build_questions(questionsObj) {
 }
 
 function build_response(questionObj, elementId) {
-    let questionType = questionObj.questionType.description;
+    let questionType = questionObj.type;
 
     switch (questionType) {
 
-        case 'boolean':
+        case 'BOOLEAN':
             return response_boolean(questionObj, elementId);
 
-        case 'numeric':
+        case 'NUMERIC':
             return response_numeric(questionObj, elementId);
 
-        case 'choice':
+        case 'CHOICE':
             return response_choice(questionObj, elementId);
 
-        case 'radio':
+        case 'RADIO':
             return response_radio(questionObj, elementId);
 
-        case 'text':
+        case 'TEXT':
             return response_text(questionObj, elementId);
 
         default:
@@ -379,7 +379,7 @@ function response_text(questionObj, elementId) {
 
 function response_choice(questionObj, elementId) {
 
-    let values = questionObj.questionType.responseValues;
+    let values = questionObj.choiceGroup.choices;
     let html = ''
     html += '<div class="col-sm-3">';
     html += '<label class="label label-default" for="' + elementId + '">' + questionObj.question + '</label>';
@@ -402,7 +402,7 @@ function response_choice(questionObj, elementId) {
 }
 
 function response_radio(questionObj, elementId) {
-    let values = questionObj.questionType.responseValues;
+    let values = questionObj.choiceGroup.choices;
     let html = '';
     html += '<div class="col-sm-3">';
     html += '<label class="label label-default">' + questionObj.question + '</label> ';
