@@ -24,11 +24,14 @@ class Question {
     @Column(name = 'sequence', nullable = false)
     Integer sequence
 
+    @Column(name = 'editable', nullable = false)
+    Boolean editable
+
     @ManyToOne(optional = true)
     @JoinColumn(name = "choice_group_id", referencedColumnName = "id", nullable = true)
     ChoiceGroup choiceGroup
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "survey_section_id", referencedColumnName = "id", nullable = false)
     SurveySection surveySection
 

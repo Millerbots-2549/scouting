@@ -99,3 +99,6 @@ SQL used to create a survey:
 In MySQL you can edit the result grids like a spreadsheet and enter new data. When
 done insert statements will be generated that you can execute. Once the data is inserted
 the stuff is created and should be immediately viewable on the website.
+
+#Thoughts on survey
+page that displays choice groups and choices that can be reused on questions. allow editing of choices that have not been used yet.

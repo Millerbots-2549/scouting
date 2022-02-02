@@ -17,6 +17,9 @@ class ChoiceGroup {
     @Column(name = 'description', nullable = false, length = 100)
     String description
 
+    @Column(name = 'editable', nullable = false)
+    Boolean editable
+
     @OneToMany(mappedBy = "choiceGroup")
     Set<Question> questions = new HashSet<>()
 
