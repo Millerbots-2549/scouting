@@ -1,9 +1,18 @@
 let statusEnabled;
 
 $(document).ready(function () {
-    callStatusApi('status');
+    getCurrentStatus('status');
 })
 ;
+
+function updatePageStatus(status) {
+    statusEnabled = status.ENABLED;
+    if (statusEnabled) {
+        enabled();
+    } else {
+        disabled();
+    }
+}
 
 function disabled() {
     document.getElementById('statusBtn').innerHTML = 'Disabled';
@@ -21,25 +30,36 @@ function enabled() {
 
 function statusButtonClicked() {
     if (statusEnabled) {
-        callStatusApi('disable');
+        changeStatus('disable');
     } else {
-        callStatusApi('enable');
+        changeStatus('enable');
     }
 }
 
-function callStatusApi(action) {
+function getCurrentStatus(action) {
     $.ajax(
         {
             type: 'GET',
             url: 'tba/' + action,
             dataType: 'json',
             success: function (status) {
-                statusEnabled = status.ENABLED;
-                if (statusEnabled) {
-                    enabled();
-                } else {
-                    disabled();
-                }
+                updatePageStatus(status);
+            },
+            error: function (xhr, resp, text) {
+                console.log(xhr, resp, text);
+                $("#message").text("There was an issue with your request!").show().fadeOut(5000);
+            }
+        });
+}
+
+function changeStatus(action) {
+    $.ajax(
+        {
+            type: 'PUT',
+            url: 'tba/' + action,
+            dataType: 'json',
+            success: function (status) {
+                updatePageStatus(status);
             },
             error: function (xhr, resp, text) {
                 console.log(xhr, resp, text);
