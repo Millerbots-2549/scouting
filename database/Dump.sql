@@ -18,6 +18,59 @@ USE `scouting`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `choice`
+--
+
+DROP TABLE IF EXISTS `choice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `choice` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `choice_group_id` int NOT NULL,
+  `value` varchar(50) NOT NULL,
+  `is_default` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `fk_choice_idx1` (`choice_group_id`) /*!80000 INVISIBLE */,
+  CONSTRAINT `fk_choice_choice_group1` FOREIGN KEY (`choice_group_id`) REFERENCES `choice_group` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `choice`
+--
+
+LOCK TABLES `choice` WRITE;
+/*!40000 ALTER TABLE `choice` DISABLE KEYS */;
+INSERT INTO `choice` VALUES (3,3,'1',0),(4,3,'2',0),(5,3,'3',0),(6,4,'Win',0),(7,4,'Loss',0),(8,4,'Tie',0),(9,6,'Solo',0),(10,6,'Assisted Others',0),(11,6,'Received Assistance',0),(13,3,'0',0),(14,7,'Yes',0),(15,7,'No',0),(16,7,'Maybe',0),(17,8,'None',0),(18,8,'Camera',0),(19,8,'Off-Board Vision Processing',0),(20,9,'Good',0),(21,9,'Bad',0),(22,9,'OK',0),(23,6,'Did not climb',1),(24,10,'Left',1),(25,10,'Right',0),(26,10,'Middle',0),(27,11,'Java',0),(28,11,'C++',0),(29,11,'LabView',0),(30,10,'No Preference',0),(31,10,'Left or Right',0),(32,6,'Climbed and Assisted Others',0),(33,12,'1',1),(34,12,'2',0),(35,12,'3',0),(36,13,'Ball',0),(37,13,'Panel',0),(38,13,'None',1),(39,14,'0 - Ground',0),(40,14,'1',0),(41,14,'2',0),(42,14,'3',0),(43,15,'1',0),(44,15,'2',0),(45,15,'3',0),(46,15,'4',0),(47,15,'5',0),(48,16,'Dad Bot',0),(49,16,'Fab Bot',0),(50,16,'Stud Bot',0),(51,16,'No Idea',1),(52,17,'Vision Teleop',1),(53,17,'Auto',0),(54,17,'In Progress',0);
+/*!40000 ALTER TABLE `choice` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `choice_group`
+--
+
+DROP TABLE IF EXISTS `choice_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `choice_group` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `description` varchar(100) NOT NULL,
+  `editable` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `choice_group`
+--
+
+LOCK TABLES `choice_group` WRITE;
+/*!40000 ALTER TABLE `choice_group` DISABLE KEYS */;
+INSERT INTO `choice_group` VALUES (3,'cube count choices',0),(4,'game outcome choices',0),(6,'climb choices',0),(7,'Yes/No/Maybe',0),(8,'vision system choices',0),(9,'Good/Bad/Ok',0),(10,'Left/Right/Middle',0),(11,'programming language choices',0),(12,'1/2/3',0),(13,'Ball/Panel/None',0),(14,'robot starting positions',0),(15,'1/2/3/4/5',0),(16,'Robot Build Choices',0),(17,'type of automation',0);
+/*!40000 ALTER TABLE `choice_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `event`
 --
 
@@ -42,7 +95,7 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
-INSERT INTO `event` VALUES (1,'test','test','MN','2018-01-31','2022-02-26','2020ndgf'),(2,'Lake Superior Regional 2018','Duluth','MN','2018-03-10','2018-03-13','2018mndu'),(3,'Northern Lights Regional 2018','Duluth','MN','2018-03-10','2018-03-13','2018mndu2'),(4,'Iowa Regional 2018','Cedar Falls','IA','2018-03-21','2018-03-24','2018iacf'),(5,'Minnesota North Star Regional 2018','Minneapolis','MN','2018-03-28','2018-04-01','2018mnmi2'),(6,'Great Northern Regional 2019','Grand Forks','ND','2019-03-13','2019-03-16','2019ndgf'),(7,'Minnesota North Star Regional 2019','Minneapolis','MN','2019-03-27','2019-03-31','2019mnmi2'),(8,'Lake Superior Regional 2019','Duluth','MN','2019-03-06','2019-03-09','2019mndu'),(9,'Northern Lights Regional 2019','Duluth','MN','2019-03-06','2019-03-10','2019mndu2'),(12,'Carson Division - 2019 Championship','Detroit','MI','2019-04-24','2019-04-28','2019cars'),(17,'Great Northern Regional 2020','Grand Forks','ND','2020-02-26','2020-03-21','2020ndgf'),(18,'Minnesota North Star Regional 2020','Minneapolis','MN','2020-03-25','2020-03-29','2020mnmi2');
+INSERT INTO `event` VALUES (1,'test','test','MN','2018-01-31','2022-02-26','2020ndgf'),(2,'Lake Superior Regional','Duluth','MN','2018-03-10','2018-03-13','2018mndu'),(3,'Northern Lights Regional','Duluth','MN','2018-03-10','2018-03-13','2018mndu2'),(4,'Iowa Regional','Cedar Falls','IA','2018-03-21','2018-03-24','2018iacf'),(5,'Minnesota North Star Regional','Minneapolis','MN','2018-03-28','2018-04-01','2018mnmi2'),(6,'Great Northern Regional','Grand Forks','ND','2019-03-13','2019-03-16','2019ndgf'),(7,'Minnesota North Star Regional','Minneapolis','MN','2019-03-27','2019-03-31','2019mnmi2'),(8,'Lake Superior Regional','Duluth','MN','2019-03-06','2019-03-09','2019mndu'),(9,'Northern Lights Regional','Duluth','MN','2019-03-06','2019-03-10','2019mndu2'),(12,'Carson Division','Detroit','MI','2019-04-24','2019-04-28','2019cars'),(17,'Great Northern Regional','Grand Forks','ND','2020-02-26','2020-03-21','2020ndgf'),(18,'Minnesota North Star Regional','Minneapolis','MN','2020-03-25','2020-03-29','2020mnmi2');
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,14 +168,16 @@ DROP TABLE IF EXISTS `question`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `question` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `question_type_id` int NOT NULL,
+  `choice_group_id` int DEFAULT NULL,
   `survey_section_id` int NOT NULL,
   `sequence` int NOT NULL,
   `question` varchar(400) NOT NULL,
+  `type` varchar(15) NOT NULL,
+  `editable` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `fk_Question_QuestionType1_idx` (`question_type_id`),
-  KEY `fk_question_survey_section1_idx` (`survey_section_id`),
-  CONSTRAINT `fk_Question_QuestionType1` FOREIGN KEY (`question_type_id`) REFERENCES `question_type` (`id`),
+  KEY `fk_question_idx2` (`survey_section_id`),
+  KEY `fk_question_idx1` (`choice_group_id`),
+  CONSTRAINT `fk_question_choice_group1` FOREIGN KEY (`choice_group_id`) REFERENCES `choice_group` (`id`),
   CONSTRAINT `fk_question_survey_section1` FOREIGN KEY (`survey_section_id`) REFERENCES `survey_section` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -133,32 +188,8 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` VALUES (1,1,1,2,'Auto (moved)'),(2,1,1,4,'Cross Line'),(3,2,1,8,'Power Cube on Switch - Succeed'),(4,2,1,12,'Power Cube on Scale - Succeed'),(5,2,1,14,'Power Cubes in Exchange'),(6,2,2,2,'Power Cube on Switch - Attempt'),(7,2,2,4,'Power Cube on Switch - Succeed'),(8,2,2,6,'Power Cube on Scale - Attempt'),(9,2,2,8,'Power Cube on Scale - Succeed'),(10,2,2,10,'Power Cube on Opponent Switch - Attempt'),(11,2,2,12,'Power Cube on Opponent Switch - Succeed'),(12,2,2,14,'Cubes in Exchange'),(13,2,2,16,'Cubes from Portal - Attempt'),(14,1,3,2,'Got on Pad'),(15,6,3,4,'Climb'),(19,3,4,2,'Force - cube count'),(20,3,4,6,'Levitate	- cube count'),(21,3,4,10,'Boost - cube count'),(22,2,5,2,'Alliance Score'),(23,4,5,4,'Game Outcome'),(28,1,5,10,'Yellow Card'),(29,1,5,12,'Red Card'),(30,5,5,16,'Comments'),(31,2,2,18,'Cubes from Portal - Succeed'),(32,1,6,2,'No Show'),(33,1,6,4,'Broken'),(34,1,6,8,'Died'),(35,1,6,10,'Fell Over'),(36,1,4,4,'Force Activated'),(37,1,4,8,'Levitate Activated'),(38,1,4,12,'Boost Activated'),(39,5,7,2,'Drive Train'),(40,7,7,4,'Vision System'),(41,8,7,6,'What type of vision system'),(42,1,8,4,'Cross Baseline'),(43,1,8,6,'Put Cube on Switch'),(44,1,8,8,'Put Cube on Scale'),(45,1,8,10,'Put Cube in Exchange'),(46,1,11,2,'Put Cube on Switch'),(47,1,11,4,'Put Cube on Scale'),(48,1,11,6,'Put Cube in Exchange'),(49,1,11,8,'Take Cube from Portal'),(50,7,9,2,'Can it climb'),(51,5,9,4,'How does it climb, mechanism:'),(52,1,9,6,'Assist others in climbing'),(53,5,9,8,'How does it assist:'),(54,7,11,10,'Defensive'),(55,5,11,12,'Vault Goals'),(56,1,10,2,'Willing to change'),(57,5,10,4,'General Strategy'),(59,5,10,6,'Additional Notes'),(60,9,10,10,'Team Feel'),(61,2,1,6,'Power Cube on Switch - Attempt'),(62,2,1,10,'Power Cube on Scale - Attemp'),(63,5,7,8,'Cube retrieval system:'),(64,1,5,14,'The driver/team\'s strategy was good'),(65,10,8,2,'What is your preferred starting position?'),(66,5,10,8,'What is your budget for the year?'),(67,1,10,12,'Robot was built by the students'),(68,11,7,7,'What programming language do you use?'),(69,12,12,1,'Starting Height:'),(70,13,12,2,'Starting Game Piece:'),(71,1,12,3,'Drive Off:'),(72,1,12,4,'Cross Base Line:'),(73,2,13,1,'Cargo Ship - Attempt:'),(74,2,13,2,'Cargo Ship - Succeed:'),(75,2,13,3,'Rocket Level 1 - Attempt:'),(76,2,13,4,'Rocket Level 1 - Succeed:'),(77,2,13,5,'Rocket Level 2 - Attempt:'),(78,2,13,6,'Rocket Level 2 - Succeed:'),(79,2,13,7,'Rocket Level 3 - Attempt:'),(80,2,13,8,'Rocket Level 3 - Succeed:'),(81,2,14,1,'Cargo Ship - Attempt:'),(82,2,14,2,'Cargo Ship - Succeed:'),(83,2,14,3,'Rocket Level 1 - Attempt:'),(84,2,14,4,'Rocket Level 1 - Succeed:'),(85,2,14,5,'Rocket Level 2 - Attempt:'),(86,2,14,6,'Rocket Level 2 - Succeed:'),(87,2,14,7,'Rocket Level 3 - Attempt:'),(88,2,14,8,'Rocket Level 3 - Succeed:'),(89,2,15,1,'Cargo Ship - Attempt:'),(90,2,15,2,'Cargo Ship - Succeed:'),(91,2,15,3,'Rocket Level 1 - Attempt:'),(92,2,15,4,'Rocket Level 1 - Succeed:'),(93,2,15,5,'Rocket Level 2 - Attempt:'),(94,2,15,6,'Rocket Level 2 - Succeed:'),(95,2,15,7,'Rocket Level 3 - Attempt:'),(96,2,15,8,'Rocket Level 3 - Succeed:'),(97,2,16,1,'Cargo Ship - Attempt:'),(98,2,16,2,'Cargo Ship - Succeed:'),(99,2,16,3,'Rocket Level 1 - Attempt:'),(100,2,16,4,'Rocket Level 1 - Succeed:'),(101,2,16,5,'Rocket Level 2 - Attempt:'),(102,2,16,6,'Rocket Level 2 - Succeed:'),(103,2,16,7,'Rocket Level 3 - Attempt:'),(104,2,16,8,'Rocket Level 3 - Succeed:'),(105,14,17,1,'Got on which level:'),(106,1,17,2,'Assisted Others:'),(107,1,17,3,'Was assisted:'),(108,2,18,1,'Alliance Score:'),(109,4,18,2,'Game outcome:'),(110,2,18,3,'Fouls:'),(111,2,18,4,'Tech Fouls:'),(112,1,18,5,'Yellow Card:'),(113,1,18,6,'Red Card:'),(114,15,18,7,'Rate the driver from 1 (Bad) to 5 (Incredible)'),(115,5,18,8,'Comments:'),(116,5,19,4,'Drive Train:'),(117,1,19,1,'Vision System:'),(118,2,19,3,'Number of Cameras:'),(119,1,19,2,'Off-Board Vision Processing:'),(120,5,19,5,'Describe the Hatch panel mechanism:'),(121,5,19,6,'Describe the Ball mechanism:'),(122,14,20,2,'Starting Position:'),(123,1,20,3,'Cross Baseline:'),(124,1,20,4,'Put hatch panel on rocket:'),(125,1,20,5,'Put hatch panel on cargo ship:'),(126,1,20,6,'Put ball in rocket:'),(127,1,20,7,'Put ball in cargo ship:'),(128,12,20,8,'Highest level they can put the hatch:'),(129,12,20,9,'Highest level they can put the ball:'),(130,1,21,1,'Put hatch panel on rocket:'),(131,1,21,2,'Put hatch panel on cargo ship:'),(132,1,21,3,'Put ball in rocket:'),(133,1,21,4,'Put ball in cargo ship:'),(134,12,21,5,'Highest level they can put the hatch:'),(135,12,21,6,'Highest level they can put the ball:'),(136,2,21,7,'Cycle time for panel:'),(137,2,21,8,'Cycle time for ball:'),(138,5,21,9,'Describe their general strategy:'),(139,14,22,1,'Ending Position:'),(140,1,22,2,'Do you help others up a level?'),(141,1,22,3,'Are you willing to play defense?'),(142,1,22,4,'Are you able to play defense?'),(143,16,23,1,'Who do you think built the robot?'),(144,9,23,2,'General feel of the team:'),(145,17,20,1,'Type of auto:'),(146,1,24,1,'No Show'),(147,1,24,2,'Broken'),(148,1,24,3,'Died'),(149,1,24,4,'Fell Over'),(150,5,23,3,'Comments:'),(151,2,25,1,'Starting number of power cells:'),(152,1,25,2,'Crossed the line:'),(153,2,25,3,'LOW - Total success:'),(154,2,25,4,'HEX - Total success:'),(155,2,25,5,'HOLE - Total success:'),(156,2,26,1,'LOW - Total success:'),(157,2,26,2,'HEX - Total success:'),(158,2,26,3,'HOLE - Total success:'),(159,1,26,4,'Spun Wheel for count successfully:'),(160,1,26,5,'Spun For Color successfully:'),(161,1,27,1,'Attempted Climb:'),(162,1,27,2,'Climbed successfully:'),(163,1,27,3,'Parked:'),(164,1,27,4,'Generator Switch Level:'),(165,2,28,2,'Alliance Score:'),(166,4,28,1,'Game Outcome:'),(169,1,28,5,'Yellow Card:'),(170,1,28,6,'Red Card:'),(171,15,28,7,'Rate the drivers strategy: (1 is bad)'),(172,15,28,8,'Defensive maneuvering: (1 is bad)'),(173,1,29,1,'No Show:'),(174,1,29,2,'Broken:'),(175,1,29,3,'Died:'),(176,1,29,4,'Fell Over:'),(177,5,29,5,'Final Comments:'),(178,1,30,1,'Vision System:'),(179,1,30,2,'Off-Board vision processing:'),(180,2,30,3,'Number of cameras:'),(181,5,30,4,'Describe Drivetrain:'),(182,5,30,5,'Describe Power Cell Mech:'),(183,5,30,6,'Describe Wheel Mech:'),(184,5,30,7,'Describe Climb Mech:'),(185,2,30,8,'Max Number of Power Cells able to hold:'),(186,2,30,9,'Cycle time (in seconds):'),(187,2,30,10,'Weight without battery (in pounds):'),(188,1,30,11,'Able to do trench run:'),(189,1,31,1,'Can do autonomous:'),(190,1,31,2,'Can cross line:'),(191,1,31,3,'Can score LOW:'),(192,1,31,4,'Can score HEX:'),(193,1,31,5,'Can score HOLE:'),(194,1,32,2,'Can score LOW:'),(195,1,32,3,'Can score HEX:'),(196,1,32,4,'Can score HOLE:'),(197,1,32,5,'Can spin wheel for count:'),(198,1,32,6,'Can spin wheel for color:'),(199,1,33,1,'Can climb:'),(200,5,33,2,'Any preferred climb spot:'),(201,1,34,1,'Can play defense:'),(202,1,34,2,'Willing to play defense:'),(203,5,34,3,'Comments:'),(204,5,32,1,'Preferred Shooting spot:');
+INSERT INTO `question` VALUES (1,NULL,1,2,'Auto (moved)','BOOLEAN',0),(2,NULL,1,4,'Cross Line','BOOLEAN',0),(3,NULL,1,8,'Power Cube on Switch - Succeed','NUMERIC',0),(4,NULL,1,12,'Power Cube on Scale - Succeed','NUMERIC',0),(5,NULL,1,14,'Power Cubes in Exchange','NUMERIC',0),(6,NULL,2,2,'Power Cube on Switch - Attempt','NUMERIC',0),(7,NULL,2,4,'Power Cube on Switch - Succeed','NUMERIC',0),(8,NULL,2,6,'Power Cube on Scale - Attempt','NUMERIC',0),(9,NULL,2,8,'Power Cube on Scale - Succeed','NUMERIC',0),(10,NULL,2,10,'Power Cube on Opponent Switch - Attempt','NUMERIC',0),(11,NULL,2,12,'Power Cube on Opponent Switch - Succeed','NUMERIC',0),(12,NULL,2,14,'Cubes in Exchange','NUMERIC',0),(13,NULL,2,16,'Cubes from Portal - Attempt','NUMERIC',0),(14,NULL,3,2,'Got on Pad','BOOLEAN',0),(15,6,3,4,'Climb','CHOICE',0),(19,3,4,2,'Force - cube count','RADIO',0),(20,3,4,6,'Levitate	- cube count','RADIO',0),(21,3,4,10,'Boost - cube count','RADIO',0),(22,NULL,5,2,'Alliance Score','NUMERIC',0),(23,4,5,4,'Game Outcome','RADIO',0),(28,NULL,5,10,'Yellow Card','BOOLEAN',0),(29,NULL,5,12,'Red Card','BOOLEAN',0),(30,NULL,5,16,'Comments','TEXT',0),(31,NULL,2,18,'Cubes from Portal - Succeed','NUMERIC',0),(32,NULL,6,2,'No Show','BOOLEAN',0),(33,NULL,6,4,'Broken','BOOLEAN',0),(34,NULL,6,8,'Died','BOOLEAN',0),(35,NULL,6,10,'Fell Over','BOOLEAN',0),(36,NULL,4,4,'Force Activated','BOOLEAN',0),(37,NULL,4,8,'Levitate Activated','BOOLEAN',0),(38,NULL,4,12,'Boost Activated','BOOLEAN',0),(39,NULL,7,2,'Drive Train','TEXT',0),(40,7,7,4,'Vision System','CHOICE',0),(41,8,7,6,'What type of vision system','CHOICE',0),(42,NULL,8,4,'Cross Baseline','BOOLEAN',0),(43,NULL,8,6,'Put Cube on Switch','BOOLEAN',0),(44,NULL,8,8,'Put Cube on Scale','BOOLEAN',0),(45,NULL,8,10,'Put Cube in Exchange','BOOLEAN',0),(46,NULL,11,2,'Put Cube on Switch','BOOLEAN',0),(47,NULL,11,4,'Put Cube on Scale','BOOLEAN',0),(48,NULL,11,6,'Put Cube in Exchange','BOOLEAN',0),(49,NULL,11,8,'Take Cube from Portal','BOOLEAN',0),(50,7,9,2,'Can it climb','CHOICE',0),(51,NULL,9,4,'How does it climb, mechanism:','TEXT',0),(52,NULL,9,6,'Assist others in climbing','BOOLEAN',0),(53,NULL,9,8,'How does it assist:','TEXT',0),(54,7,11,10,'Defensive','CHOICE',0),(55,NULL,11,12,'Vault Goals','TEXT',0),(56,NULL,10,2,'Willing to change','BOOLEAN',0),(57,NULL,10,4,'General Strategy','TEXT',0),(59,NULL,10,6,'Additional Notes','TEXT',0),(60,9,10,10,'Team Feel','RADIO',0),(61,NULL,1,6,'Power Cube on Switch - Attempt','NUMERIC',0),(62,NULL,1,10,'Power Cube on Scale - Attemp','NUMERIC',0),(63,NULL,7,8,'Cube retrieval system:','TEXT',0),(64,NULL,5,14,'The driver/team\'s strategy was good','BOOLEAN',0),(65,10,8,2,'What is your preferred starting position?','CHOICE',0),(66,NULL,10,8,'What is your budget for the year?','TEXT',0),(67,NULL,10,12,'Robot was built by the students','BOOLEAN',0),(68,11,7,7,'What programming language do you use?','RADIO',0),(69,12,12,1,'Starting Height:','RADIO',0),(70,13,12,2,'Starting Game Piece:','RADIO',0),(71,NULL,12,3,'Drive Off:','BOOLEAN',0),(72,NULL,12,4,'Cross Base Line:','BOOLEAN',0),(73,NULL,13,1,'Cargo Ship - Attempt:','NUMERIC',0),(74,NULL,13,2,'Cargo Ship - Succeed:','NUMERIC',0),(75,NULL,13,3,'Rocket Level 1 - Attempt:','NUMERIC',0),(76,NULL,13,4,'Rocket Level 1 - Succeed:','NUMERIC',0),(77,NULL,13,5,'Rocket Level 2 - Attempt:','NUMERIC',0),(78,NULL,13,6,'Rocket Level 2 - Succeed:','NUMERIC',0),(79,NULL,13,7,'Rocket Level 3 - Attempt:','NUMERIC',0),(80,NULL,13,8,'Rocket Level 3 - Succeed:','NUMERIC',0),(81,NULL,14,1,'Cargo Ship - Attempt:','NUMERIC',0),(82,NULL,14,2,'Cargo Ship - Succeed:','NUMERIC',0),(83,NULL,14,3,'Rocket Level 1 - Attempt:','NUMERIC',0),(84,NULL,14,4,'Rocket Level 1 - Succeed:','NUMERIC',0),(85,NULL,14,5,'Rocket Level 2 - Attempt:','NUMERIC',0),(86,NULL,14,6,'Rocket Level 2 - Succeed:','NUMERIC',0),(87,NULL,14,7,'Rocket Level 3 - Attempt:','NUMERIC',0),(88,NULL,14,8,'Rocket Level 3 - Succeed:','NUMERIC',0),(89,NULL,15,1,'Cargo Ship - Attempt:','NUMERIC',0),(90,NULL,15,2,'Cargo Ship - Succeed:','NUMERIC',0),(91,NULL,15,3,'Rocket Level 1 - Attempt:','NUMERIC',0),(92,NULL,15,4,'Rocket Level 1 - Succeed:','NUMERIC',0),(93,NULL,15,5,'Rocket Level 2 - Attempt:','NUMERIC',0),(94,NULL,15,6,'Rocket Level 2 - Succeed:','NUMERIC',0),(95,NULL,15,7,'Rocket Level 3 - Attempt:','NUMERIC',0),(96,NULL,15,8,'Rocket Level 3 - Succeed:','NUMERIC',0),(97,NULL,16,1,'Cargo Ship - Attempt:','NUMERIC',0),(98,NULL,16,2,'Cargo Ship - Succeed:','NUMERIC',0),(99,NULL,16,3,'Rocket Level 1 - Attempt:','NUMERIC',0),(100,NULL,16,4,'Rocket Level 1 - Succeed:','NUMERIC',0),(101,NULL,16,5,'Rocket Level 2 - Attempt:','NUMERIC',0),(102,NULL,16,6,'Rocket Level 2 - Succeed:','NUMERIC',0),(103,NULL,16,7,'Rocket Level 3 - Attempt:','NUMERIC',0),(104,NULL,16,8,'Rocket Level 3 - Succeed:','NUMERIC',0),(105,14,17,1,'Got on which level:','RADIO',0),(106,NULL,17,2,'Assisted Others:','BOOLEAN',0),(107,NULL,17,3,'Was assisted:','BOOLEAN',0),(108,NULL,18,1,'Alliance Score:','NUMERIC',0),(109,4,18,2,'Game outcome:','RADIO',0),(110,NULL,18,3,'Fouls:','NUMERIC',0),(111,NULL,18,4,'Tech Fouls:','NUMERIC',0),(112,NULL,18,5,'Yellow Card:','BOOLEAN',0),(113,NULL,18,6,'Red Card:','BOOLEAN',0),(114,15,18,7,'Rate the driver from 1 (Bad) to 5 (Incredible)','RADIO',0),(115,NULL,18,8,'Comments:','TEXT',0),(116,NULL,19,4,'Drive Train:','TEXT',0),(117,NULL,19,1,'Vision System:','BOOLEAN',0),(118,NULL,19,3,'Number of Cameras:','NUMERIC',0),(119,NULL,19,2,'Off-Board Vision Processing:','BOOLEAN',0),(120,NULL,19,5,'Describe the Hatch panel mechanism:','TEXT',0),(121,NULL,19,6,'Describe the Ball mechanism:','TEXT',0),(122,14,20,2,'Starting Position:','RADIO',0),(123,NULL,20,3,'Cross Baseline:','BOOLEAN',0),(124,NULL,20,4,'Put hatch panel on rocket:','BOOLEAN',0),(125,NULL,20,5,'Put hatch panel on cargo ship:','BOOLEAN',0),(126,NULL,20,6,'Put ball in rocket:','BOOLEAN',0),(127,NULL,20,7,'Put ball in cargo ship:','BOOLEAN',0),(128,12,20,8,'Highest level they can put the hatch:','RADIO',0),(129,12,20,9,'Highest level they can put the ball:','RADIO',0),(130,NULL,21,1,'Put hatch panel on rocket:','BOOLEAN',0),(131,NULL,21,2,'Put hatch panel on cargo ship:','BOOLEAN',0),(132,NULL,21,3,'Put ball in rocket:','BOOLEAN',0),(133,NULL,21,4,'Put ball in cargo ship:','BOOLEAN',0),(134,12,21,5,'Highest level they can put the hatch:','RADIO',0),(135,12,21,6,'Highest level they can put the ball:','RADIO',0),(136,NULL,21,7,'Cycle time for panel:','NUMERIC',0),(137,NULL,21,8,'Cycle time for ball:','NUMERIC',0),(138,NULL,21,9,'Describe their general strategy:','TEXT',0),(139,14,22,1,'Ending Position:','RADIO',0),(140,NULL,22,2,'Do you help others up a level?','BOOLEAN',0),(141,NULL,22,3,'Are you willing to play defense?','BOOLEAN',0),(142,NULL,22,4,'Are you able to play defense?','BOOLEAN',0),(143,16,23,1,'Who do you think built the robot?','CHOICE',0),(144,9,23,2,'General feel of the team:','RADIO',0),(145,17,20,1,'Type of auto:','CHOICE',0),(146,NULL,24,1,'No Show','BOOLEAN',0),(147,NULL,24,2,'Broken','BOOLEAN',0),(148,NULL,24,3,'Died','BOOLEAN',0),(149,NULL,24,4,'Fell Over','BOOLEAN',0),(150,NULL,23,3,'Comments:','TEXT',0),(151,NULL,25,1,'Starting number of power cells:','NUMERIC',0),(152,NULL,25,2,'Crossed the line:','BOOLEAN',0),(153,NULL,25,3,'LOW - Total success:','NUMERIC',0),(154,NULL,25,4,'HEX - Total success:','NUMERIC',0),(155,NULL,25,5,'HOLE - Total success:','NUMERIC',0),(156,NULL,26,1,'LOW - Total success:','NUMERIC',0),(157,NULL,26,2,'HEX - Total success:','NUMERIC',0),(158,NULL,26,3,'HOLE - Total success:','NUMERIC',0),(159,NULL,26,4,'Spun Wheel for count successfully:','BOOLEAN',0),(160,NULL,26,5,'Spun For Color successfully:','BOOLEAN',0),(161,NULL,27,1,'Attempted Climb:','BOOLEAN',0),(162,NULL,27,2,'Climbed successfully:','BOOLEAN',0),(163,NULL,27,3,'Parked:','BOOLEAN',0),(164,NULL,27,4,'Generator Switch Level:','BOOLEAN',0),(165,NULL,28,2,'Alliance Score:','NUMERIC',0),(166,4,28,1,'Game Outcome:','RADIO',0),(169,NULL,28,5,'Yellow Card:','BOOLEAN',0),(170,NULL,28,6,'Red Card:','BOOLEAN',0),(171,15,28,7,'Rate the drivers strategy: (1 is bad)','RADIO',0),(172,15,28,8,'Defensive maneuvering: (1 is bad)','RADIO',0),(173,NULL,29,1,'No Show:','BOOLEAN',0),(174,NULL,29,2,'Broken:','BOOLEAN',0),(175,NULL,29,3,'Died:','BOOLEAN',0),(176,NULL,29,4,'Fell Over:','BOOLEAN',0),(177,NULL,29,5,'Final Comments:','TEXT',0),(178,NULL,30,1,'Vision System:','BOOLEAN',0),(179,NULL,30,2,'Off-Board vision processing:','BOOLEAN',0),(180,NULL,30,3,'Number of cameras:','NUMERIC',0),(181,NULL,30,4,'Describe Drivetrain:','TEXT',0),(182,NULL,30,5,'Describe Power Cell Mech:','TEXT',0),(183,NULL,30,6,'Describe Wheel Mech:','TEXT',0),(184,NULL,30,7,'Describe Climb Mech:','TEXT',0),(185,NULL,30,8,'Max Number of Power Cells able to hold:','NUMERIC',0),(186,NULL,30,9,'Cycle time (in seconds):','NUMERIC',0),(187,NULL,30,10,'Weight without battery (in pounds):','NUMERIC',0),(188,NULL,30,11,'Able to do trench run:','BOOLEAN',0),(189,NULL,31,1,'Can do autonomous:','BOOLEAN',0),(190,NULL,31,2,'Can cross line:','BOOLEAN',0),(191,NULL,31,3,'Can score LOW:','BOOLEAN',0),(192,NULL,31,4,'Can score HEX:','BOOLEAN',0),(193,NULL,31,5,'Can score HOLE:','BOOLEAN',0),(194,NULL,32,2,'Can score LOW:','BOOLEAN',0),(195,NULL,32,3,'Can score HEX:','BOOLEAN',0),(196,NULL,32,4,'Can score HOLE:','BOOLEAN',0),(197,NULL,32,5,'Can spin wheel for count:','BOOLEAN',0),(198,NULL,32,6,'Can spin wheel for color:','BOOLEAN',0),(199,NULL,33,1,'Can climb:','BOOLEAN',0),(200,NULL,33,2,'Any preferred climb spot:','TEXT',0),(201,NULL,34,1,'Can play defense:','BOOLEAN',0),(202,NULL,34,2,'Willing to play defense:','BOOLEAN',0),(203,NULL,34,3,'Comments:','TEXT',0),(204,NULL,32,1,'Preferred Shooting spot:','TEXT',0);
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `question_type`
---
-
-DROP TABLE IF EXISTS `question_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `question_type` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `description` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `question_type`
---
-
-LOCK TABLES `question_type` WRITE;
-/*!40000 ALTER TABLE `question_type` DISABLE KEYS */;
-INSERT INTO `question_type` VALUES (1,'boolean'),(2,'numeric'),(3,'radio'),(4,'radio'),(5,'text'),(6,'choice'),(7,'choice'),(8,'choice'),(9,'radio'),(10,'choice'),(11,'radio'),(12,'radio'),(13,'radio'),(14,'radio'),(15,'radio'),(16,'choice'),(17,'choice');
-/*!40000 ALTER TABLE `question_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -199,34 +230,6 @@ INSERT INTO `response` VALUES (125090,105,7577,'2',10),(125091,78,7577,'0',10),(
 UNLOCK TABLES;
 
 --
--- Table structure for table `response_value`
---
-
-DROP TABLE IF EXISTS `response_value`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `response_value` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `question_type_id` int NOT NULL,
-  `value` varchar(45) NOT NULL,
-  `is_default` tinyint NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `fk_ResponseType_QuestionType1_idx` (`question_type_id`),
-  CONSTRAINT `fk_ResponseType_QuestionType1` FOREIGN KEY (`question_type_id`) REFERENCES `question_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `response_value`
---
-
-LOCK TABLES `response_value` WRITE;
-/*!40000 ALTER TABLE `response_value` DISABLE KEYS */;
-INSERT INTO `response_value` VALUES (1,1,'true',0),(2,1,'false',0),(3,3,'1',0),(4,3,'2',0),(5,3,'3',0),(6,4,'Win',0),(7,4,'Loss',0),(8,4,'Tie',0),(9,6,'Solo',0),(10,6,'Assisted Others',0),(11,6,'Received Assistance',0),(13,3,'0',0),(14,7,'Yes',0),(15,7,'No',0),(16,7,'Maybe',0),(17,8,'None',0),(18,8,'Camera',0),(19,8,'Off-Board Vision Processing',0),(20,9,'Good',0),(21,9,'Bad',0),(22,9,'OK',0),(23,6,'Did not climb',1),(24,10,'Left',1),(25,10,'Right',0),(26,10,'Middle',0),(27,11,'Java',0),(28,11,'C++',0),(29,11,'LabView',0),(30,10,'No Preference',0),(31,10,'Left or Right',0),(32,6,'Climbed and Assisted Others',0),(33,12,'1',1),(34,12,'2',0),(35,12,'3',0),(36,13,'Ball',0),(37,13,'Panel',0),(38,13,'None',1),(39,14,'0 - Ground',0),(40,14,'1',0),(41,14,'2',0),(42,14,'3',0),(43,15,'1',0),(44,15,'2',0),(45,15,'3',0),(46,15,'4',0),(47,15,'5',0),(48,16,'Dad Bot',0),(49,16,'Fab Bot',0),(50,16,'Stud Bot',0),(51,16,'No Idea',1),(52,17,'Vision Teleop',1),(53,17,'Auto',0),(54,17,'In Progress',0);
-/*!40000 ALTER TABLE `response_value` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `student`
 --
 
@@ -246,7 +249,7 @@ CREATE TABLE `student` (
   UNIQUE KEY `username_UNIQUE` (`username`),
   KEY `fk_student_belongs_team_idx` (`team_id`),
   CONSTRAINT `fk_student_belongs_team` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -255,7 +258,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (3,2549,'Aaron','Keyes',0,'akeyes','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(4,2549,'Ahmed-Rashid','Shire',0,'ashire','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(5,2549,'Alex','Knight',0,'aknight','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(7,2549,'Andrew','Hollar',1,'ahollar','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(8,2549,'Brynn','DeVaan',0,'bdevaan','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(10,2549,'Cassidey','Shafer',0,'cshafer','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(11,2549,'Charlie','Boesen',0,'cboesen','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(12,2549,'Charlie','Ruff',0,'cruff','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(14,2549,'Ed','Shipp',0,'eshipp','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(15,2549,'Eli','Knaus',0,'eknaus','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(16,2549,'Ernest','Pridgeon',0,'epridgeon','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(18,2549,'Grant','Ober',0,'gober','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(19,2549,'Jack','Lonn',0,'jlonn','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(20,2549,'Jameson','Cochrane',0,'jcochrane','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(21,2549,'Jack','Boesen',0,'jboesen','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(23,2549,'Lars','Haugen',0,'lhaugen','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(24,2549,'Max','Labrie',0,'mlabrie','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(26,2549,'Nils','Nordstrom',0,'nnordstrom','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(28,2549,'Olivia','Donney',0,'odonney','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(29,2549,'Owen','Cody',0,'ocody','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(34,2549,'Sergei','Miller',0,'smiller','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(35,2549,'Sofia','Garcia',0,'sgarcia','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(36,2549,'Sully','Leier',0,'sleier','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(37,2549,'Svetlana','Greipel',0,'sgreipel','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(38,2549,'Thomas','Schroeder',0,'tschroeder','$2a$10$RW6kd8tJKQYCIeQsfKnA4eopGA1Rb9YA02rrWSaX.XUA5h23hOjY2'),(39,2549,'Victor','LaBrie',0,'vlabrie','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(40,2549,'Jack','O\'Kane',1,'jokane','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(41,2549,'Madeleine','Kelly',0,'mkelly','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(42,2549,'Nathaniel','Grundeen',1,'ngrundeen','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(43,2549,'Patrick','Ryan',0,'pryan','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(44,2549,'Shirley','O\'Mara',1,'somara','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(45,2549,'Owen','Knych',1,'oknych','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(46,2549,'Ben','Guengerich',0,'bguengerich','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(47,2549,'Aidan','Sutton',0,'asutton','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(48,2549,'Charlie','Tripp',1,'ctripp','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(49,2549,'Ellen','Leier',1,'eleier','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(50,2549,'Kris','Nordland',1,'knordland','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(51,2549,'Marcus','Ernst',1,'mernst','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(52,2549,'Oscar','Wiestling',0,'owiestling','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(53,2549,'Mac','Hearn',1,'mhearn','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(54,2549,'Sawyer','Ranum',0,'sranum','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(55,2549,'Evan','Briggs',1,'ebriggs','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(56,2549,'Test','Tester',1,'test','$2a$10$d4uvX.5K2qxpEKTFJ7bBOOIAKrtm8aEBtNfYAKpzPzGaou/mcsgI.');
+INSERT INTO `student` VALUES (3,2549,'Aaron','Keyes',0,'akeyes','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(4,2549,'Ahmed-Rashid','Shire',0,'ashire','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(5,2549,'Alex','Knight',0,'aknight','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(7,2549,'Andrew','Hollar',0,'ahollar','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(8,2549,'Brynn','DeVaan',0,'bdevaan','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(10,2549,'Cassidey','Shafer',0,'cshafer','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(11,2549,'Charlie','Boesen',0,'cboesen','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(12,2549,'Charlie','Ruff',0,'cruff','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(14,2549,'Ed','Shipp',0,'eshipp','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(15,2549,'Eli','Knaus',0,'eknaus','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(16,2549,'Ernest','Pridgeon',0,'epridgeon','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(18,2549,'Grant','Ober',0,'gober','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(19,2549,'Jack','Lonn',0,'jlonn','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(20,2549,'Jameson','Cochrane',0,'jcochrane','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(21,2549,'Jack','Boesen',0,'jboesen','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(23,2549,'Lars','Haugen',0,'lhaugen','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(24,2549,'Max','Labrie',0,'mlabrie','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(26,2549,'Nils','Nordstrom',0,'nnordstrom','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(28,2549,'Olivia','Donney',0,'odonney','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(29,2549,'Owen','Cody',0,'ocody','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(34,2549,'Sergei','Miller',0,'smiller','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(35,2549,'Sofia','Garcia',0,'sgarcia','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(36,2549,'Sully','Leier',0,'sleier','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(37,2549,'Svetlana','Greipel',0,'sgreipel','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(38,2549,'Thomas','Schroeder',0,'tschroeder','$2a$10$RW6kd8tJKQYCIeQsfKnA4eopGA1Rb9YA02rrWSaX.XUA5h23hOjY2'),(39,2549,'Victor','LaBrie',0,'vlabrie','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(40,2549,'Jack','O\'Kane',1,'jokane','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(41,2549,'Madeleine','Kelly',0,'mkelly','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(42,2549,'Nathaniel','Grundeen',0,'ngrundeen','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(43,2549,'Patrick','Ryan',0,'pryan','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(44,2549,'Shirley','O\'Mara',1,'somara','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(45,2549,'Owen','Knych',1,'oknych','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(46,2549,'Ben','Guengerich',0,'bguengerich','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(47,2549,'Aidan','Sutton',0,'asutton','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(48,2549,'Charlie','Tripp',1,'ctripp','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(49,2549,'Ellen','Leier',1,'eleier','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(50,2549,'Kris','Nordland',1,'knordland','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(51,2549,'Marcus','Ernst',1,'mernst','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(52,2549,'Oscar','Wiestling',0,'owiestling','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(53,2549,'Mac','Hearn',1,'mhearn','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(54,2549,'Sawyer','Ranum',0,'sranum','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(55,2549,'Evan','Briggs',1,'ebriggs','$2a$10$N2wbu5PjFLUIx/nA5EXnFeoAwYLgcftSP4P8bWlX5OE2WZebySuZe'),(56,2549,'Test','Tester',1,'test','$2a$10$d4uvX.5K2qxpEKTFJ7bBOOIAKrtm8aEBtNfYAKpzPzGaou/mcsgI.'),(57,2549,'Norah','Bestler',1,'nbestler','$2a$10$QF.7cnUx4iRLATs9D1WDIeImviT21D8HiUPIF6UkOt5kIJZDe1My.'),(58,2549,'Endre','Brumbaugh',1,'ebrumbaugh','$2a$10$wmzsBLFid0VH2RoPOysW/eYfZ2LL3ogqGPbe7wmPYwMGZxFMcL4Tm'),(59,2549,'Hannah','Ernst',1,'hernst','$2a$10$.24imxvlA13W4QTS6AffUOjYvfjVVYll9tVX0tPrvvejGKNxL3jvS'),(60,2549,'Alex','Hermodson',1,'ahermodson','$2a$10$Q4jbVcT.CR.fKGyhGXObbudI/7CsvrsDaVik8KXwLzW1kucO01BO6'),(61,2549,'Quentin','Kovar',1,'qkovar','$2a$10$sPbote9y7vuD6bg8SVpnYeDXpBTJ2PjkWF3s.mimCh5LnsO9rtOb6'),(63,2549,'Harley','Peterson',1,'hpeterson','$2a$10$H6n78jDwhGUVtx9.UOfx0.zV4rAisvIDDZd3UDwah3qERo9wdKzPy'),(64,2549,'Nathan','Resnik',1,'nresnik','$2a$10$DP.B3goPlEH4eU14CBmnAOYvicE17MRwN.rhmKi29FLisW6w3LE7i'),(65,2549,'Bryson','Sanger',1,'bsanger','$2a$10$nL5vrA2suFgpO9UpcqeUrereP/eacvta7sk.e/IPO2dCCIVXGdSt2'),(66,2549,'Dan','Hollar',1,'dhollar','$2a$10$LPMuNDqE0O5aC.pw5y.W7OOQOy7wxXPHigwGjKnt.l3bJ9w15uJE2'),(67,2549,'Sydney','Skoglund',1,'sskoglund','$2a$10$LCzCM7r0LrUAZrZC6M6UueAUiO2CT4FbQfWsboiLZglnRi8fpnA9O'),(68,2549,'David','Wozniak',1,'dwozniak','$2a$10$ga6x.TOKp7gJqCIU.qjC4ujUcPIDLMSxw2n1Tf91/9l91UhYZIKR.');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,7 +276,7 @@ CREATE TABLE `student_role` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `student_role_uk1` (`student_id`,`role`),
   CONSTRAINT `student_role_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -282,7 +285,7 @@ CREATE TABLE `student_role` (
 
 LOCK TABLES `student_role` WRITE;
 /*!40000 ALTER TABLE `student_role` DISABLE KEYS */;
-INSERT INTO `student_role` VALUES (1,3,'ROLE_USER'),(2,4,'ROLE_USER'),(3,5,'ROLE_USER'),(64,7,'ROLE_ADMIN'),(5,7,'ROLE_USER'),(6,8,'ROLE_USER'),(8,10,'ROLE_USER'),(9,11,'ROLE_USER'),(10,12,'ROLE_USER'),(12,14,'ROLE_USER'),(13,15,'ROLE_USER'),(14,16,'ROLE_USER'),(16,18,'ROLE_USER'),(17,19,'ROLE_USER'),(18,20,'ROLE_USER'),(19,21,'ROLE_USER'),(21,23,'ROLE_USER'),(22,24,'ROLE_USER'),(24,26,'ROLE_USER'),(26,28,'ROLE_USER'),(27,29,'ROLE_USER'),(32,34,'ROLE_USER'),(33,35,'ROLE_USER'),(34,36,'ROLE_USER'),(35,37,'ROLE_USER'),(66,38,'ROLE_ADMIN'),(65,38,'ROLE_POWER_USER'),(36,38,'ROLE_USER'),(37,39,'ROLE_USER'),(38,40,'ROLE_USER'),(39,41,'ROLE_USER'),(40,42,'ROLE_USER'),(41,43,'ROLE_USER'),(68,44,'ROLE_ADMIN'),(42,44,'ROLE_USER'),(69,45,'ROLE_ADMIN'),(43,45,'ROLE_USER'),(44,46,'ROLE_USER'),(45,47,'ROLE_USER'),(70,48,'ROLE_ADMIN'),(46,48,'ROLE_USER'),(47,49,'ROLE_USER'),(48,50,'ROLE_USER'),(49,51,'ROLE_USER'),(50,52,'ROLE_USER'),(51,53,'ROLE_USER'),(52,54,'ROLE_USER'),(53,55,'ROLE_USER'),(67,56,'ROLE_USER');
+INSERT INTO `student_role` VALUES (1,3,'ROLE_USER'),(2,4,'ROLE_USER'),(3,5,'ROLE_USER'),(5,7,'ROLE_USER'),(6,8,'ROLE_USER'),(8,10,'ROLE_USER'),(9,11,'ROLE_USER'),(10,12,'ROLE_USER'),(12,14,'ROLE_USER'),(13,15,'ROLE_USER'),(14,16,'ROLE_USER'),(16,18,'ROLE_USER'),(17,19,'ROLE_USER'),(18,20,'ROLE_USER'),(19,21,'ROLE_USER'),(21,23,'ROLE_USER'),(22,24,'ROLE_USER'),(24,26,'ROLE_USER'),(26,28,'ROLE_USER'),(27,29,'ROLE_USER'),(32,34,'ROLE_USER'),(33,35,'ROLE_USER'),(34,36,'ROLE_USER'),(35,37,'ROLE_USER'),(66,38,'ROLE_ADMIN'),(65,38,'ROLE_POWER_USER'),(36,38,'ROLE_USER'),(37,39,'ROLE_USER'),(38,40,'ROLE_USER'),(39,41,'ROLE_USER'),(40,42,'ROLE_USER'),(41,43,'ROLE_USER'),(68,44,'ROLE_ADMIN'),(42,44,'ROLE_USER'),(69,45,'ROLE_ADMIN'),(43,45,'ROLE_USER'),(44,46,'ROLE_USER'),(45,47,'ROLE_USER'),(70,48,'ROLE_ADMIN'),(46,48,'ROLE_USER'),(47,49,'ROLE_USER'),(48,50,'ROLE_USER'),(49,51,'ROLE_USER'),(50,52,'ROLE_USER'),(51,53,'ROLE_USER'),(52,54,'ROLE_USER'),(53,55,'ROLE_USER'),(67,56,'ROLE_USER'),(71,57,'ROLE_USER'),(72,58,'ROLE_USER'),(73,59,'ROLE_USER'),(74,60,'ROLE_USER'),(75,61,'ROLE_USER'),(76,63,'ROLE_USER'),(77,64,'ROLE_USER'),(78,65,'ROLE_USER'),(80,66,'ROLE_ADMIN'),(81,66,'ROLE_POWER_USER'),(79,66,'ROLE_USER'),(82,67,'ROLE_USER'),(83,68,'ROLE_USER');
 /*!40000 ALTER TABLE `student_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -296,7 +299,12 @@ DROP TABLE IF EXISTS `survey`;
 CREATE TABLE `survey` (
   `id` int NOT NULL,
   `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  `type` varchar(10) NOT NULL,
+  `year` int NOT NULL,
+  `editable` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `survey_udx1` (`name`) /*!80000 INVISIBLE */,
+  UNIQUE KEY `survey_udx2` (`type`,`year`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -306,7 +314,7 @@ CREATE TABLE `survey` (
 
 LOCK TABLES `survey` WRITE;
 /*!40000 ALTER TABLE `survey` DISABLE KEYS */;
-INSERT INTO `survey` VALUES (1,'Match Scouting 2018'),(2,'Pit Scouting 2018'),(3,'Match Scouting 2019'),(4,'Pit Scouting 2019'),(5,'Match Scouting 2020'),(6,'Pit Scouting 2020');
+INSERT INTO `survey` VALUES (1,'Match Scouting 2018','MATCH',2018,0),(2,'Pit Scouting 2018','PIT',2018,0),(3,'Match Scouting 2019','MATCH',2019,0),(4,'Pit Scouting 2019','PIT',2019,0),(5,'Match Scouting 2020','MATCH',2020,0),(6,'Pit Scouting 2020','PIT',2020,0);
 /*!40000 ALTER TABLE `survey` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -465,8 +473,8 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`scout`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `warehouse` AS select `r`.`question_id` AS `question_id`,`tm`.`team_id` AS `team_id`,`tm`.`matchup_id` AS `matchup_id`,`tr`.`event_id` AS `event_id`,`e`.`name` AS `event_name`,`t`.`name` AS `team_name`,`m`.`match_number` AS `match_number`,`tm`.`alliance` AS `alliance`,`r`.`response` AS `response`,`tr`.`team_rank` AS `team_rank`,(case when (`tm`.`alliance` = 'red') then `m`.`red_score` when (`tm`.`alliance` = 'blue') then `m`.`blue_score` else NULL end) AS `alliance_score`,`q`.`question` AS `question` from ((((((`response` `r` join `question` `q` on((`r`.`question_id` = `q`.`id`))) join `team_matchup` `tm` on((`r`.`team_matchup_id` = `tm`.`id`))) join `matchup` `m` on((`tm`.`matchup_id` = `m`.`id`))) join `event` `e` on((`m`.`event_id` = `e`.`id`))) join `team` `t` on((`tm`.`team_id` = `t`.`id`))) join `team_ranking` `tr` on(((`tr`.`team_id` = `t`.`id`) and (`tr`.`event_id` = `e`.`id`)))) where ((`q`.`question_type_id` <> 5) and (`tm`.`alliance` <> 'pit')) */;
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `warehouse` AS select `r`.`question_id` AS `question_id`,`tm`.`team_id` AS `team_id`,`tm`.`matchup_id` AS `matchup_id`,`tr`.`event_id` AS `event_id`,`e`.`name` AS `event_name`,`t`.`name` AS `team_name`,`m`.`match_number` AS `match_number`,`tm`.`alliance` AS `alliance`,`r`.`response` AS `response`,`tr`.`team_rank` AS `team_rank`,(case when (`tm`.`alliance` = 'red') then `m`.`red_score` when (`tm`.`alliance` = 'blue') then `m`.`blue_score` else NULL end) AS `alliance_score`,`q`.`question` AS `question` from ((((((`response` `r` join `question` `q` on((`r`.`question_id` = `q`.`id`))) join `team_matchup` `tm` on((`r`.`team_matchup_id` = `tm`.`id`))) join `matchup` `m` on((`tm`.`matchup_id` = `m`.`id`))) join `event` `e` on((`m`.`event_id` = `e`.`id`))) join `team` `t` on((`tm`.`team_id` = `t`.`id`))) join `team_ranking` `tr` on(((`tr`.`team_id` = `t`.`id`) and (`tr`.`event_id` = `e`.`id`)))) where ((`q`.`type` <> 'TEXT') and (`tm`.`alliance` <> 'pit')) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -480,4 +488,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-26 18:02:29
+-- Dump completed on 2022-02-02  2:09:10
