@@ -23,6 +23,9 @@ class Survey {
     @Column(name = 'year', nullable = false)
     Integer year
 
+    @Column(name = 'editable', nullable = false)
+    Boolean editable
+
     @ManyToMany(mappedBy = "surveys")
     Set<Event> events = new HashSet<>()
 

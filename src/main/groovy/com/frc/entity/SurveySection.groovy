@@ -14,7 +14,7 @@ class SurveySection {
     @Column(name = 'id', nullable = false)
     Integer id
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "survey_id", referencedColumnName = "id", nullable = false)
     Survey survey
 

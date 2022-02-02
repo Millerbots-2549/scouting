@@ -25,5 +25,6 @@ class ResponseController {
     @ResponseStatus(HttpStatus.CREATED)
     void save(@RequestBody Collection<ResponseDto> responseDtos) {
         service.save(responseDtos)
+        service.updateEditable(responseDtos)
     }
 }

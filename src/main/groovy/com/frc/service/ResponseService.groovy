@@ -9,6 +9,7 @@ import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
 
 import javax.transaction.Transactional
@@ -51,6 +52,21 @@ class ResponseService {
         teamMatchupRepository.save(tm)
     }
 
+    @Async
+    void updateEditable(Collection<ResponseDto> responseDtos) {
+        try {
+            responseDtos.each {
+                Question question = getQuestion(it)
+                question.editable = false
+                question?.choiceGroup?.editable = false
+                question.surveySection.survey.editable = false
+                questionRepository.save(question)
+            }
+        } catch (Exception e) {
+            log.info('Error processing updates for editable', e)
+        }
+    }
+
     private TeamMatchup getTeamMatchup(Collection<ResponseDto> responseDtos) {
         TeamMatchup tm = teamMatchupRepository.findById(responseDtos.first().teamMatchupId).orElse(null)
 
@@ -61,11 +77,7 @@ class ResponseService {
     }
 
     private Question getQuestion(ResponseDto it) {
-        Question question = questionRepository.findById(it.questionId).orElse(null)
-        if (question == null) {
-            throw new RuntimeException("Not able to find question with id=${it.questionId}")
-        }
-        question
+        return questionRepository.findById(it.questionId).orElseThrow()
     }
 
     private static String cleanResponse(String response, Question question) {
