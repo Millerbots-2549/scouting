@@ -10,5 +10,7 @@ import groovy.transform.Sortable
 class SurveyDto {
     Integer surveyId
     String name
+    String type
+    String year
     Set<SurveySectionDto> surveySections
 }
