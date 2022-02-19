@@ -5,6 +5,8 @@ import com.frc.entity.*
 import groovy.transform.CompileStatic
 import org.apache.commons.lang3.StringUtils
 
+import java.text.Normalizer
+
 @CompileStatic
 class Converter {
 
@@ -76,7 +78,9 @@ class Converter {
         if (survey) {
             new SurveyDto(
                     surveyId: survey.id,
-                    name: survey.name
+                    name: survey.name,
+                    type: survey.type,
+                    year: survey.year
             )
         } else {
             return null
@@ -179,20 +183,20 @@ class Converter {
 
     static Event merge(EventDto dto, Event entity) {
         entity.id = dto.eventId
-        entity.city = StringUtils.stripToNull(dto.city)
+        entity.city = stripNonAscii(dto.city)
         entity.endDate = dto.endDate
-        entity.eventKey = StringUtils.stripToNull(dto.eventKey) ?: entity.eventKey
-        entity.name = StringUtils.stripToNull(dto.name)
+        entity.eventKey = stripNonAscii(dto.eventKey) ?: entity.eventKey
+        entity.name = stripNonAscii(dto.name)
         entity.startDate = dto.startDate
-        entity.state = StringUtils.stripToNull(dto.state)
+        entity.state = stripNonAscii(dto.state)
         return entity
     }
 
     static Student merge(StudentDto dto, Student entity) {
         entity.id = dto.studentId
-        entity.firstName = StringUtils.stripToNull(dto.firstName)
-        entity.lastName = StringUtils.stripToNull(dto.lastName)
-        entity.username = StringUtils.stripToNull(dto.username)
+        entity.firstName = stripNonAscii(dto.firstName)
+        entity.lastName = stripNonAscii(dto.lastName)
+        entity.username = stripNonAscii(dto.username)
         entity.active = dto.enabled
 
         // only mess with roles for a new student
@@ -210,6 +214,14 @@ class Converter {
         }
 
         return entity
+    }
+
+    static String stripNonAscii(final String comment) {
+        String s = StringUtils.trim(StringUtils.stripToNull(comment))
+        if (s) {
+            return Normalizer.normalize(s, Normalizer.Form.NFKD).replaceAll('[^ -~]', '')
+        }
+        return s
     }
 
 }

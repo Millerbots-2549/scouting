@@ -3,11 +3,10 @@ package com.frc.service
 import com.frc.dto.ResponseDto
 import com.frc.entity.*
 import com.frc.repository.QuestionRepository
-import com.frc.repository.ResponseRepository
 import com.frc.repository.TeamMatchupRepository
+import com.frc.util.Converter
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
-import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
@@ -22,8 +21,6 @@ class ResponseService {
 
     private static final String ZERO = '0'
 
-    @Autowired
-    ResponseRepository responseRepository
     @Autowired
     TeamMatchupRepository teamMatchupRepository
     @Autowired
@@ -81,7 +78,7 @@ class ResponseService {
     }
 
     private static String cleanResponse(String response, Question question) {
-        String cleanResponse = StringUtils.trim(StringUtils.stripToEmpty(response))
+        String cleanResponse = Converter.stripNonAscii(response)
         // if the response is empty and its numeric set it to zero
         if (!cleanResponse && question.type == QuestionType.NUMERIC) {
             return ZERO
