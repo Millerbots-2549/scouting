@@ -13,7 +13,7 @@ class Survey {
     @Column(name = 'id', nullable = false)
     Integer id
 
-    @Column(name = 'name', nullable = false, unique = true, length=45)
+    @Column(name = 'name', nullable = false, unique = true, length = 45)
     String name
 
     @Enumerated(EnumType.STRING)

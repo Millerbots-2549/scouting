@@ -102,12 +102,13 @@ class ResultService {
     private static String calculateAverage(List<String> responses) {
         double count = 0
         double total = 0
-        responses.each {
-            count++
-            double value = it.trim() ? it.trim().toFloat() : 0
-            total += value
+        if (responses) {
+            responses.each {
+                count++
+                double value = it.trim() ? it.trim().toFloat() : 0
+                total += value
+            }
         }
-
         if (count == 0) {
             return '0'
         } else {
@@ -118,11 +119,13 @@ class ResultService {
 
     private static String calculateMostOccurring(List<String> responses) {
         Map<String, Integer> counts = [:]
-        responses.each {
-            if (!counts.containsKey(it)) {
-                counts.put(it, 1)
-            } else {
-                counts.put(it, counts.get(it) + 1)
+        if (responses) {
+            responses.each {
+                if (!counts.containsKey(it)) {
+                    counts.put(it, 1)
+                } else {
+                    counts.put(it, counts.get(it) + 1)
+                }
             }
         }
         int max = 0

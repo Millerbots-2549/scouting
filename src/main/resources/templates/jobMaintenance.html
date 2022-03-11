@@ -6,12 +6,12 @@
     <title>Blue Alliance Data</title>
 
     <link rel="apple-touch-icon" sizes="180x180" th:href="@{/ico/apple-touch-icon.png}"/>
-    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/ico/favicon-32x32.png}"/>
-    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/ico/favicon-16x16.png}"/>
+    <link rel="icon" sizes="32x32" th:href="@{/ico/favicon-32x32.png}" type="image/png"/>
+    <link rel="icon" sizes="16x16" th:href="@{/ico/favicon-16x16.png}" type="image/png"/>
     <link rel="manifest" th:href="@{/ico/site.webmanifest}"/>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" crossorigin="anonymous" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" rel="stylesheet"/>
     <link rel="stylesheet" th:href="@{/css/millerbots.css}" type="text/css"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -46,7 +46,7 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="nav-item"><a class="nav-link" th:href="@{/logout}"><i class="fas fa-sign-out-alt" aria-hidden="true"></i></a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/logout}"><i aria-hidden="true" class="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </div>
     </nav>
@@ -54,7 +54,7 @@
 <!--Main part of page-->
 
 <div class="container">
-    <span id="message" class="bg-danger text-white"></span><br>
+    <span class="bg-danger text-white" id="message"></span><br>
     <div class="row">
         <div class="col-sm-12 text-left">
             <p>
@@ -70,21 +70,21 @@
             <h4>System Status is:</h4>
         </div>
         <div class="col-sm-6 text-left">
-            <button type="button" onclick="statusButtonClicked()" id="statusBtn"></button>
+            <button id="statusBtn" onclick="statusButtonClicked()" type="button"></button>
             <p><small>(click the button to change the status)</small></p>
         </div>
     </div>
     <p></p>
     <div class="row" id="rankingsDiv">
         <div class="col-sm-3 text-left">
-            <button type="button" onclick="getRankings()" class="btn btn-primary" id="rankingBtn">Get Rankings</button>
+            <button class="btn btn-primary" id="rankingBtn" onclick="getRankings()" type="button">Get Rankings</button>
         </div>
         <div class="col-sm-9 text-left" id="rankingResultDiv"></div>
     </div>
     <p></p>
     <div class="row" id="matchupDiv">
         <div class="col-sm-3 text-left">
-            <button type="button" onclick="getMatchUps()" class="btn btn-primary" id="matchUpBtn">Get Match Ups</button>
+            <button class="btn btn-primary" id="matchUpBtn" onclick="getMatchUps()" type="button">Get Match Ups</button>
         </div>
         <div class="col-sm-9 text-left" id="matchUpResultDiv"></div>
     </div>

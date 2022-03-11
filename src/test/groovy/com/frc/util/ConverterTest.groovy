@@ -23,12 +23,12 @@ class ConverterTest extends Specification {
 
     def "convert null team matchups"() {
         expect:
-        [] == Converter.convertTeamMatchups(null)
+        [] as TreeSet == Converter.convertTeamMatchups(null)
     }
 
     def "convert empty team matchups"() {
         expect:
-        [] == Converter.convertTeamMatchups([] as Set<TeamMatchup>)
+        [] as TreeSet == Converter.convertTeamMatchups([] as Set<TeamMatchup>)
     }
 
     def 'convert null student'() {
@@ -60,8 +60,8 @@ class ConverterTest extends Specification {
                 name: 'event1',
                 city: 'City2',
                 state: 'state3',
-                startDate: LocalDate.now(),
-                endDate: LocalDate.now())
+                startDate: LocalDate.of(2020, 1, 1),
+                endDate: LocalDate.of(2020, 1, 10))
 
         when:
         EventDto result = Converter.convert(event)
@@ -199,6 +199,5 @@ class ConverterTest extends Specification {
                 school: 'School1'
         )
     }
-
 
 }
